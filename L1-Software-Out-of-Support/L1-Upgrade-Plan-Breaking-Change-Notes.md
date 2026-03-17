@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1-1.5h |
+| **Phase** | Execute (Week 2) |
+| **Inputs** | Compatibility map, release notes, repo |
+| **Key output** | Upgrade plan + breaking-change notes |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Developers attempting upgrades without a clear breaking-change summary often discover issues late, after code has been written against removed APIs or changed configuration formats. This causes rework, delays, and erodes confidence in the upgrade path.
 
 This activity consolidates release notes, migration guides, and the compatibility map into a concise, developer-ready upgrade plan with breaking-change notes. It gives the team a checklist they can follow during the Exemplar Upgrade PRs activity and beyond.
 
 Decision enabled: confirm that the upgrade path is feasible, that the team understands the breaking changes, and that they are ready to begin code-level remediation.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Produce a short summary of breaking changes and mitigations for the target upgrade path and consolidate an upgrade plan.
@@ -23,18 +37,23 @@ Sub tasks:
 7. Review the plan with the Solution Architect or Tech Lead and confirm it is ready for developer handover.
 8. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: depends on Dependency and Compatibility Mapping output. Produces the reference document used during Exemplar Upgrade PRs. Run in Week 2 (Execute phase), shortly after the compatibility map is approved.
+> **Sequencing:** depends on Dependency and Compatibility Mapping output. Produces the reference document used during Exemplar Upgrade PRs. Run in Week 2 (Execute phase), shortly after the compatibility map is approved.
 
-Out of scope:
-- Executing the upgrades or writing production-ready migration code.
-- Full rewrite of developer documentation beyond the upgrade-specific notes.
-- Performance or load testing of upgraded components.
+> **Out of scope:**
+> - Executing the upgrades or writing production-ready migration code.
+> - Full rewrite of developer documentation beyond the upgrade-specific notes.
+> - Performance or load testing of upgraded components.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Retrieve and ground: pull official release notes, migration guides, changelogs, and Stack Overflow/GitHub issues for each component upgrade to identify breaking changes and known workarounds.
-- Analyse and reason: compare current codebase usage (from the repo) against the breaking changes to assess which ones actually affect this system versus which are irrelevant.
-- Generate: draft the breaking-change summary, mitigation notes, before/after code snippets, and the consolidated upgrade plan document.
-- Human in the loop: an engineer validates that cited breaking changes are real, that mitigations are correct for this codebase, and that code snippets compile/make sense in context. Solution Architect or Tech Lead approves the plan.
+- **Retrieve and ground:** pull official release notes, migration guides, changelogs, and Stack Overflow/GitHub issues for each component upgrade to identify breaking changes and known workarounds.
+- **Analyse and reason:** compare current codebase usage (from the repo) against the breaking changes to assess which ones actually affect this system versus which are irrelevant.
+- **Generate:** draft the breaking-change summary, mitigation notes, before/after code snippets, and the consolidated upgrade plan document.
+- **Human in the loop:** an engineer validates that cited breaking changes are real, that mitigations are correct for this codebase, and that code snippets compile/make sense in context. Solution Architect or Tech Lead approves the plan.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Completed compatibility map from the Dependency and Compatibility Mapping activity (L1).
@@ -43,14 +62,26 @@ Out of scope:
 - Named reviewer (Solution Architect or Tech Lead) confirmed and available within the timebox.
 - ATRS trigger: No. DPIA check: only if the upgrade plan will be shared externally (unlikely at this stage).
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI reasoning and drafting: an enterprise LLM (e.g. GitHub Copilot Chat, Azure OpenAI, or equivalent) grounded on release notes, migration guides, and the target repository code.
-- Code search (to verify actual usage of breaking APIs): IDE search, grep/ripgrep, GitHub code search, Sourcegraph (or equivalents).
-- Notes and reporting: Markdown or Word for the upgrade plan and breaking-change notes; stored in the shared evidence area.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI reasoning and drafting | an enterprise LLM (e.g. GitHub Copilot Chat, Azure OpenAI, or equivalent) grounded on release notes, migration guides, and the target repository code |  |
+| Code search (to verify actual usage of breaking APIs) | IDE search, grep/ripgrep, GitHub code search, Sourcegraph |  |
+| Notes and reporting | Markdown or Word for the upgrade plan and breaking-change notes; stored in the shared evidence area |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1h for a straightforward upgrade path (fewer than 5 components); 1.5h if the compatibility map includes complex chains or Low-confidence steps. Schedule in Week 2 (Execute phase), after the compatibility map is approved.
+
+
+---
 
 ## 7) Inputs and data sources
 - Compatibility map and upgrade sequence from the Dependency and Compatibility Mapping activity.
@@ -58,6 +89,9 @@ Suggested: 1h for a straightforward upgrade path (fewer than 5 components); 1.5h
 - Target repository source code (to verify which breaking changes actually affect this codebase).
 - Any department ADRs or existing upgrade notes.
 - If unavailable: state assumptions and tag confidence accordingly.
+
+
+---
 
 ## 8) Outputs and artefacts
 - Upgrade plan document (Markdown or Word): ordered steps matching the compatibility map, each listing breaking changes, mitigations, estimated effort, and test areas.
@@ -67,31 +101,48 @@ Suggested: 1h for a straightforward upgrade path (fewer than 5 components); 1.5h
 
 Audience: developers who will execute the upgrades, Solution Architect, Tech Lead. The plan serves as the reference document during the Exemplar Upgrade PRs activity.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record wall-clock time to produce the upgrade plan. Compare AI-assisted time against the department's estimate for manually researching and summarising the same breaking changes.
-- **P2 Quality score**: reviewer rates the upgrade plan on the 1-5 rubric for accuracy (breaking changes correctly identified), completeness (all upgrade steps covered), and actionability (a developer could follow this without additional research).
-- **P8 Reusable artefacts**: count the upgrade plan template, AI prompt for breaking-change extraction, and any reusable code snippet patterns.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record wall-clock time to produce the upgrade plan. Compare AI-assisted time against the department's estimate for manually researching and summarising the same breaking changes |
+| **P2 Quality score** | reviewer rates the upgrade plan on the 1-5 rubric for accuracy (breaking changes correctly identified), completeness (all upgrade steps covered), and actionability (a developer could follow this without additional research) |
+| **P8 Reusable artefacts** | count the upgrade plan template, AI prompt for breaking-change extraction, and any reusable code snippet patterns |
+
 
 Secondary (collect if available):
 - **P7 Vulnerability/risk reduction**: if the upgrade plan reveals previously unidentified risk areas.
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey.
 
+---
+
 ## 10) Risks and controls
-- **Hallucinated breaking changes**: AI may cite API changes that do not exist in the actual release. Mitigation: cross-check each flagged breaking change against the official changelog or release notes page; reviewer validates before handover.
-- **Missed breaking changes**: AI may not capture all breaking changes, especially for minor or point releases with subtle deprecations. Mitigation: supplement AI output with a manual scan of the changelog for releases between the current and target versions.
-- **Code snippets that do not compile**: AI-generated before/after examples may contain syntax errors or use incorrect API signatures. Mitigation: reviewer spot-checks snippets; mark them as "illustrative, verify before use" in the plan.
-- **Scope creep into execution**: the temptation to start fixing issues while writing the plan. Mitigation: defer all code changes to the Exemplar Upgrade PRs activity.
+
+| Risk | Mitigation |
+|---|---|
+| **Hallucinated breaking changes**: AI may cite API changes that do not exist in the actual release | cross-check each flagged breaking change against the official changelog or release notes page; reviewer validates before handover |
+| **Missed breaking changes**: AI may not capture all breaking changes, especially for minor or point releases with subtle deprecations | supplement AI output with a manual scan of the changelog for releases between the current and target versions |
+| **Code snippets that do not compile**: AI-generated before/after examples may contain syntax errors or use incorrect API signatures | reviewer spot-checks snippets; mark them as "illustrative, verify before use" in the plan |
+| **Scope creep into execution**: the temptation to start fixing issues while writing the plan | defer all code changes to the Exemplar Upgrade PRs activity |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Upgrade plan covers all components in the compatibility map sequence.
-- Each step lists breaking changes, mitigations, estimated effort tier, and test areas.
-- Low-confidence steps are flagged with spike or exemplar PR recommendations.
-- Solution Architect or Tech Lead has reviewed and approved the plan as ready for developer handover.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
-- Decision Log entry added if feasibility or scope adjustments are recommended.
+- [ ] Upgrade plan covers all components in the compatibility map sequence.
+- [ ] Each step lists breaking changes, mitigations, estimated effort tier, and test areas.
+- [ ] Low-confidence steps are flagged with spike or exemplar PR recommendations.
+- [ ] Solution Architect or Tech Lead has reviewed and approved the plan as ready for developer handover.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+- [ ] Decision Log entry added if feasibility or scope adjustments are recommended.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: time saving on release-note research and breaking-change extraction; quality comparison of AI-drafted plan versus a manually researched equivalent.

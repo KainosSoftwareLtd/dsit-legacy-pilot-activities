@@ -3,6 +3,17 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | Half a day |
+| **Phase** | Execute (Week 3) |
+| **Inputs** | Repository, SBOM, architecture summary |
+| **Key output** | Dockerfiles and/or Helm charts |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Once the containerisation exemplar (L5-Containerisation-Exemplar) confirms that a component can run in a container, the next step is producing production-grade build and deployment artefacts. Quick proof-of-concept Dockerfiles often skip security hardening, multi-stage builds, image size optimisation, and parameterised Helm charts.
 
@@ -11,6 +22,9 @@ This activity takes the exemplar as a starting point and produces Dockerfiles an
 Decision enabled: confirm the artefacts are ready for pipeline integration; decide whether to proceed with deploying the containerised component.
 
 Note: for the initial proof of concept, see L5-Containerisation-Exemplar. This activity builds production-grade artefacts.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Produce Dockerfiles or charts for the scoped component.
@@ -26,18 +40,23 @@ Sub tasks:
 8. Open a PR with the production-grade Dockerfile and Helm chart (or equivalent manifests). Include a README documenting build and deploy instructions.
 9. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: runs after the Containerisation Exemplar (L5). Outputs feed into CI/CD enhancement (L4) and IaC Patterns (L5). Schedule in Week 3-4.
+> **Sequencing:** runs after the Containerisation Exemplar (L5). Outputs feed into CI/CD enhancement (L4) and IaC Patterns (L5). Schedule in Week 3-4.
 
-Out of scope:
-- Full Helm release process redesign.
-- Deploying to production.
-- Managing a container registry.
+> **Out of scope:**
+> - Full Helm release process redesign.
+> - Deploying to production.
+> - Managing a container registry.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Generate: produce production-grade Dockerfiles with multi-stage builds, Helm charts with parameterised values, and deployment manifests.
-- Analyse and reason: review existing Dockerfiles for anti-patterns (running as root, large image size, embedded secrets, unpinned base images) and suggest improvements.
-- Automate and orchestrate: diagnose build and deployment errors; run static checks and propose fixes.
-- Human in the loop: the engineer validates security practices, tests deployments, and the Solution Architect reviews the final PR.
+- **Generate:** produce production-grade Dockerfiles with multi-stage builds, Helm charts with parameterised values, and deployment manifests.
+- **Analyse and reason:** review existing Dockerfiles for anti-patterns (running as root, large image size, embedded secrets, unpinned base images) and suggest improvements.
+- **Automate and orchestrate:** diagnose build and deployment errors; run static checks and propose fixes.
+- **Human in the loop:** the engineer validates security practices, tests deployments, and the Solution Architect reviews the final PR.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Read/write access to the target repository.
@@ -48,17 +67,29 @@ Out of scope:
 - Named reviewer (Solution Architect or Tech Lead) available.
 - ATRS trigger: Possibly, if deploying to a shared or cloud environment. DPIA check: confirm images do not embed personal data or credentials.
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- Container runtime: Docker, Podman, containerd.
-- Orchestration: Helm, Kustomize, raw Kubernetes manifests.
-- Static analysis for containers/charts: hadolint (Dockerfile linting), helm lint, kubeval, kube-score.
-- Container scanning: Trivy, Snyk Container, Docker Scout.
-- Code assistants (for generating configs): GitHub Copilot, Sourcegraph Cody, Cursor.
-- Not typically needed: SCA/SBOM tools (unless auditing dependencies within the image), log analytics tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| Container runtime | Docker, Podman, containerd |  |
+| Orchestration | Helm, Kustomize, raw Kubernetes manifests |  |
+| Static analysis for containers/charts | hadolint (Dockerfile linting), helm lint, kubeval, kube-score |  |
+| Container scanning | Trivy, Snyk Container, Docker Scout |  |
+| Code assistants (for generating configs) | GitHub Copilot, Sourcegraph Cody, Cursor |  |
+| Not typically needed | SCA/SBOM tools (unless auditing dependencies within the image), log analytics tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 2h for Dockerfile hardening and build; 2h for Helm chart generation, static checks, and deployment validation. Total: half a day. Schedule in Week 3-4.
+
+
+---
 
 ## 7) Inputs and data sources
 - Exemplar Dockerfile and orchestration config from L5-Containerisation-Exemplar (if available).
@@ -69,6 +100,9 @@ Suggested: 2h for Dockerfile hardening and build; 2h for Helm chart generation, 
 - Target platform details: Kubernetes cluster version, namespace policies, resource quotas.
 - If unavailable: if no exemplar exists, treat this activity as combined proof-of-concept and hardening. Budget additional time.
 
+
+---
+
 ## 8) Outputs and artefacts
 - Production-grade Dockerfile (multi-stage, non-root, pinned base image, health check).
 - Helm chart or deployment manifests with parameterised values.
@@ -78,33 +112,50 @@ Suggested: 2h for Dockerfile hardening and build; 2h for Helm chart generation, 
 
 Audience: engineers, DevOps/platform team, Solution Architect. The artefacts are intended for CI/CD integration.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record time to produce production-grade artefacts with AI assistance. Compare against estimate for manual Dockerfile/chart authoring.
-- **P2 Quality score**: reviewer rates the artefacts on the 1-5 rubric for security compliance, best-practice adherence, and maintainability.
-- **P7 Vulnerability/risk reduction**: if a container scan is run, report the number and severity of findings.
-- **P8 Reusable artefacts**: count the Dockerfile template, Helm chart template, build/deploy README, static check pipeline snippet.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record time to produce production-grade artefacts with AI assistance. Compare against estimate for manual Dockerfile/chart authoring |
+| **P2 Quality score** | reviewer rates the artefacts on the 1-5 rubric for security compliance, best-practice adherence, and maintainability |
+| **P7 Vulnerability/risk reduction** | if a container scan is run, report the number and severity of findings |
+| **P8 Reusable artefacts** | count the Dockerfile template, Helm chart template, build/deploy README, static check pipeline snippet |
+
 
 Secondary:
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey.
 - **P4 Lead time**: if the artefacts enable faster deployment, note qualitatively.
 
+---
+
 ## 10) Risks and controls
-- **AI-generated Dockerfile with security issues**: the AI may produce images running as root, with unpinned base images, or with embedded secrets. Mitigation: apply the hardening checklist in sub-task 2; run hadolint and container scanning.
-- **Helm chart values not parameterised correctly**: hard-coded values (image tags, environment-specific config) make the chart non-portable. Mitigation: review values.yaml for anything that should be a parameter.
-- **Large image size impacting deployment speed**: the image may include unnecessary build tools or layers. Mitigation: use multi-stage builds; check final image size and compare against a reasonable target.
-- **Deployment fails in the target namespace**: Kubernetes policies (resource quotas, network policies, security contexts) may reject the deployment. Mitigation: test in a namespace that mirrors production policies; fix issues before merging.
+
+| Risk | Mitigation |
+|---|---|
+| **AI-generated Dockerfile with security issues**: the AI may produce images running as root, with unpinned base images, or with embedded secrets | apply the hardening checklist in sub-task 2; run hadolint and container scanning |
+| **Helm chart values not parameterised correctly**: hard-coded values (image tags, environment-specific config) make the chart non-portable | review values.yaml for anything that should be a parameter |
+| **Large image size impacting deployment speed**: the image may include unnecessary build tools or layers | use multi-stage builds; check final image size and compare against a reasonable target |
+| **Deployment fails in the target namespace**: Kubernetes policies (resource quotas, network policies, security contexts) may reject the deployment | test in a namespace that mirrors production policies; fix issues before merging |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Dockerfile follows best practices (multi-stage, non-root, pinned base, health check, no secrets).
-- Helm chart (if applicable) passes helm lint and kubeval.
-- Image builds successfully and application passes health checks.
-- Container scan has been run (if tool is available) and critical findings addressed.
-- Build and deploy README is complete.
-- PR has been reviewed and approved by the named reviewer.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Dockerfile follows best practices (multi-stage, non-root, pinned base, health check, no secrets).
+- [ ] Helm chart (if applicable) passes helm lint and kubeval.
+- [ ] Image builds successfully and application passes health checks.
+- [ ] Container scan has been run (if tool is available) and critical findings addressed.
+- [ ] Build and deploy README is complete.
+- [ ] PR has been reviewed and approved by the named reviewer.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of Dockerfile and Helm chart generation; anti-pattern detection.

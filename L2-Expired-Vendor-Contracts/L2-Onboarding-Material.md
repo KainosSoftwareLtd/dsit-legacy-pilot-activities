@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1.5-2h |
+| **Phase** | Execute (Week 3-4) |
+| **Inputs** | All L2 outputs, system docs |
+| **Key output** | Vendor onboarding pack |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 When a vendor contract is replaced, new suppliers need to ramp up quickly on the existing system. Without a usable onboarding pack, the first weeks are spent asking basic questions, reading scattered documentation, and building context that could have been provided upfront. This wastes time and creates early friction.
 
 This activity produces an AI-drafted onboarding pack (system overview, API map, key runbooks, contact points) that a new supplier can use from day one. It validates the pack through a walkthrough and measures how much it reduces ramp-up uncertainty.
 
 Decision enabled: adopt the onboarding pack as the starting point for vendor transition, or identify gaps that need filling before a new vendor can be productive.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Create an onboarding pack covering system overview, API map and runbooks.
@@ -23,18 +37,23 @@ Sub tasks:
 7. Publish in the department's documentation area.
 8. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: can run in parallel with the Options Appraisal or after a "replace" decision is made. Most useful in Week 2-3 when there is enough system context from other activities.
+> **Sequencing:** can run in parallel with the Options Appraisal or after a "replace" decision is made. Most useful in Week 2-3 when there is enough system context from other activities.
 
-Out of scope:
-- End-to-end supplier mobilisation (contract, security, access provisioning).
-- Writing new architectural or technical documentation from scratch (see L3 activities for that).
-- Ongoing maintenance of the pack beyond the pilot.
+> **Out of scope:**
+> - End-to-end supplier mobilisation (contract, security, access provisioning).
+> - Writing new architectural or technical documentation from scratch (see L3 activities for that).
+> - Ongoing maintenance of the pack beyond the pilot.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Retrieve and ground: ingest existing documentation, repository READMEs, API specs, and runbooks to build a comprehensive base for the pack.
-- Generate: produce the structured onboarding pack from the ingested material, filling in standard sections and formatting consistently. Flag gaps where source material is missing.
-- Analyse and reason: identify inconsistencies between different documentation sources (e.g. architecture diagram shows a component not mentioned in the API spec) and flag them.
-- Human in the loop: a department team member validates the pack content. The walkthrough with a new-joiner (or proxy) tests whether the pack is actually usable. Final version is reviewed by the Solution Architect or Tech Lead.
+- **Retrieve and ground:** ingest existing documentation, repository READMEs, API specs, and runbooks to build a comprehensive base for the pack.
+- **Generate:** produce the structured onboarding pack from the ingested material, filling in standard sections and formatting consistently. Flag gaps where source material is missing.
+- **Analyse and reason:** identify inconsistencies between different documentation sources (e.g. architecture diagram shows a component not mentioned in the API spec) and flag them.
+- **Human in the loop:** a department team member validates the pack content. The walkthrough with a new-joiner (or proxy) tests whether the pack is actually usable. Final version is reviewed by the Solution Architect or Tech Lead.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Access to existing documentation, repository READMEs, API specs, and runbooks.
@@ -43,15 +62,27 @@ Out of scope:
 - AI tool approved for processing the system documentation (check whether any documentation contains sensitive or classified information).
 - ATRS trigger: No. DPIA check: only if the onboarding pack will be shared with an external vendor and contains personal data or sensitive system details. Accessibility check: if the pack will be published externally, confirm it meets basic accessibility standards (headings, alt text for diagrams).
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI document generation: an enterprise LLM (e.g. Azure OpenAI, GitHub Copilot Chat, or equivalent) grounded on the existing documentation and repository.
-- Documentation platform: Markdown (in repo), Confluence, SharePoint, or the department's standard documentation tool.
-- Diagramming (if needed): Mermaid, draw.io, or existing architecture diagram tools.
-- Not typically needed for this activity: SCA/SBOM tools, SIEM tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI document generation | an enterprise LLM (e.g. Azure OpenAI, GitHub Copilot Chat, or equivalent) grounded on the existing documentation and repository |  |
+| Documentation platform | Markdown (in repo), Confluence, SharePoint, or the department's standard documentation tool |  |
+| Diagramming (if needed) | Mermaid, draw.io, or existing architecture diagram tools |  |
+| Not typically needed for this activity | SCA/SBOM tools, SIEM tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1.5h for the draft and walkthrough; up to 2h if the existing documentation is sparse and significant gap-filling is needed. Schedule in Week 2-3.
+
+
+---
 
 ## 7) Inputs and data sources
 - Existing documentation: architecture diagrams, API specs, deployment guides, runbooks, README files.
@@ -59,6 +90,9 @@ Suggested: 1.5h for the draft and walkthrough; up to 2h if the existing document
 - Department team member for content validation.
 - Walkthrough participant (ideally someone new to the system).
 - If unavailable: if documentation is very sparse, note the pack as "draft, requires department input" and list specific gaps. This is itself a useful finding for the playbook.
+
+
+---
 
 ## 8) Outputs and artefacts
 - Onboarding pack (Markdown, Word, or Confluence page): system overview, architecture summary, API map, operational runbooks, key contacts, known issues and gotchas.
@@ -68,31 +102,48 @@ Suggested: 1.5h for the draft and walkthrough; up to 2h if the existing document
 
 Audience: incoming vendor technical team and their delivery manager. Secondary audience: department's own new starters.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record wall-clock time to produce the onboarding pack. Compare AI-assisted drafting time against the department's estimate for producing similar material manually.
-- **P2 Quality score**: walkthrough participant and reviewer rate the pack on the 1-5 rubric for accuracy (content matches reality), completeness (new joiner could get started), and clarity (understandable without further explanation).
-- **P8 Reusable artefacts**: count the onboarding pack template, AI prompt, and gap-list format if reusable.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record wall-clock time to produce the onboarding pack. Compare AI-assisted drafting time against the department's estimate for producing similar material manually |
+| **P2 Quality score** | walkthrough participant and reviewer rate the pack on the 1-5 rubric for accuracy (content matches reality), completeness (new joiner could get started), and clarity (understandable without further explanation) |
+| **P8 Reusable artefacts** | count the onboarding pack template, AI prompt, and gap-list format if reusable |
+
 
 Secondary (collect if available):
 - **P3 Developer sentiment**: if the walkthrough participant is an engineer, capture their feedback on usefulness.
 - **P7 Vulnerability/risk reduction**: if the pack surfaces previously undocumented operational risks or known issues.
 
+---
+
 ## 10) Risks and controls
-- **AI hallucinating system details**: the AI may generate plausible-sounding but incorrect descriptions of system behaviour. Mitigation: every section must be validated by a department team member who knows the system.
-- **Stale or contradictory source documentation**: existing docs may be outdated, leading the AI to produce inaccurate content. Mitigation: flag contradictions during generation; note "based on documentation as of [date]" and highlight sections that need department confirmation.
-- **Sensitive information in the pack**: the pack may inadvertently include credentials, internal URLs, or security-sensitive architecture details. Mitigation: review the pack for sensitive content before sharing externally; remove or redact as needed.
-- **Pack not maintained after pilot**: the onboarding pack may become stale if no one owns it. Mitigation: assign an owner and flag pack maintenance as a separate follow-on option if the department wants it kept current.
+
+| Risk | Mitigation |
+|---|---|
+| **AI hallucinating system details**: the AI may generate plausible-sounding but incorrect descriptions of system behaviour | every section must be validated by a department team member who knows the system |
+| **Stale or contradictory source documentation**: existing docs may be outdated, leading the AI to produce inaccurate content | flag contradictions during generation; note "based on documentation as of [date]" and highlight sections that need department confirmation |
+| **Sensitive information in the pack**: the pack may inadvertently include credentials, internal URLs, or security-sensitive architecture details | review the pack for sensitive content before sharing externally; remove or redact as needed |
+| **Pack not maintained after pilot**: the onboarding pack may become stale if no one owns it | assign an owner and flag pack maintenance as a separate follow-on option if the department wants it kept current |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Onboarding pack covers all standard sections (system overview, architecture, API map, runbooks, contacts, known issues).
-- Gap list is produced for sections where information was missing.
-- Walkthrough has been conducted and feedback incorporated.
-- Department team member has validated the content.
-- Pack is published in the department's documentation area.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Onboarding pack covers all standard sections (system overview, architecture, API map, runbooks, contacts, known issues).
+- [ ] Gap list is produced for sections where information was missing.
+- [ ] Walkthrough has been conducted and feedback incorporated.
+- [ ] Department team member has validated the content.
+- [ ] Pack is published in the department's documentation area.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: time saving on drafting the pack from scattered documentation; ability to surface gaps and contradictions across multiple sources.

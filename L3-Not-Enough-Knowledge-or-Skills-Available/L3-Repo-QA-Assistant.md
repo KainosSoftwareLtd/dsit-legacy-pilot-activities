@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 2-3h |
+| **Phase** | Execute (Week 3-4) |
+| **Inputs** | Repository, documentation outputs |
+| **Key output** | Configured QA assistant + test queries |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 In legacy systems the answers to common questions ("how does the payment flow work?", "where is the config for X?", "why was this pattern chosen?") live in the heads of one or two senior engineers. Every interruption costs the expert context-switch time and creates a bottleneck.
 
 This activity creates a repository-grounded Q and A assistant that engineers can query privately against the indexed codebase and documentation. The assistant returns cited answers, reducing reliance on individuals and creating an auditable knowledge surface.
 
 Decision enabled: confirm whether the Q and A assistant provides accurate, useful answers; decide whether to keep it running for the team beyond the pilot.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Index code and docs to support private questions and answers.
@@ -23,18 +37,23 @@ Sub tasks:
 7. Share the assistant link with the team. Collect initial feedback on usefulness and answer quality.
 8. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: benefits from running after other L3 activities that produce documentation (Architecture Summary, Gap Analysis, Onboarding Pack) since those outputs improve the index quality. Schedule in Week 3.
+> **Sequencing:** benefits from running after other L3 activities that produce documentation (Architecture Summary, Gap Analysis, Onboarding Pack) since those outputs improve the index quality. Schedule in Week 3.
 
-Out of scope:
-- Connecting external data sources without governance approval.
-- Building a custom chatbot or fine-tuned model.
-- Public-facing deployment.
+> **Out of scope:**
+> - Connecting external data sources without governance approval.
+> - Building a custom chatbot or fine-tuned model.
+> - Public-facing deployment.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Retrieve and ground: the assistant indexes the repository and documentation, then retrieves relevant code and text snippets to answer questions with citations.
-- Analyse and reason: the assistant synthesises information from multiple files to answer questions that span several areas of the codebase.
-- Generate: the assistant generates natural-language answers grounded in the indexed sources.
-- Human in the loop: engineers validate answers against their knowledge during the curated question test. The validation scorecard records accuracy.
+- **Retrieve and ground:** the assistant indexes the repository and documentation, then retrieves relevant code and text snippets to answer questions with citations.
+- **Analyse and reason:** the assistant synthesises information from multiple files to answer questions that span several areas of the codebase.
+- **Generate:** the assistant generates natural-language answers grounded in the indexed sources.
+- **Human in the loop:** engineers validate answers against their knowledge during the curated question test. The validation scorecard records accuracy.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Read access to the repository and all documentation to be indexed.
@@ -43,21 +62,36 @@ Out of scope:
 - Named reviewer (Tech Lead or Solution Architect) available to approve the index scope.
 - ATRS trigger: Possibly, if the tool sends code to an external API. Check data residency requirements. DPIA check: confirm the index does not include personal data or credentials.
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- Repository-grounded Q and A tools: Sourcegraph Cody, GitHub Copilot Chat (workspace mode), Cursor, Continue.dev (or equivalents that support codebase indexing).
-- Embeddings and search: if building a custom index, tools like LangChain, LlamaIndex, or Azure AI Search.
-- Documentation hosting: Confluence, GitHub Wiki, MkDocs (sources to be indexed).
-- Not typically needed: SCA/SBOM tools, security scanning tools, CI pipeline tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| Repository-grounded Q and A tools | Sourcegraph Cody, GitHub Copilot Chat (workspace mode), Cursor, Continue.dev |  |
+| Embeddings and search | if building a custom index, tools like LangChain, LlamaIndex, or Azure AI Search |  |
+| Documentation hosting | Confluence, GitHub Wiki, MkDocs | sources to be indexed |
+| Not typically needed | SCA/SBOM tools, security scanning tools, CI pipeline tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 2h for setup and indexing; 1h for validation and gap fixing. Total: 3h. Schedule in Week 3.
+
+
+---
 
 ## 7) Inputs and data sources
 - Target repository (source code, README, CI/CD config).
 - Existing documentation: wiki pages, Confluence spaces, architecture diagrams.
 - Outputs from other L3 activities (Architecture Summary, Documentation Gap Analysis, Onboarding Pack) if available.
 - If unavailable: if documentation is sparse, the index will rely primarily on source code. Note this as a limitation in the validation report.
+
+
+---
 
 ## 8) Outputs and artefacts
 - Configured Q and A assistant accessible to the team.
@@ -67,30 +101,47 @@ Suggested: 2h for setup and indexing; 1h for validation and gap fixing. Total: 3
 
 Audience: engineering team (as users of the assistant), Tech Lead (for validation results and adoption decision).
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record time to set up and validate the assistant. Also measure time saved per question answered by the assistant versus asking an expert (estimate from team feedback).
-- **P2 Quality score**: score each validation question answer on the 1-5 rubric for accuracy and usefulness. Report the aggregate score.
-- **P3 Developer sentiment**: include Q and A assistant experience in the post-pilot SPACE survey.
-- **P8 Reusable artefacts**: count the index configuration, validation question set, and any prompt templates.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record time to set up and validate the assistant. Also measure time saved per question answered by the assistant versus asking an expert (estimate from team feedback) |
+| **P2 Quality score** | score each validation question answer on the 1-5 rubric for accuracy and usefulness. Report the aggregate score |
+| **P3 Developer sentiment** | include Q and A assistant experience in the post-pilot SPACE survey |
+| **P8 Reusable artefacts** | count the index configuration, validation question set, and any prompt templates |
+
 
 Secondary:
 - **P4 Lead time**: if the assistant reduces time spent searching for answers during development, note qualitatively.
 
+---
+
 ## 10) Risks and controls
-- **Hallucinated answers**: the assistant may generate plausible-sounding but incorrect answers, especially for areas with sparse documentation. Mitigation: the validation question set tests accuracy before team rollout; instruct users to verify answers against the cited source.
-- **Data exposure via the index**: if the index includes credentials, secrets, or personal data, the assistant could surface them. Mitigation: review the index scope before creation; exclude .env files, secrets, and personal data. Confirm with DPIA check.
-- **Over-reliance on the assistant**: engineers may trust answers without verification, especially for complex architectural questions. Mitigation: frame the assistant as a starting point, not an authority. Include a disclaimer in the chat surface.
-- **Tool approval and data residency**: if the tool sends code to an external API, it may not meet departmental data handling requirements. Mitigation: confirm tool approval and data residency before setup.
+
+| Risk | Mitigation |
+|---|---|
+| **Hallucinated answers**: the assistant may generate plausible-sounding but incorrect answers, especially for areas with sparse documentation | the validation question set tests accuracy before team rollout; instruct users to verify answers against the cited source |
+| **Data exposure via the index**: if the index includes credentials, secrets, or personal data, the assistant could surface them | review the index scope before creation; exclude .env files, secrets, and personal data. Confirm with DPIA check |
+| **Over-reliance on the assistant**: engineers may trust answers without verification, especially for complex architectural questions | frame the assistant as a starting point, not an authority. Include a disclaimer in the chat surface |
+| **Tool approval and data residency**: if the tool sends code to an external API, it may not meet departmental data handling requirements | confirm tool approval and data residency before setup |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Q and A assistant is configured and accessible to team members.
-- Validation question set (10-15 questions) has been run and scored.
-- Aggregate accuracy score meets acceptable threshold (discuss with Tech Lead).
-- Gap report is documented.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Q and A assistant is configured and accessible to team members.
+- [ ] Validation question set (10-15 questions) has been run and scored.
+- [ ] Aggregate accuracy score meets acceptable threshold (discuss with Tech Lead).
+- [ ] Gap report is documented.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of setting up a repo-grounded Q and A surface; accuracy of answers versus manual expert lookup.

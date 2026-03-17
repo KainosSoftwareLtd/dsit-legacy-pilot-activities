@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1.5-2h |
+| **Phase** | Execute (Week 3-4) |
+| **Inputs** | All L3 outputs |
+| **Key output** | Onboarding pack |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 New joiners to legacy systems often lose their first one to two weeks navigating an undocumented codebase, discovering tribal knowledge through trial and error, and asking the same questions of senior engineers. This time cost repeats with every onboarding event and is a direct drag on team velocity.
 
 This activity uses AI to draft a structured onboarding pack that brings a new joiner to productive contribution faster. The pack consolidates system context, architectural overview, development environment setup, and key workflows into a single document.
 
 Decision enabled: adopt or adapt the pack as the standard onboarding resource and confirm whether AI-assisted onboarding material is faster and more effective than the previous approach.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Bundle docs, Q and A, tests and diagrams into a single pack.
@@ -23,17 +37,22 @@ Sub tasks:
 7. Publish the pack in the agreed location (wiki, Confluence, repo docs folder). Note any accessibility requirements.
 8. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: benefits from running after Architecture Summary (L3) and Documentation Gap Analysis (L3). Can run in parallel with other L3 activities. Schedule in Week 2-3.
+> **Sequencing:** benefits from running after Architecture Summary (L3) and Documentation Gap Analysis (L3). Can run in parallel with other L3 activities. Schedule in Week 2-3.
 
-Out of scope:
-- Comprehensive training programme design.
-- Role-specific or security-clearance-specific onboarding procedures.
+> **Out of scope:**
+> - Comprehensive training programme design.
+> - Role-specific or security-clearance-specific onboarding procedures.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Retrieve and ground: read the repository (source code, README, CI config, existing docs) to understand the system and extract onboarding-relevant information.
-- Generate: draft each section of the onboarding pack, explaining the system in plain language for a new joiner.
-- Analyse and reason: identify gaps in the pack by comparing its coverage against the defined structure; flag areas where source material is insufficient.
-- Human in the loop: an engineer reviews every section for accuracy. A new joiner or recent onboardee validates the pack during a walkthrough.
+- **Retrieve and ground:** read the repository (source code, README, CI config, existing docs) to understand the system and extract onboarding-relevant information.
+- **Generate:** draft each section of the onboarding pack, explaining the system in plain language for a new joiner.
+- **Analyse and reason:** identify gaps in the pack by comparing its coverage against the defined structure; flag areas where source material is insufficient.
+- **Human in the loop:** an engineer reviews every section for accuracy. A new joiner or recent onboardee validates the pack during a walkthrough.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Read access to the target repository and any existing documentation (wiki, Confluence, shared drives).
@@ -42,16 +61,28 @@ Out of scope:
 - Publication location agreed (wiki, repo docs folder, Confluence).
 - ATRS trigger: No. DPIA check: No (assuming pack does not contain personal data or credentials).
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI reasoning over artefacts: an enterprise LLM grounded on the repository and existing docs (for drafting pack sections).
-- Code assistants: GitHub Copilot, Sourcegraph Cody, Cursor (for understanding code and generating explanations).
-- Documentation platform: Confluence, GitHub Wiki, MkDocs, Notion, or equivalent.
-- Diagramming: Mermaid, draw.io, Lucidchart (for architecture diagrams in the pack).
-- Not typically needed: SCA/SBOM tools, security scanning tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI reasoning over artefacts | an enterprise LLM grounded on the repository and existing docs |  |
+| Code assistants | GitHub Copilot, Sourcegraph Cody, Cursor |  |
+| Documentation platform | Confluence, GitHub Wiki, MkDocs, Notion, or equivalent |  |
+| Diagramming | Mermaid, draw.io, Lucidchart |  |
+| Not typically needed | SCA/SBOM tools, security scanning tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 2h for initial draft and review; 1h for walkthrough and revision. Total: 3h. Schedule in Week 2-3.
+
+
+---
 
 ## 7) Inputs and data sources
 - Target repository (source code, README, CI/CD config, existing docs folder).
@@ -60,6 +91,9 @@ Suggested: 2h for initial draft and review; 1h for walkthrough and revision. Tot
 - Documentation Gap Analysis register (from L3-Documentation-Gap-Analysis, if completed).
 - If unavailable: if no existing documentation exists, the AI will draft sections from source code analysis alone. Note in the pack which sections are draft-only and need subject-matter expert validation.
 
+
+---
+
 ## 8) Outputs and artefacts
 - Onboarding pack document (structured per the template in sub-task 2).
 - Walkthrough feedback notes (questions raised, confusion points, missing information).
@@ -67,30 +101,47 @@ Suggested: 2h for initial draft and review; 1h for walkthrough and revision. Tot
 
 Audience: new joiners, hiring managers. The pack also serves as a living reference for the wider team.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record time to produce the pack with AI assistance. Compare against an estimate for producing equivalent material manually.
-- **P2 Quality score**: reviewer and walkthrough participant rate the pack on the 1-5 rubric for completeness, accuracy, and usefulness.
-- **P3 Developer sentiment**: include onboarding experience questions in the post-pilot SPACE survey.
-- **P8 Reusable artefacts**: count the pack itself plus any prompt templates used to generate sections.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record time to produce the pack with AI assistance. Compare against an estimate for producing equivalent material manually |
+| **P2 Quality score** | reviewer and walkthrough participant rate the pack on the 1-5 rubric for completeness, accuracy, and usefulness |
+| **P3 Developer sentiment** | include onboarding experience questions in the post-pilot SPACE survey |
+| **P8 Reusable artefacts** | count the pack itself plus any prompt templates used to generate sections |
+
 
 Secondary:
 - **P4 Lead time**: if the pack reduces time-to-first-contribution for new joiners, note this qualitatively.
 
+---
+
 ## 10) Risks and controls
-- **AI-generated setup instructions that do not work**: the AI may hallucinate configuration steps or omit prerequisites. Mitigation: verify setup instructions by running them in a clean environment; mark any unverified steps clearly.
-- **Pack becomes stale quickly**: if the system changes, the pack drifts out of date. Mitigation: store the pack in version control alongside the code; assign an owner for periodic review.
-- **Over-reliance on AI for domain context**: the AI cannot know business context, team norms, or organisational processes that are not in the code. Mitigation: supplement AI-drafted sections with subject-matter expert input.
-- **Accessibility and format issues**: the pack may not meet accessibility standards for all readers. Mitigation: check formatting against departmental accessibility guidelines before publication.
+
+| Risk | Mitigation |
+|---|---|
+| **AI-generated setup instructions that do not work**: the AI may hallucinate configuration steps or omit prerequisites | verify setup instructions by running them in a clean environment; mark any unverified steps clearly |
+| **Pack becomes stale quickly**: if the system changes, the pack drifts out of date | store the pack in version control alongside the code; assign an owner for periodic review |
+| **Over-reliance on AI for domain context**: the AI cannot know business context, team norms, or organisational processes that are not in the code | supplement AI-drafted sections with subject-matter expert input |
+| **Accessibility and format issues**: the pack may not meet accessibility standards for all readers | check formatting against departmental accessibility guidelines before publication |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Onboarding pack covers all sections in the defined structure.
-- At least one engineer has reviewed the pack for accuracy.
-- Walkthrough has been conducted with a new joiner or recent onboardee, and feedback incorporated.
-- Pack is published in the agreed location.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Onboarding pack covers all sections in the defined structure.
+- [ ] At least one engineer has reviewed the pack for accuracy.
+- [ ] Walkthrough has been conducted with a new joiner or recent onboardee, and feedback incorporated.
+- [ ] Pack is published in the agreed location.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of drafting onboarding material from source code; quality and completeness of the generated sections.

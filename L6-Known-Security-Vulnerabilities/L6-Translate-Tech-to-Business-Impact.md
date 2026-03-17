@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1.5-2h |
+| **Phase** | Execute (Week 3-4) |
+| **Inputs** | Triage list, reachability map, fix PRs |
+| **Key output** | Business impact summary for stakeholders |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Technical vulnerability reports are written for engineers: CVE IDs, CVSS scores, affected library versions, and code references. Senior stakeholders, risk owners, and decision-makers need to understand the same findings in terms of business impact: what could happen to the service, the data, or the users if this vulnerability is exploited?
 
 This activity takes the prioritised technical findings (from Triage, Reachability Mapping, or Architecture Risk Scan) and produces short, plain-English narratives that explain the business risk, potential impact, and recommended action for each.
 
 Decision enabled: stakeholders can prioritise mitigation funding and resources based on business impact rather than technical severity alone.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Produce short narratives that explain business risk from technical findings.
@@ -22,18 +36,23 @@ Sub tasks:
 6. Share the narratives with the identified risk owners. Record acknowledgement.
 7. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: runs after Triage SAST/SCA (L6), Reachability Mapping (L6), or Architecture Risk Scan (L6) have produced findings. Schedule in Week 3-4.
+> **Sequencing:** runs after Triage SAST/SCA (L6), Reachability Mapping (L6), or Architecture Risk Scan (L6) have produced findings. Schedule in Week 3-4.
 
-Out of scope:
-- Full security policy rewrite.
-- Producing a formal risk register (though narratives may feed into one).
-- Communicating with external parties without departmental approval.
+> **Out of scope:**
+> - Full security policy rewrite.
+> - Producing a formal risk register (though narratives may feed into one).
+> - Communicating with external parties without departmental approval.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Analyse and reason: interpret technical vulnerability details (CVE, CVSS, code reference) and infer the business impact based on what the affected component does and what data it handles.
-- Generate: produce plain-English business impact narratives using a consistent format.
-- Retrieve and ground: cross-reference findings against the Architecture Summary and system documentation to understand the business context of each component.
-- Human in the loop: the engineer verifies technical accuracy; the BA or business contact verifies the business framing. Risk owners review and acknowledge.
+- **Analyse and reason:** interpret technical vulnerability details (CVE, CVSS, code reference) and infer the business impact based on what the affected component does and what data it handles.
+- **Generate:** produce plain-English business impact narratives using a consistent format.
+- **Retrieve and ground:** cross-reference findings against the Architecture Summary and system documentation to understand the business context of each component.
+- **Human in the loop:** the engineer verifies technical accuracy; the BA or business contact verifies the business framing. Risk owners review and acknowledge.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Prioritised technical findings (from L6 triage, reachability, or architecture risk scan).
@@ -42,15 +61,27 @@ Out of scope:
 - Named reviewer (engineer for technical accuracy, BA or business contact for business framing).
 - ATRS trigger: No. DPIA check: No (but confirm narratives do not disclose sensitive vulnerability details to unauthorised recipients).
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI reasoning over artefacts: an enterprise LLM (for translating technical findings into business narratives).
-- Architecture and system context: Architecture Summary (L3), system documentation, service catalogues.
-- Notes and reporting: Markdown, Confluence, Word (for the narratives).
-- Not typically needed: code assistants, SCA/SAST tools, CI pipeline tools, container tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI reasoning over artefacts | an enterprise LLM |  |
+| Architecture and system context | Architecture Summary (L3), system documentation, service catalogues |  |
+| Notes and reporting | Markdown, Confluence, Word |  |
+| Not typically needed | code assistants, SCA/SAST tools, CI pipeline tools, container tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1.5h for drafting narratives for 5-10 findings; 30 minutes for peer review and sharing. Total: 2h. Schedule in Week 3-4.
+
+
+---
 
 ## 7) Inputs and data sources
 - Prioritised technical findings (from L6-Triage-SAST-SCA, L6-Reachability-Mapping, or L6-Architecture-Risk-Scan).
@@ -59,6 +90,9 @@ Suggested: 1.5h for drafting narratives for 5-10 findings; 30 minutes for peer r
 - Risk owner contact details.
 - If unavailable: if no business context is available, draft the narrative based on what the code does and flag sections that need business-side validation.
 
+
+---
+
 ## 8) Outputs and artefacts
 - Business impact narratives (one per finding or per finding group) using the format: Finding Summary, Business Impact, Likelihood, Recommended Action.
 - Record of risk owner acknowledgement.
@@ -66,31 +100,48 @@ Suggested: 1.5h for drafting narratives for 5-10 findings; 30 minutes for peer r
 
 Audience: risk owners, senior stakeholders, Delivery Manager. The narratives bridge the gap between technical security findings and business decision-making.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record time to produce business impact narratives with AI assistance. Compare against estimate for manual translation.
-- **P2 Quality score**: both the engineer (technical accuracy) and the business reviewer (business framing accuracy) rate the narratives on the 1-5 rubric.
-- **P7 Vulnerability/risk reduction**: track whether the narratives result in stakeholder action (funding, prioritisation, risk acceptance decisions).
-- **P8 Reusable artefacts**: count the narrative template, business impact framing guide.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record time to produce business impact narratives with AI assistance. Compare against estimate for manual translation |
+| **P2 Quality score** | both the engineer (technical accuracy) and the business reviewer (business framing accuracy) rate the narratives on the 1-5 rubric |
+| **P7 Vulnerability/risk reduction** | track whether the narratives result in stakeholder action (funding, prioritisation, risk acceptance decisions) |
+| **P8 Reusable artefacts** | count the narrative template, business impact framing guide |
+
 
 Secondary:
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey.
 
+---
+
 ## 10) Risks and controls
-- **AI overstates or understates business impact**: the AI may dramatise low-risk findings or downplay critical ones. Mitigation: the engineer verifies technical accuracy and the business reviewer verifies impact framing.
-- **Narratives contain too much technical detail**: the point of the translation is to be accessible to non-technical stakeholders. Mitigation: enforce plain English; remove CVE IDs, CVSS scores, and code references from the narrative body (include them in a technical appendix if needed).
-- **Narratives shared with the wrong audience**: vulnerability details in the wrong hands could increase risk. Mitigation: confirm the distribution list with the Tech Lead; follow departmental information classification policies.
-- **Stakeholders do not act on the narratives**: producing narratives that are read but not acted on wastes the effort. Mitigation: include a clear "Recommended Action" and urgency for each narrative; schedule a review meeting with risk owners.
+
+| Risk | Mitigation |
+|---|---|
+| **AI overstates or understates business impact**: the AI may dramatise low-risk findings or downplay critical ones | the engineer verifies technical accuracy and the business reviewer verifies impact framing |
+| **Narratives contain too much technical detail**: the point of the translation is to be accessible to non-technical stakeholders | enforce plain English; remove CVE IDs, CVSS scores, and code references from the narrative body (include them in a technical appendix if needed) |
+| **Narratives shared with the wrong audience**: vulnerability details in the wrong hands could increase risk | confirm the distribution list with the Tech Lead; follow departmental information classification policies |
+| **Stakeholders do not act on the narratives**: producing narratives that are read but not acted on wastes the effort | include a clear "Recommended Action" and urgency for each narrative; schedule a review meeting with risk owners |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Business impact narratives are drafted for all selected findings.
-- Engineer has verified technical accuracy.
-- Business reviewer has verified business framing.
-- Narratives have been shared with identified risk owners.
-- Acknowledgement is recorded.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Business impact narratives are drafted for all selected findings.
+- [ ] Engineer has verified technical accuracy.
+- [ ] Business reviewer has verified business framing.
+- [ ] Narratives have been shared with identified risk owners.
+- [ ] Acknowledgement is recorded.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of translating technical findings to business language; consistency of narrative format.

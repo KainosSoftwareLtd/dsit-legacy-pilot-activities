@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 2-3h |
+| **Phase** | Execute (Week 2-3) |
+| **Inputs** | Repository, gap register, architecture summary |
+| **Key output** | System documentation set |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Legacy systems often lack up-to-date technical narratives: architecture descriptions, data-flow diagrams, and interface catalogues. Without these, every change requires reverse-engineering from code, which is slow and error-prone.
 
 This activity uses AI grounded on the repository to generate a documentation set covering the highest-priority gaps identified in the Documentation Gap Analysis. The output is a living document set that becomes the baseline for future changes.
 
 Decision enabled: adopt the generated documentation as the system baseline and proceed with changes that previously required tribal knowledge.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Create architecture, dataflow and interface notes grounded in the repo.
@@ -22,18 +36,23 @@ Sub tasks:
 6. Publish the reviewed documentation in the agreed location and link it from the repository README.
 7. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: depends on Documentation Gap Analysis output. Runs alongside or after Architecture Summary. Schedule in Week 2 (Execute phase).
+> **Sequencing:** depends on Documentation Gap Analysis output. Runs alongside or after Architecture Summary. Schedule in Week 2 (Execute phase).
 
-Out of scope:
-- Comprehensive documentation of every module (focus on high-priority gaps only).
-- Ongoing documentation maintenance (flag as a follow-on option).
-- User-facing documentation (this covers technical/developer documentation only).
+> **Out of scope:**
+> - Comprehensive documentation of every module (focus on high-priority gaps only).
+> - Ongoing documentation maintenance (flag as a follow-on option).
+> - User-facing documentation (this covers technical/developer documentation only).
+
+---
 
 ## 3) How AI is used (options and modes)
-- Retrieve and ground: ingest the repository structure, source code, configuration files, READMEs, and any existing documentation to build a factual base.
-- Analyse and reason: infer component boundaries, data flows, and integration points from code structure, imports, and configuration; identify areas where the code contradicts existing documentation.
-- Generate: produce draft documentation sections with source-file citations for each claim.
-- Human in the loop: an SME or engineer reviews every section for accuracy, corrects hallucinations, and adds context (business rules, historical decisions) that cannot be inferred from code alone.
+- **Retrieve and ground:** ingest the repository structure, source code, configuration files, READMEs, and any existing documentation to build a factual base.
+- **Analyse and reason:** infer component boundaries, data flows, and integration points from code structure, imports, and configuration; identify areas where the code contradicts existing documentation.
+- **Generate:** produce draft documentation sections with source-file citations for each claim.
+- **Human in the loop:** an SME or engineer reviews every section for accuracy, corrects hallucinations, and adds context (business rules, historical decisions) that cannot be inferred from code alone.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Completed Documentation Gap Analysis with a prioritised gap register.
@@ -42,21 +61,36 @@ Out of scope:
 - Named reviewer (Solution Architect or Tech Lead) to approve the final documentation.
 - ATRS trigger: No. DPIA check: only if documentation will be published externally. Accessibility: if published, ensure headings, alt text for any diagrams, and plain language.
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI code reasoning: an enterprise LLM with repository access (e.g. GitHub Copilot Chat, Sourcegraph Cody, Azure OpenAI grounded on repo, or equivalents).
-- Documentation platform: Markdown (in repo /docs), Confluence, SharePoint, or the department's standard.
-- Diagramming (if needed): Mermaid (AI can generate), draw.io, PlantUML.
-- Not typically needed: SCA/SBOM tools, SIEM tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI code reasoning | an enterprise LLM with repository access |  |
+| Documentation platform | Markdown (in repo /docs), Confluence, SharePoint, or the department's standard |  |
+| Diagramming (if needed) | Mermaid (AI can generate), draw.io, PlantUML |  |
+| Not typically needed | SCA/SBOM tools, SIEM tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1.5h for 2-3 documentation sections; 2h if the codebase is large or the gaps are extensive. Schedule in Week 2 (Execute phase).
+
+
+---
 
 ## 7) Inputs and data sources
 - Gap register from Documentation Gap Analysis (to scope which sections to generate).
 - Repository source code, configuration files, and existing documentation.
 - SME or engineer available for peer review (book 30 minutes).
 - If unavailable: if the code is too opaque for the AI to infer reliable documentation, note the gap as "requires SME interview" and defer to the Tribal Knowledge Capture activity.
+
+
+---
 
 ## 8) Outputs and artefacts
 - Documentation set covering the selected high-priority gaps: system overview, component descriptions, data-flow notes, and/or interface catalogue (as applicable).
@@ -66,30 +100,47 @@ Suggested: 1.5h for 2-3 documentation sections; 2h if the codebase is large or t
 
 Audience: engineers working on the system, new joiners, Solution Architect. The documentation set becomes the system baseline.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record wall-clock time to generate and review the documentation. Compare against the department's estimate for writing the same documentation from scratch.
-- **P2 Quality score**: reviewer rates each documentation section on the 1-5 rubric for accuracy (matches the actual system), completeness (covers the gap adequately), and clarity (a new engineer could understand it).
-- **P8 Reusable artefacts**: count the documentation generation prompts, section templates, and output format if reusable.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record wall-clock time to generate and review the documentation. Compare against the department's estimate for writing the same documentation from scratch |
+| **P2 Quality score** | reviewer rates each documentation section on the 1-5 rubric for accuracy (matches the actual system), completeness (covers the gap adequately), and clarity (a new engineer could understand it) |
+| **P8 Reusable artefacts** | count the documentation generation prompts, section templates, and output format if reusable |
+
 
 Secondary (collect if available):
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey; this directly addresses knowledge/skills gaps.
 
+---
+
 ## 10) Risks and controls
-- **AI hallucination**: the AI may describe components or data flows that do not exist, or misrepresent how the system works. Mitigation: require source-file citations for every claim; SME reviews every section.
-- **Stale code producing misleading docs**: dead code or unused modules may be documented as active. Mitigation: cross-check with the SME; note any sections marked as "uncertain, verify with runtime evidence."
-- **Over-scoping the documentation**: the temptation to document everything rather than focusing on high-priority gaps. Mitigation: scope strictly to the gap register; note additional gaps as future work.
-- **Documentation drift**: generated documentation will become stale if not maintained. Mitigation: flag ongoing maintenance as a follow-on option; recommend storing documentation close to the code (e.g. in-repo /docs).
+
+| Risk | Mitigation |
+|---|---|
+| **AI hallucination**: the AI may describe components or data flows that do not exist, or misrepresent how the system works | require source-file citations for every claim; SME reviews every section |
+| **Stale code producing misleading docs**: dead code or unused modules may be documented as active | cross-check with the SME; note any sections marked as "uncertain, verify with runtime evidence." |
+| **Over-scoping the documentation**: the temptation to document everything rather than focusing on high-priority gaps | scope strictly to the gap register; note additional gaps as future work |
+| **Documentation drift**: generated documentation will become stale if not maintained | flag ongoing maintenance as a follow-on option; recommend storing documentation close to the code (e.g. in-repo /docs) |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Documentation sections cover all selected high-priority gaps from the gap register.
-- Each section has been reviewed by an SME or engineer and corrected where needed.
-- Source-file citations are included.
-- Documentation is published in the agreed location and linked from the repo README.
-- Solution Architect or Tech Lead has approved the documentation set.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Documentation sections cover all selected high-priority gaps from the gap register.
+- [ ] Each section has been reviewed by an SME or engineer and corrected where needed.
+- [ ] Source-file citations are included.
+- [ ] Documentation is published in the agreed location and linked from the repo README.
+- [ ] Solution Architect or Tech Lead has approved the documentation set.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: time saving on drafting documentation from code versus manual authoring; coverage of documentation generated in one pass.

@@ -3,10 +3,24 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1.5-2h |
+| **Phase** | Execute (Week 2-3) |
+| **Inputs** | Incident analysis, log clusters |
+| **Key output** | RCA summary per incident |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Root cause analysis (RCA) reports are essential for organisational learning after incidents, but they are time-consuming to write manually. Delays in producing RCAs mean corrective actions are deferred and the same failures recur. AI-drafted RCA summaries accelerate the loop from incident to action, giving reviewers a structured starting point rather than a blank page.
 
 Decision enabled: which corrective actions to approve and assign, based on validated root cause narratives.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Select incidents for RCA (from the pattern shortlist or recent high-severity events), gather evidence, draft structured RCA narratives using AI, and produce a validated action register with owners and target dates.
@@ -26,16 +40,21 @@ Sub-tasks (sequenced, later steps depend on earlier outputs):
 7. Publish to the incident knowledge base. Store completed RCA summaries in the agreed location (for example Confluence, wiki, or Git repo).
 8. Update the evidence log and scorecard. Record the RCA summaries, action register, and any patterns or playbook contributions.
 
-Out of scope:
-- Implementing the corrective actions (these are tracked separately in the backlog).
-- Skipping stakeholder or SRE validation of the AI-drafted narratives.
+> **Out of scope:**
+> - Implementing the corrective actions (these are tracked separately in the backlog).
+> - Skipping stakeholder or SRE validation of the AI-drafted narratives.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Analyse and reason: synthesise incident evidence (logs, timelines, changes) into a coherent root cause narrative. Identify contributing factors that a human reviewer might not immediately connect.
-- Generate: draft the five-section RCA narrative for each incident, propose corrective actions, and suggest owner assignments based on affected components.
-- Retrieve and ground: operate over incident records, log extracts, deployment history, and the cluster report to ensure the RCA narrative is grounded in evidence rather than speculation.
-- Automate and orchestrate: assemble the evidence package per incident, produce the structured RCA document, and generate the action register.
-- Human in the loop: an SRE or senior engineer reviews every AI-drafted RCA for factual accuracy, confirms the root cause, and approves the action items before publication.
+- **Analyse and reason:** synthesise incident evidence (logs, timelines, changes) into a coherent root cause narrative. Identify contributing factors that a human reviewer might not immediately connect.
+- **Generate:** draft the five-section RCA narrative for each incident, propose corrective actions, and suggest owner assignments based on affected components.
+- **Retrieve and ground:** operate over incident records, log extracts, deployment history, and the cluster report to ensure the RCA narrative is grounded in evidence rather than speculation.
+- **Automate and orchestrate:** assemble the evidence package per incident, produce the structured RCA document, and generate the action register.
+- **Human in the loop:** an SRE or senior engineer reviews every AI-drafted RCA for factual accuracy, confirms the root cause, and approves the action items before publication.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Incidents selected for RCA (from the Incident Analysis pattern shortlist or agreed with the delivery team).
@@ -45,16 +64,28 @@ Out of scope:
 - ATRS: incident evidence stays within the approved environment. If evidence includes PII (for example customer-impacting details), confirm redaction approach before AI processing.
 - DPIA: not typically triggered unless incident evidence contains personal data. Confirm with information governance if needed.
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI reasoning over artefacts: an enterprise LLM grounded on incident evidence, log extracts, and deployment history (for example Azure OpenAI, GitHub Copilot Chat).
-- Incident management: ServiceNow, Jira Service Management, PagerDuty, or equivalents (for incident record access).
-- Log and monitoring: Splunk, ELK, CloudWatch, Azure Monitor, or equivalents (for log extracts and timeline reconstruction).
-- Deployment history: CI/CD platform logs, Git commit history, or change management records.
-- Notes and reporting: Markdown or Confluence for RCA publication and the action register.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI reasoning over artefacts | an enterprise LLM grounded on incident evidence, log extracts, and deployment history |  |
+| Incident management | ServiceNow, Jira Service Management, PagerDuty, or equivalents |  |
+| Log and monitoring | Splunk, ELK, CloudWatch, Azure Monitor, or equivalents |  |
+| Deployment history | CI/CD platform logs, Git commit history, or change management records |  |
+| Notes and reporting | Markdown or Confluence for RCA publication and the action register |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1.5h to 2.5h for a batch of 3 to 5 incidents (scope band S, confidence Medium +/-30%). Evidence gathering (step 2) typically takes 30min to 1h across the batch. AI drafting and cross-referencing (steps 3 to 4) take 30min. Review, correction, and action finalisation (steps 5 to 6) take 30min to 1h. Adjust upward if evidence is scattered across multiple systems or if incidents are complex.
+
+
+---
 
 ## 7) Inputs and data sources
 - Incident records for selected incidents (from the pattern shortlist or recent P1/P2 events).
@@ -65,22 +96,40 @@ Suggested: 1.5h to 2.5h for a batch of 3 to 5 incidents (scope band S, confidenc
 - Pattern shortlist from L7-Incident-Analysis (if available).
 - Existing post-incident notes or chat transcripts.
 
+
+---
+
 ## 8) Outputs and artefacts
 - RCA summaries: one per incident, each following the five-section format (Summary, Timeline, Root Cause, Contributing Factors, Actions).
 - Action register: table of corrective actions with columns for action description, owner, target date, priority (immediate, short-term, longer-term), and status.
 - Published RCAs in the incident knowledge base.
 - Updated evidence log and scorecard entry.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-- P1 Task Time delta: time to produce the batch of RCA summaries with AI assistance versus estimated manual effort. Record both values (target: at least 40% reduction).
-- P2 Quality score: SRE or senior engineer rates each RCA summary on the 1 to 5 rubric (factual accuracy, root cause identification correctness, completeness of contributing factors, actionability of recommended actions).
-- P8 Reusable artefacts: count and catalogue outputs (five-section RCA template, prompting strategy, evidence-gathering checklist).
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | time to produce the batch of RCA summaries with AI assistance versus estimated manual effort. Record both values (target: at least 40% reduction) |
+| **P2 Quality score** | SRE or senior engineer rates each RCA summary on the 1 to 5 rubric (factual accuracy, root cause identification correctness, completeness of contributing factors, actionability of recommended actions) |
+| **P8 Reusable artefacts** | count and catalogue outputs (five-section RCA template, prompting strategy, evidence-gathering checklist) |
+
+
+---
 
 ## 10) Risks and controls
-- Incorrect root cause identification: AI may attribute the incident to a plausible but wrong cause if the evidence is ambiguous. Mitigation: every RCA must be reviewed and confirmed by an SRE or engineer who was involved in the incident or has deep system knowledge.
-- Hallucinated timeline events: AI may infer events that did not happen if log coverage is incomplete. Mitigation: cross-reference every timeline entry against at least one primary source (log line, alert, or deployment record).
-- Blame-oriented language: AI drafts may inadvertently assign blame to individuals. Mitigation: enforce blameless RCA principles in the prompt; reviewer checks for and removes any blame-oriented language.
-- Stale actions: corrective actions may languish without follow-up. Mitigation: assign each action an owner and target date; add to the team backlog for tracking.
+
+| Risk | Mitigation |
+|---|---|
+| **Incorrect root cause identification**: AI may attribute the incident to a plausible but wrong cause if the evidence is ambiguous | every RCA must be reviewed and confirmed by an SRE or engineer who was involved in the incident or has deep system knowledge |
+| **Hallucinated timeline events**: AI may infer events that did not happen if log coverage is incomplete | cross-reference every timeline entry against at least one primary source (log line, alert, or deployment record) |
+| **Blame-oriented language**: AI drafts may inadvertently assign blame to individuals | enforce blameless RCA principles in the prompt; reviewer checks for and removes any blame-oriented language |
+| **Stale actions**: corrective actions may languish without follow-up | assign each action an owner and target date; add to the team backlog for tracking |
+
+
+---
 
 ## 11) Review and definition of done
 - [ ] 3 to 5 incidents selected for RCA, confirmed with the delivery team.
@@ -92,6 +141,9 @@ Suggested: 1.5h to 2.5h for a batch of 3 to 5 incidents (scope band S, confidenc
 - [ ] No blame-oriented language in any published RCA.
 - [ ] Evidence log and scorecard updated. Decision log entry added if systemic recommendations are made.
 - [ ] All artefacts stored in the evidence area.
+
+
+---
 
 ## 12) Playbook contribution
 - Pattern candidates: "five-section RCA template" (Summary, Timeline, Root Cause, Contributing Factors, Actions as a repeatable structure); "evidence-first drafting" (gather all primary sources before prompting the AI, to reduce hallucination).

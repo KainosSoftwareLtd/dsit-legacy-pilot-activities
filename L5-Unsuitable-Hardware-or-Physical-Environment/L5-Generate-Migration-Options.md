@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1.5-2h |
+| **Phase** | Execute (Week 2-3) |
+| **Inputs** | Architecture summary, SBOM, migration readiness |
+| **Key output** | Migration options with effort estimates |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Legacy migration discussions often default to one approach ("we should containerise" or "we should lift and shift") without systematically evaluating alternatives. This leads to plans that do not account for constraints, risks, or trade-offs.
 
 This activity generates 2-3 concrete migration options for the scoped system, each with pros, cons, assumptions, effort estimates (using pilot-scope bands), and risk profiles. The options are structured to enable an evidence-based decision rather than a default choice.
 
 Decision enabled: pick a preferred migration option (or decide to validate two in parallel); proceed to Evaluate Feasibility and Risk (L5) with a chosen path.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Draft 2 to 3 options with pros, cons and assumptions, using pilot-scope bands.
@@ -22,17 +36,22 @@ Sub tasks:
 6. Review with the Solution Architect and relevant stakeholders. Record the decision.
 7. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: benefits from Migration Readiness Assessment (L5) for blocker context and Architecture Summary (L3) for system understanding. Outputs feed into Evaluate Feasibility and Risk (L5). Schedule in Week 2.
+> **Sequencing:** benefits from Migration Readiness Assessment (L5) for blocker context and Architecture Summary (L3) for system understanding. Outputs feed into Evaluate Feasibility and Risk (L5). Schedule in Week 2.
 
-Out of scope:
-- Delivery of the chosen migration path.
-- Detailed implementation planning (this activity selects the option, not plans the execution).
+> **Out of scope:**
+> - Delivery of the chosen migration path.
+> - Detailed implementation planning (this activity selects the option, not plans the execution).
+
+---
 
 ## 3) How AI is used (options and modes)
-- Analyse and reason: review the system architecture, constraints, and dependencies to generate migration options tailored to the specific system rather than generic templates.
-- Generate: produce structured option descriptions with pros, cons, assumptions, and effort estimates.
-- Retrieve and ground: cross-reference options against the codebase, Architecture Summary, and dependency map to verify feasibility claims.
-- Human in the loop: the Solution Architect validates each option for realism and completeness. Stakeholders participate in the decision.
+- **Analyse and reason:** review the system architecture, constraints, and dependencies to generate migration options tailored to the specific system rather than generic templates.
+- **Generate:** produce structured option descriptions with pros, cons, assumptions, and effort estimates.
+- **Retrieve and ground:** cross-reference options against the codebase, Architecture Summary, and dependency map to verify feasibility claims.
+- **Human in the loop:** the Solution Architect validates each option for realism and completeness. Stakeholders participate in the decision.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Understanding of the current system architecture (Architecture Summary from L3, or equivalent context).
@@ -41,15 +60,27 @@ Out of scope:
 - Named reviewer (Solution Architect) available.
 - ATRS trigger: Possibly, if the migration options involve moving to a new hosting platform. DPIA check: flag if any option involves changing how personal data is stored or processed.
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI reasoning over artefacts: an enterprise LLM (for generating options, scoring against constraints, and drafting the recommendation).
-- Notes and reporting: Markdown, Confluence, Word, spreadsheets (for the options paper and evaluation matrix).
-- Architecture and dependency context: Architecture Summary (L3), SBOM/dependency map (L1).
-- Not typically needed: code assistants (unless cross-referencing options against code), SCA tools, CI pipeline tools, container tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI reasoning over artefacts | an enterprise LLM |  |
+| Notes and reporting | Markdown, Confluence, Word, spreadsheets |  |
+| Architecture and dependency context | Architecture Summary (L3), SBOM/dependency map | L1 |
+| Not typically needed | code assistants (unless cross-referencing options against code), SCA tools, CI pipeline tools, container tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 2h for option generation, scoring, and drafting; 1h for review and revision. Total: 3h. Schedule in Week 2.
+
+
+---
 
 ## 7) Inputs and data sources
 - Architecture Summary (from L3, if available).
@@ -59,6 +90,9 @@ Suggested: 2h for option generation, scoring, and drafting; 1h for review and re
 - Stakeholder priorities (if documented).
 - If unavailable: if no architecture summary exists, the AI will generate options from repository analysis alone. Note this as a lower-confidence analysis.
 
+
+---
+
 ## 8) Outputs and artefacts
 - Migration options paper: 2-3 structured options with pros, cons, assumptions, effort estimates (pilot-scope bands), and confidence tags.
 - Evaluation matrix: each option scored against identified constraints (green/amber/red per constraint).
@@ -67,30 +101,47 @@ Suggested: 2h for option generation, scoring, and drafting; 1h for review and re
 
 Audience: Solution Architect, Delivery Manager, senior stakeholders. This paper is a key input to the Evaluate Feasibility and Risk activity (L5).
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record time to produce the options paper with AI assistance. Compare against estimate for manual option analysis.
-- **P2 Quality score**: reviewer rates the paper on the 1-5 rubric for completeness (all options well-described), realism (effort estimates and assumptions are reasonable), and usefulness (the paper enables a decision).
-- **P8 Reusable artefacts**: count the options paper template, evaluation matrix format, constraint scoring method.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record time to produce the options paper with AI assistance. Compare against estimate for manual option analysis |
+| **P2 Quality score** | reviewer rates the paper on the 1-5 rubric for completeness (all options well-described), realism (effort estimates and assumptions are reasonable), and usefulness (the paper enables a decision) |
+| **P8 Reusable artefacts** | count the options paper template, evaluation matrix format, constraint scoring method |
+
 
 Secondary:
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey.
 
+---
+
 ## 10) Risks and controls
-- **AI generates generic options**: the options may be boilerplate ("containerise, lift-and-shift, re-write") without reflecting the specific system's constraints. Mitigation: feed the AI the system architecture, dependency map, and constraints explicitly. Review each option for specificity.
-- **Effort estimates are unreliable**: AI-generated effort estimates may not reflect real complexity. Mitigation: use pilot-scope bands (XS-XL) with confidence tags; validate estimates with engineers who know the system.
-- **Options paper not used for decision-making**: the paper may be produced but bypassed in favour of an informal decision. Mitigation: schedule a decision meeting and use the evaluation matrix to structure the discussion.
-- **Missing constraint discovery**: important constraints (licensing, compliance, data residency) may not be known at the time of analysis. Mitigation: include an "assumptions" section per option; flag areas where constraint confirmation is needed.
+
+| Risk | Mitigation |
+|---|---|
+| **AI generates generic options**: the options may be boilerplate ("containerise, lift-and-shift, re-write") without reflecting the specific system's constraints | feed the AI the system architecture, dependency map, and constraints explicitly. Review each option for specificity |
+| **Effort estimates are unreliable**: AI-generated effort estimates may not reflect real complexity | use pilot-scope bands (XS-XL) with confidence tags; validate estimates with engineers who know the system |
+| **Options paper not used for decision-making**: the paper may be produced but bypassed in favour of an informal decision | schedule a decision meeting and use the evaluation matrix to structure the discussion |
+| **Missing constraint discovery**: important constraints (licensing, compliance, data residency) may not be known at the time of analysis | include an "assumptions" section per option; flag areas where constraint confirmation is needed |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- 2-3 migration options are documented with pros, cons, assumptions, and effort estimates.
-- Evaluation matrix scores each option against identified constraints.
-- Recommendation narrative is drafted.
-- Solution Architect has reviewed and approved the paper.
-- Decision is recorded (option selected, or two options shortlisted for validation).
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] 2-3 migration options are documented with pros, cons, assumptions, and effort estimates.
+- [ ] Evaluation matrix scores each option against identified constraints.
+- [ ] Recommendation narrative is drafted.
+- [ ] Solution Architect has reviewed and approved the paper.
+- [ ] Decision is recorded (option selected, or two options shortlisted for validation).
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of generating structured migration options; quality of the evaluation matrix and recommendation.

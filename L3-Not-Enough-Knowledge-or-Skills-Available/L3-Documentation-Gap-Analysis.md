@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 1-1.5h |
+| **Phase** | Assess (Week 1) |
+| **Inputs** | Repository, existing docs |
+| **Key output** | Gap register |
+| **Hub activity** | No |
+
+---
+
 ## 1) Why this activity (value and decision)
 Legacy systems with poor documentation create a single-point-of-failure risk: only a few people know how the system works, onboarding is slow, and every change carries hidden risk. Before generating new documentation, the team needs to know what exists, what is missing, and what is outdated.
 
 This activity scans the repository and existing documentation, compares what is present against a standard checklist, and produces a prioritised gap list. This tells the team exactly what to document next (via the Generate System Documentation and Architecture Summary activities) versus what can wait.
 
 Decision enabled: agree which documentation gaps to fill within the pilot and which to defer, with owners assigned.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Identify missing or conflicting documentation and create a remedial plan.
@@ -22,18 +36,23 @@ Sub tasks:
 6. Produce a one-page gap register with priorities, owners, and recommended next activities (e.g. "Architecture overview: absent, high priority, owner: [name], fill via Architecture Summary activity").
 7. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: run this as the first L3 activity. Its output shapes the scope for Generate System Documentation, Architecture Summary, and other L3 activities. Schedule in Week 1 (Assess phase).
+> **Sequencing:** run this as the first L3 activity. Its output shapes the scope for Generate System Documentation, Architecture Summary, and other L3 activities. Schedule in Week 1 (Assess phase).
 
-Out of scope:
-- Writing the missing documentation (see Generate System Documentation and Architecture Summary).
-- Full documentation audit across all department systems (scope to the pilot system only).
-- Enforcing documentation standards beyond the pilot.
+> **Out of scope:**
+> - Writing the missing documentation (see Generate System Documentation and Architecture Summary).
+> - Full documentation audit across all department systems (scope to the pilot system only).
+> - Enforcing documentation standards beyond the pilot.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Retrieve and ground: scan the repository structure, READMEs, /docs folders, inline comments, and any linked documentation stores to build an inventory of what exists.
-- Analyse and reason: compare the inventory against the documentation checklist, identify gaps, assess staleness (last-modified dates), and flag contradictions between different documentation sources.
-- Generate: produce the gap matrix and the prioritised gap register.
-- Human in the loop: an SME validates the gap matrix to catch false positives (docs that exist elsewhere) and confirm priority. Solution Architect or Tech Lead approves the gap register and owner assignments.
+- **Retrieve and ground:** scan the repository structure, READMEs, /docs folders, inline comments, and any linked documentation stores to build an inventory of what exists.
+- **Analyse and reason:** compare the inventory against the documentation checklist, identify gaps, assess staleness (last-modified dates), and flag contradictions between different documentation sources.
+- **Generate:** produce the gap matrix and the prioritised gap register.
+- **Human in the loop:** an SME validates the gap matrix to catch false positives (docs that exist elsewhere) and confirm priority. Solution Architect or Tech Lead approves the gap register and owner assignments.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - Read access to the target repository/repositories and any external documentation stores.
@@ -41,21 +60,36 @@ Out of scope:
 - Named reviewer (Solution Architect or Tech Lead) to approve the gap register.
 - ATRS trigger: No. DPIA check: No (inventory only, no new content generated).
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- AI reasoning and analysis: an enterprise LLM (e.g. GitHub Copilot Chat, Azure OpenAI, or equivalent) for scanning and comparing documentation inventory against the checklist.
-- Repository search: IDE search, grep/ripgrep, or GitHub/GitLab search to locate documentation files and inline comments.
-- Notes and reporting: Markdown or spreadsheet for the gap matrix and register; stored in the shared evidence area.
-- Not typically needed for this activity: SCA/SBOM tools, SIEM tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| AI reasoning and analysis | an enterprise LLM (e.g. GitHub Copilot Chat, Azure OpenAI, or equivalent) for scanning and comparing documentation inventory against the checklist |  |
+| Repository search | IDE search, grep/ripgrep, or GitHub/GitLab search to locate documentation files and inline comments |  |
+| Notes and reporting | Markdown or spreadsheet for the gap matrix and register; stored in the shared evidence area |  |
+| Not typically needed for this activity | SCA/SBOM tools, SIEM tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1h for a well-structured repository; 2h if documentation is scattered across multiple stores. Schedule in Week 1 (Assess phase).
+
+
+---
 
 ## 7) Inputs and data sources
 - Repository URL(s) and branch.
 - Locations of any external documentation (Confluence spaces, SharePoint sites, wiki links, shared drives).
 - An SME who knows the system for the validation walkthrough (book 20-30 minutes).
 - If unavailable: if no SME is available, produce the gap matrix from the repository scan alone and mark it as "unvalidated". Schedule a follow-up walkthrough.
+
+
+---
 
 ## 8) Outputs and artefacts
 - Gap matrix (spreadsheet or Markdown table): one row per checklist category, columns for status (present/partial/absent), last-modified date, quality note, and source location.
@@ -64,30 +98,47 @@ Suggested: 1h for a well-structured repository; 2h if documentation is scattered
 
 Audience: Solution Architect, Tech Lead, department engineering lead. The gap register is the primary scoping input for subsequent L3 activities.
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record wall-clock time to produce the gap register. Compare against the department's estimate for a manual documentation audit.
-- **P2 Quality score**: reviewer rates the gap register on the 1-5 rubric for accuracy (gaps are genuine), completeness (all categories checked), and actionability (priorities and owners are clear).
-- **P8 Reusable artefacts**: count the documentation checklist template, AI scanning prompt, and gap register format if reusable.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record wall-clock time to produce the gap register. Compare against the department's estimate for a manual documentation audit |
+| **P2 Quality score** | reviewer rates the gap register on the 1-5 rubric for accuracy (gaps are genuine), completeness (all categories checked), and actionability (priorities and owners are clear) |
+| **P8 Reusable artefacts** | count the documentation checklist template, AI scanning prompt, and gap register format if reusable |
+
 
 Secondary (collect if available):
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey; this activity directly addresses onboarding pain.
 
+---
+
 ## 10) Risks and controls
-- **False gaps**: AI may miss documentation that exists in non-standard locations (e.g. embedded in Jira tickets, Slack channels, or personal notes). Mitigation: the SME walkthrough catches these; ask explicitly about informal knowledge sources.
-- **Stale documentation counted as present**: a document may exist but be years out of date. Mitigation: include last-modified date in the gap matrix; flag anything older than 12 months for SME review.
-- **Scope creep into writing documentation**: the temptation to start filling gaps during the analysis. Mitigation: this activity produces the gap register only; all writing is deferred to subsequent L3 activities.
-- **SME unavailability**: if no SME is available, the gap register may have false positives. Mitigation: mark as "unvalidated" and schedule a follow-up.
+
+| Risk | Mitigation |
+|---|---|
+| **False gaps**: AI may miss documentation that exists in non-standard locations (e.g. embedded in Jira tickets, Slack channels, or personal notes) | the SME walkthrough catches these; ask explicitly about informal knowledge sources |
+| **Stale documentation counted as present**: a document may exist but be years out of date | include last-modified date in the gap matrix; flag anything older than 12 months for SME review |
+| **Scope creep into writing documentation**: the temptation to start filling gaps during the analysis | this activity produces the gap register only; all writing is deferred to subsequent L3 activities |
+| **SME unavailability**: if no SME is available, the gap register may have false positives | mark as "unvalidated" and schedule a follow-up |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Gap matrix covers all checklist categories with status, date, quality note, and source.
-- SME has validated the matrix (or it is marked "unvalidated" with follow-up scheduled).
-- Gap register is prioritised with owners for high-priority items.
-- Solution Architect or Tech Lead has approved the register.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
-- Decision Log entry added for the scoping decision (which gaps to fill in the pilot).
+- [ ] Gap matrix covers all checklist categories with status, date, quality note, and source.
+- [ ] SME has validated the matrix (or it is marked "unvalidated" with follow-up scheduled).
+- [ ] Gap register is prioritised with owners for high-priority items.
+- [ ] Solution Architect or Tech Lead has approved the register.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+- [ ] Decision Log entry added for the scoping decision (which gaps to fill in the pilot).
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of inventory scanning and gap identification versus manual audit; ability to cross-check multiple documentation stores.

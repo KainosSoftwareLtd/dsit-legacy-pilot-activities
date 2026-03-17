@@ -3,12 +3,26 @@ Version: 0.1
 Owner: <assign>  
 Date: <dd MMM yyyy>
 
+
+| Field | Value |
+|---|---|
+| **Timebox** | 2h |
+| **Phase** | Assess (Week 1-2) |
+| **Inputs** | SAST/SCA scan results, repository, SBOM |
+| **Key output** | Prioritised triage list + fix plan |
+| **Hub activity** | Yes (feeds L6 chain) |
+
+---
+
 ## 1) Why this activity (value and decision)
 Legacy systems typically accumulate hundreds or thousands of SAST (static application security testing) and SCA (software composition analysis) findings over time. The sheer volume makes any individual finding invisible, and teams often ignore the backlog entirely. Without triage, the team cannot distinguish between exploitable critical vulnerabilities and low-risk informational findings.
 
 This activity uses AI to import, cluster, and prioritise the findings from SAST/SCA tools by exploitability and business impact, producing a ranked fix plan that the team can action within the pilot timebox.
 
 Decision enabled: select the top-priority findings for remediation (feeding into L6-Fix-PRs); decide whether the triage approach is scalable for ongoing use.
+
+
+---
 
 ## 2) What we will do (scope and steps)
 Description: Triages findings and groups by exploitability and impact.
@@ -23,18 +37,23 @@ Sub tasks:
 7. Review the triage with the Tech Lead or Solution Architect.
 8. Log time spent (start/end timestamps) for P1 measurement.
 
-Sequencing: this is typically the first L6 activity. Outputs feed into Reachability Mapping (L6), Fix PRs (L6), and Translate Tech to Business Impact (L6). Schedule in Week 1-2.
+> **Sequencing:** this is typically the first L6 activity. Outputs feed into Reachability Mapping (L6), Fix PRs (L6), and Translate Tech to Business Impact (L6). Schedule in Week 1-2.
 
-Out of scope:
-- Bulk auto-merge of fixes without review.
-- Deep manual code audit (beyond what the SAST tool identified).
-- Penetration testing.
+> **Out of scope:**
+> - Bulk auto-merge of fixes without review.
+> - Deep manual code audit (beyond what the SAST tool identified).
+> - Penetration testing.
+
+---
 
 ## 3) How AI is used (options and modes)
-- Analyse and reason: cluster findings by type, severity, and component; assess exploitability by tracing code paths from user input to the vulnerable function.
-- Retrieve and ground: cross-reference findings against the codebase to verify they are in active code paths (not dead code, test code, or generated code).
-- Generate: produce the prioritised triage list, tier assignments, and fix plan.
-- Human in the loop: the engineer validates exploitability assessments. The Tech Lead approves the tier assignments and fix plan.
+- **Analyse and reason:** cluster findings by type, severity, and component; assess exploitability by tracing code paths from user input to the vulnerable function.
+- **Retrieve and ground:** cross-reference findings against the codebase to verify they are in active code paths (not dead code, test code, or generated code).
+- **Generate:** produce the prioritised triage list, tier assignments, and fix plan.
+- **Human in the loop:** the engineer validates exploitability assessments. The Tech Lead approves the tier assignments and fix plan.
+
+
+---
 
 ## 4) Preconditions, access and governance
 - SAST and/or SCA scan results available (or ability to run a scan within the timebox).
@@ -42,16 +61,28 @@ Out of scope:
 - Named reviewer (Tech Lead or Solution Architect) available.
 - ATRS trigger: No. DPIA check: No.
 
+
+---
+
 ## 5) Tooling categories and examples
 Use department-approved tools. Names below are illustrative examples only.
-- SAST tools: SonarQube, Semgrep, CodeQL, Checkmarx, Fortify.
-- SCA tools: Snyk, OWASP Dependency-Check, Dependabot, Trivy, Grype.
-- AI reasoning (for clustering and exploitability assessment): an enterprise LLM grounded on the scan results and codebase.
-- Notes and reporting: Markdown, spreadsheets, Confluence (for the triage list and fix plan).
-- Not typically needed: CI pipeline tools, container tools, IaC tools.
+
+| Category | Examples | Notes |
+|---|---|---|
+| SAST tools | SonarQube, Semgrep, CodeQL, Checkmarx, Fortify |  |
+| SCA tools | Snyk, OWASP Dependency-Check, Dependabot, Trivy, Grype |  |
+| AI reasoning (for clustering and exploitability assessment) | an enterprise LLM grounded on the scan results and codebase |  |
+| Notes and reporting | Markdown, spreadsheets, Confluence |  |
+| Not typically needed | CI pipeline tools, container tools, IaC tools |  |
+
+
+---
 
 ## 6) Timebox
 Suggested: 1.5h for import, deduplication, clustering, and ranking; 30 minutes for fix plan and review. Total: 2h. Schedule in Week 1-2.
+
+
+---
 
 ## 7) Inputs and data sources
 - SAST scan results (exported from the scanning tool).
@@ -59,6 +90,9 @@ Suggested: 1.5h for import, deduplication, clustering, and ranking; 30 minutes f
 - Target repository (to verify findings against code).
 - SBOM (from L1-Extract-SBOM, if available) for dependency context.
 - If unavailable: if no scan results exist, run a SAST and/or SCA scan as the first step. Budget 30 minutes additional for this.
+
+
+---
 
 ## 8) Outputs and artefacts
 - Deduplicated findings list with cluster assignments.
@@ -68,29 +102,46 @@ Suggested: 1.5h for import, deduplication, clustering, and ranking; 30 minutes f
 
 Audience: Tech Lead, Solution Architect, security team (if applicable). The triage list feeds directly into Fix PRs (L6) and Translate Tech to Business Impact (L6).
 
+
+---
+
 ## 9) Metrics and measurement plan (map to P1-P8)
-Primary metrics for this activity:
-- **P1 Task Time delta**: record time to triage the backlog with AI assistance. Compare against estimate for manual triage.
-- **P2 Quality score**: reviewer rates the triage on the 1-5 rubric for accuracy (are the tier assignments correct?) and usefulness (does the fix plan enable action?).
-- **P7 Vulnerability/risk reduction**: report the number and severity of findings triaged, and the number of Tier 1/Tier 2 items identified for remediation.
-- **P8 Reusable artefacts**: count the triage template, clustering method, exploitability assessment prompts.
+
+| Metric | Measurement approach |
+|---|---|
+| **P1 Task Time delta** | record time to triage the backlog with AI assistance. Compare against estimate for manual triage |
+| **P2 Quality score** | reviewer rates the triage on the 1-5 rubric for accuracy (are the tier assignments correct?) and usefulness (does the fix plan enable action?) |
+| **P7 Vulnerability/risk reduction** | report the number and severity of findings triaged, and the number of Tier 1/Tier 2 items identified for remediation |
+| **P8 Reusable artefacts** | count the triage template, clustering method, exploitability assessment prompts |
+
 
 Secondary:
 - **P3 Developer sentiment**: include in the post-pilot SPACE survey.
 
+---
+
 ## 10) Risks and controls
-- **AI mis-prioritises findings**: the AI may rank a non-exploitable finding as Tier 1 or deprioritise an exploitable one. Mitigation: the engineer validates exploitability assessments against the code; the Tech Lead reviews tier assignments.
-- **Excessive false positives in the scan results**: SAST tools are known for high false-positive rates. Mitigation: deduplicate and filter test/generated code first; use reachability analysis (L6-Reachability-Mapping) to confirm exploitability.
-- **Vulnerability data sensitivity**: scan results may reveal sensitive information about the system's weaknesses. Mitigation: restrict access to the triage output; follow departmental information classification policies.
-- **Scan results are stale**: if the scan was run against an old version of the code, the triage may not reflect the current state. Mitigation: verify the scan is against the current main branch; re-run if necessary.
+
+| Risk | Mitigation |
+|---|---|
+| **AI mis-prioritises findings**: the AI may rank a non-exploitable finding as Tier 1 or deprioritise an exploitable one | the engineer validates exploitability assessments against the code; the Tech Lead reviews tier assignments |
+| **Excessive false positives in the scan results**: SAST tools are known for high false-positive rates | deduplicate and filter test/generated code first; use reachability analysis (L6-Reachability-Mapping) to confirm exploitability |
+| **Vulnerability data sensitivity**: scan results may reveal sensitive information about the system's weaknesses | restrict access to the triage output; follow departmental information classification policies |
+| **Scan results are stale**: if the scan was run against an old version of the code, the triage may not reflect the current state | verify the scan is against the current main branch; re-run if necessary |
+
+
+---
 
 ## 11) Review and definition of done
 Done when all of the following are true:
-- Findings are deduplicated, clustered, and assigned to tiers.
-- Fix plan is prepared for Tier 1 and Tier 2 items.
-- Tech Lead or Solution Architect has reviewed and approved the triage.
-- Time log entry is recorded for P1.
-- Evidence Log and Evaluation Scorecard are updated.
+- [ ] Findings are deduplicated, clustered, and assigned to tiers.
+- [ ] Fix plan is prepared for Tier 1 and Tier 2 items.
+- [ ] Tech Lead or Solution Architect has reviewed and approved the triage.
+- [ ] Time log entry is recorded for P1.
+- [ ] Evidence Log and Evaluation Scorecard are updated.
+
+
+---
 
 ## 12) Playbook contribution
 - **Where AI helped**: speed of clustering and prioritising a large findings backlog; quality of exploitability assessment.
