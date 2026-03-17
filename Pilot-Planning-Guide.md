@@ -1,0 +1,272 @@
+# Pilot Planning Guide: Composing Activities Across Legacy Types
+
+Version: 0.1
+Date: 17 Mar 2026
+
+---
+
+## 1) Purpose
+
+The activity pages are organised by legacy type (L1 to L7), but real government systems rarely score on just one LITRAF criterion. A department's HR platform might be simultaneously out of support (L1), have known security vulnerabilities (L6), and lack documentation (L3). Running all three activity sets in isolation wastes effort because they share foundational outputs.
+
+This guide helps teams:
+
+- Identify which legacy types apply to the target system.
+- Select the right combination of activities.
+- Plan a multi-type pilot that shares outputs across activity chains.
+- Estimate total effort realistically.
+
+---
+
+## 2) From LITRAF scores to activity selection
+
+The Legacy IT Risk Assessment Framework (LITRAF) scores every system on seven likelihood criteria (L1 to L7) using a 1 to 6 scale. A score of 3 (Medium) or above on any criterion means the system is considered legacy on that dimension.
+
+**Use the system's LITRAF scores to select activity sets:**
+
+| LITRAF Criterion | Score >= 3? | Activity Set |
+|---|---|---|
+| L1 End of Life / End of Support | Yes | [L1 activities](L1-Software-Out-of-Support/) |
+| L2 Expired Vendor Contract | Yes | [L2 activities](L2-Expired-Vendor-Contracts/) |
+| L3 Lack of Knowledge and Skills | Yes | [L3 activities](L3-Not-Enough-Knowledge-or-Skills-Available/) |
+| L4 Inability to Meet Business Needs | Yes | [L4 activities](L4-Cannot-Meet-Current-or-Future-Business-Needs/) |
+| L5 Unsuitable Physical Environment | Yes | [L5 activities](L5-Unsuitable-Hardware-or-Physical-Environment/) |
+| L6 Known Security Vulnerabilities | Yes | [L6 activities](L6-Known-Security-Vulnerabilities/) |
+| L7 Historically Recorded Issues | Yes | [L7 activities](L7-Recent-Failures-or-Downtime/) |
+
+If a system scores >= 3 on multiple criteria, select activities from all relevant types and use this guide to compose them into a single pilot plan.
+
+Not every activity within a selected type needs to be run. The team should choose activities based on the specific pilot hypotheses agreed during the Assess phase.
+
+---
+
+## 3) Common type clusters
+
+These combinations occur frequently in practice. The rationale explains why they co-occur.
+
+### Cluster A: L1 + L6 - "Unpatched and exposed"
+**Rationale:** Out-of-support software cannot receive security patches, so known vulnerabilities accumulate. Almost every L1 system also scores on L6.
+
+**Typical pilot focus:** Extract the SBOM, triage vulnerabilities against actual code usage (reachability), produce exemplar upgrade PRs and security fix PRs, and translate the highest-risk findings into business impact for decision-makers.
+
+### Cluster B: L1 + L3 - "Old tech, no one left who knows it"
+**Rationale:** When technology is old enough to be out of support, the engineers who built it have often moved on. Knowledge exists only as tribal memory.
+
+**Typical pilot focus:** Document the system and its architecture, capture tribal knowledge from remaining SMEs, extract the SBOM and dependency map, and produce an upgrade plan the team can actually follow.
+
+### Cluster C: L1 + L3 + L6 - "Full technical debt"
+**Rationale:** The most common cluster for red-rated systems. Combines software out of support, skills gaps, and security vulnerabilities.
+
+**Typical pilot focus:** All the activities from Clusters A and B, plus security triage and risk translation for senior stakeholders.
+
+### Cluster D: L4 + L3 - "Can't change, don't understand"
+**Rationale:** Systems that cannot meet business needs are often also poorly documented. The team cannot make safe changes because they do not understand the system well enough.
+
+**Typical pilot focus:** Architecture summary and documentation, change impact mapping, refactoring opportunities, exemplar tests and refactors, CI/CD enhancement.
+
+### Cluster E: L4 + L3 + L7 - "Can't change, keeps breaking"
+**Rationale:** Systems that are hard to change also tend to break when changes are attempted. Recent failures provide evidence for where to focus.
+
+**Typical pilot focus:** Cluster D activities plus log clustering, incident analysis, RCA summaries, and runbook updates.
+
+### Cluster F: L5 + L1 + L3 - "Migration needs everything"
+**Rationale:** Migration to new infrastructure requires understanding the current system (L3), its dependencies (L1), and the target environment (L5).
+
+**Typical pilot focus:** Migration readiness assessment, architecture summary, SBOM extraction, migration options, containerisation exemplar, feasibility evaluation.
+
+---
+
+## 4) Shared outputs and effort savings
+
+Several activities produce outputs that serve multiple legacy types. When running a multi-type pilot, these **hub activities** are done once and their outputs are reused across activity chains.
+
+### Hub activities
+
+| Activity | Legacy Type | Consumed by | What it provides |
+|---|---|---|---|
+| Architecture Summary | L3 | L4 (5 activities), L5 (5 activities), L6 (2 activities), L7 (1 activity) | System-level context: component boundaries, interactions, dependencies, hotspots. |
+| Extract SBOM | L1 | L5 (2 activities), L6 (1 activity) | Dependency inventory: component names, versions, licences, EOL status. |
+| Autonomous Code Analysis | L1 | L4 (1 activity), L6 (1 activity) | Hotspot shortlist: complexity, duplication, deprecated APIs. |
+| Log Clustering | L7 | L4 (1 activity), L3 (1 activity) | Error families: ranked clusters of recurring log errors. |
+| Triage SAST/SCA | L6 | L6 (3 activities) | Filtered, prioritised vulnerability list (also benefits from L1-SBOM as input). |
+
+### Effort savings from shared outputs
+
+Running multiple types together costs less than the sum of their individual timeboxes because hub activities are executed once. Approximate savings:
+
+| Combination | Gross effort | Shared activities | Estimated saving | Net effort |
+|---|---|---|---|---|
+| L1 + L6 | 2.5-3 days | SBOM feeds both chains; Code Analysis surfaces security hotspots for L6 triage | half a day | 2-2.5 days |
+| L1 + L3 | 3-3.5 days | Architecture Summary provides context for L1 upgrade planning; SBOM enriches L3 documentation | half a day | 2.5-3.5 days |
+| L1 + L3 + L6 | 4.5-5.5 days | SBOM serves L1+L6; Architecture Summary serves L1+L6; Code Analysis serves L1+L6 | half a day to 1 day | 4-5 days |
+| L4 + L3 | 3.5-4.5 days | Architecture Summary is the primary input for 5 L4 activities | half a day | 3.5-4.5 days |
+| L4 + L3 + L7 | 5-6.5 days | Architecture Summary serves L4+L7; L7 cluster/incident outputs inform L4 Observability | half a day to 1 day | 4.5-6 days |
+| L5 + L1 + L3 | 5-6 days | SBOM serves L1+L5; Architecture Summary serves L1+L5 | half a day to 1 day | 4.5-5.5 days |
+
+Note: these are **activity execution days** (1 day = 7.5h), not calendar time. A pilot also includes baseline measurement (Week 1), evidence packing (Week 5), and overhead for coordination, access setup, and governance. Total calendar time remains the standard 5-week pilot structure.
+
+---
+
+## 5) Recommended activity sequence for multi-type pilots
+
+This template maps activities to the four pilot phases. Adjust based on the specific types selected.
+
+### Prepare (before kick-off)
+- Confirm LITRAF scores and select legacy types.
+- Validate pilot candidate against suitability criteria.
+- Arrange tooling, access, environments, and governance.
+- Identify hub activities that serve multiple selected types.
+
+### Assess: Week 1
+**Foundational activities (run first, outputs shared across types):**
+- L1: Autonomous Code Analysis (Days 1-3)
+- L1: Extract SBOM (Days 3-5)
+- L3: Documentation Gap Analysis (Days 1-3)
+- L3: Architecture Summary (Days 3-5)
+- L6: Triage SAST/SCA (Days 3-5, benefits from SBOM)
+- L7: Log Clustering (Days 1-5)
+
+**Baseline measurement:**
+- P3 Developer Sentiment survey
+- Current-state P4 to P7 metrics
+- Manual task-time estimates for P1 comparison
+
+### Execute: Weeks 2-3
+**Type-specific chains using shared outputs as inputs:**
+
+| Week | L1 | L2 | L3 | L4 | L5 | L6 | L7 |
+|---|---|---|---|---|---|---|---|
+| 2 | Dependency Mapping, Upgrade Plan | Contract Summary, Extract Constraints | Generate Documentation, Tribal Knowledge Capture | Change Impact Mapping, Refactoring Opportunities | Migration Readiness, Migration Options | Reachability Mapping, Architecture Risk Scan | Incident Analysis, RCA Summaries |
+| 3 | Exemplar Upgrade PRs | Options Appraisal, Cost Comparison | AI-Assisted Tests, Onboarding Pack | Tests for Changes, Validate Refactors, Enhance CI/CD | Containerisation Exemplar, IaC Patterns | Fix PRs, Continuous Security Agent | Recurring Failure Modes, Runbook Updates |
+
+**Continuous during execution:**
+- Collect P1 task times and P2 quality scores after each activity.
+- Record P8 reusable artefacts as they are produced.
+- Note cross-type handoffs: when one activity's output becomes another type's input.
+
+### Execute: Week 4
+**Late-stage activities that depend on earlier outputs:**
+- L2: Onboarding Material (uses all L2 outputs)
+- L3: Repo QA Assistant (indexes all L3 outputs)
+- L4: Improve Observability (uses L7 patterns if available)
+- L5: Dockerfiles/Helm Charts, Evaluate Feasibility and Risk
+- L6: Translate Tech to Business Impact (uses all L6 findings)
+- L7: Improve Logging and Observability (uses gap evidence from earlier L7 activities)
+
+### Evaluate: Week 5
+- Repeat P3 Developer Sentiment survey.
+- Capture updated P4 to P7 metrics.
+- Finalise P8 artefact count.
+- Produce evidence pack and Four-Box summary per legacy type.
+- Record cross-type observations: which shared outputs provided the most value, where handoffs worked well, and where gaps remained.
+
+---
+
+## 6) Total effort estimates by cluster
+
+These estimates assume all activities within the selected types are run. In practice, the team may select a subset based on pilot hypotheses.
+
+| Cluster | Types | Activities | Gross effort | Shared saving | Net effort |
+|---|---|---|---|---|---|
+| A | L1 + L6 | 11 | 2.5-3 days | half a day | 2-2.5 days |
+| B | L1 + L3 | 12 | 3-3.5 days | half a day | 2.5-3.5 days |
+| C | L1 + L3 + L6 | 18 | 4.5-5.5 days | half a day to 1 day | 4-5 days |
+| D | L4 + L3 | 13 | 3.5-4.5 days | half a day | 3.5-4.5 days |
+| E | L4 + L3 + L7 | 19 | 5-6.5 days | half a day to 1 day | 4.5-6 days |
+| F | L5 + L1 + L3 | 18 | 5-6 days | half a day to 1 day | 4.5-5.5 days |
+
+**Confidence:** Medium (+/-30%). Actual effort depends on system complexity, data availability, and team familiarity with the target system. These estimates cover activity execution only; add overhead for baseline measurement, evidence packing, coordination, and governance.
+
+---
+
+## 7) Activity dependency graphs
+
+Three diagrams show the major dependency chains.
+
+```mermaid
+flowchart LR
+    H(["Hub activity: output reused across types"])
+    A["Activity: matches an activity page"]
+    H -- "output name = what flows between activities" --> A
+```
+
+### Chain 1: L1 + L6 - Upgrade and security pipeline
+
+```mermaid
+flowchart LR
+    A1(["L1 Code Analysis (HUB)"])
+    A2["L1 Extract SBOM"]
+    A3["L1 Dependency Map"]
+    A4["L1 Upgrade Plan"]
+    A5["L1 Exemplar PRs"]
+    R1["L4 Refactoring Opps"]
+    D1(["L6 Triage SAST/SCA (HUB)"])
+    S1["L5 Dockerfiles"]
+    D2["L6 Reachability Map"]
+    D3["L6 Fix PRs"]
+    D4["L6 Business Impact"]
+
+    A1 -- code hotspots --> A2
+    A1 -- hotspot shortlist --> R1
+    A2 -- full SBOM --> A3
+    A2 -- SBOM --> D1
+    A2 -- SBOM --> S1
+    A3 -- compatibility gaps --> A4
+    A4 -- upgrade plan --> A5
+    D1 -- prioritised findings --> D2
+    D2 -- reachable vulns --> D3
+    D2 -- risk evidence --> D4
+    D3 -- fix evidence --> D4
+```
+
+### Chain 2: L7 - Incident and reliability pipeline
+
+```mermaid
+flowchart LR
+    C1(["L7 Log Clustering (HUB)"])
+    C2["L7 Incident Analysis"]
+    C3["L7 RCA Summaries"]
+    C4["L7 Recurring Failures"]
+    C5["L7 Runbook Updates"]
+    C6["L4 Enhance CI/CD"]
+    C7["L4 Improve Observability"]
+    C8["L7 Improve Logging"]
+    C9["L3 Tribal Knowledge"]
+
+    C1 -- error families --> C2
+    C1 -- error families --> C7
+    C2 -- incident patterns --> C3
+    C3 -- root causes --> C4
+    C4 -- failure modes --> C5
+    C4 -- failure backlog --> C6
+    C8 -- improved telemetry --> C7
+    C9 -- knowledge cards --> C5
+```
+
+### Chain 3: L3 - Knowledge hub (cross-type)
+
+```mermaid
+flowchart LR
+    B1["L3 Doc Gap Analysis"]
+    B2(["L3 Architecture Summary (HUB)"])
+    L4a["L4 Refactoring / Tests /<br/>Validation / Observability"]
+    L5a["L5 Dockerfiles /<br/>Containerisation"]
+    L7a["L7 Improve Logging /<br/>Runbook Updates"]
+
+    B1 -- gap inventory --> B2
+    B2 -- system context --> L4a
+    B2 -- system context --> L5a
+    B2 -- system context --> L7a
+```
+
+**EVALUATE (Week 5):** Evidence pack and Four-Box summary per legacy type. Cross-type observations recorded.
+
+---
+
+## 8) How to use this guide
+
+1. **Before the pilot:** obtain the system's LITRAF scores (or assess informally using the likelihood criteria). Identify which types score >= 3.
+2. **During Prepare:** use section 3 to find the matching cluster. Use section 6 to estimate total effort and confirm it fits the pilot timebox.
+3. **During Assess (Week 1):** schedule the hub activities from section 5 first. These produce the shared outputs that downstream activities depend on.
+4. **During Execute (Weeks 2-4):** follow the type-specific chains from section 5, using the dependency graph in section 7 to sequence cross-type handoffs.
+5. **During Evaluate (Week 5):** record which cross-type dependencies were exercised, which shared outputs provided the most value, and where the activity set could be improved.
