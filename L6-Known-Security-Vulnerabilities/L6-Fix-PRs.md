@@ -82,6 +82,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 30 minutes per fix (simple dependency bump) to 1.5h per fix (code patch with CI iteration). Plan for 3-5 fixes per session. Total: 2h to half a day. Schedule in Week 2-3.
 
+Expandability: this activity can be repeated per finding. Each additional finding adds approximately 30min to 1.5h.
 
 ---
 
@@ -151,6 +152,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: fix plan availability, CI access, reviewer availability.
 - **Limits and risks to document**: regressions introduced, incomplete fixes, cascading dependency upgrades.
 - **Reusable assets**: dependency bump workflow, code patch templates, CI failure diagnosis prompts, fix log format.
+
+- **Department continuation**: work through remaining triaged findings using the fix workflow, code patch templates, and CI diagnosis prompts.
 
 Pattern candidates:
 - **"One PR per finding"**: creating a separate PR for each finding makes review tractable and rollback simple. Avoid combining unrelated fixes.

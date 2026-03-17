@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for analysis and classification; 30 minutes for shortlist compilation and review. Total: 2h. Schedule in Week 2.
 
+Expandability: this activity can be repeated per repository or codebase area. Each additional repository or codebase area adds approximately 1.5 to 2h.
 
 ---
 
@@ -149,6 +150,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: repository access, git history availability, static analysis tool presence.
 - **Limits and risks to document**: cosmetic vs structural findings, incomplete git history, underestimated refactoring risk.
 - **Reusable assets**: hotspot analysis method, shortlist template, classification taxonomy.
+
+- **Department continuation**: work through remaining shortlist items using the analysis prompt templates and hotspot identification method.
 
 Pattern candidates:
 - **"Complexity x churn prioritisation"**: ranking refactoring targets by the product of their complexity score and change frequency ensures effort is focused on the areas that slow delivery most.

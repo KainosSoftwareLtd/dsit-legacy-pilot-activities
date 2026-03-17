@@ -152,6 +152,8 @@ Done when all of the following are true:
 - **Limits and risks to document**: incomplete inputs, over-confident risk ratings, confirmation bias in review.
 - **Reusable assets**: feasibility report template, four-dimension assessment framework, blocker classification taxonomy, risk matrix format.
 
+- **Department continuation**: update the feasibility assessment as blockers are resolved or new evidence emerges. The report template and risk matrix are reusable.
+
 Pattern candidates:
 - **"Multi-source evidence consolidation"**: feeding the AI all available activity outputs (SBOM, architecture summary, exemplar findings, readiness score) produces a more comprehensive feasibility assessment than analysing each in isolation.
 - **"Blocker severity classification"**: classifying blockers as showstopper/significant/manageable immediately focuses the decision on what matters most.

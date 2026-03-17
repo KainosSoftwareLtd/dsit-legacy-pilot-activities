@@ -82,6 +82,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h for audit, drafting, and initial testing; 1h for iteration and PR. Total: 3h. Schedule in Week 2-3.
 
+Expandability: this activity can be repeated per pipeline. Each additional pipeline adds approximately 3h.
 
 ---
 
@@ -151,6 +152,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: pipeline platform, access permissions, existing gate inventory.
 - **Limits and risks to document**: false positives, run time impact, any gates that could not be added within the timebox.
 - **Reusable assets**: pipeline audit template, gate configuration snippets, threshold-tuning notes.
+
+- **Department continuation**: apply the gate configuration patterns to additional pipelines, or extend existing gates as the team gains confidence.
 
 Pattern candidates:
 - **"Audit-first pipeline enhancement"**: documenting existing gates before adding new ones prevents duplication and ensures the highest-impact gaps are addressed first.

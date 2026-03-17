@@ -80,6 +80,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for drafting narratives for 5-10 findings; 30 minutes for peer review and sharing. Total: 2h. Schedule in Week 3-4.
 
+Expandability: this activity can be repeated per finding. Each additional finding adds approximately 15 to 20min.
 
 ---
 
@@ -148,6 +149,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: technical findings availability, business context understanding, risk owner identification.
 - **Limits and risks to document**: overstated/understated impact, technical jargon leakage, wrong audience distribution.
 - **Reusable assets**: narrative template (Finding Summary / Business Impact / Likelihood / Recommended Action), business impact framing guide.
+
+- **Department continuation**: produce narratives for new findings using the narrative template and business impact framing guide.
 
 Pattern candidates:
 - **"Structured narrative format"**: using a consistent four-section format (Summary, Impact, Likelihood, Action) makes narratives scannable and comparable across findings.

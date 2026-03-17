@@ -80,6 +80,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h if the contract summary is thorough and the document set is small; 2h for multiple contracts with extensive schedules. Schedule shortly after Contract Summarisation.
 
+Expandability: this activity can be repeated per contract. Each additional contract adds approximately 1 to 2h.
 
 ---
 
@@ -147,6 +148,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: complete document set, tool approval for commercial data, contract summary as input.
 - **Limits and risks to document**: any misclassified items, missed provisions, or ambiguities the AI failed to flag.
 - **Reusable assets**: extraction checklist template, AI extraction prompt, register format.
+
+- **Department continuation**: re-run for additional contracts using the extraction checklist and register format.
 
 Pattern candidates:
 - **"Checklist-driven extraction"**: defining the extraction categories before running the AI produces more complete and consistent results than open-ended prompting.

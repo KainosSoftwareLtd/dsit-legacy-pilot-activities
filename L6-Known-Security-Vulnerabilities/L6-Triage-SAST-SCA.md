@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for import, deduplication, clustering, and ranking; 30 minutes for fix plan and review. Total: 2h. Schedule in Week 1-2.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 2h.
 
 ---
 
@@ -148,6 +149,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: SAST/SCA tool availability, scan freshness, repository access.
 - **Limits and risks to document**: false positives, mis-prioritised findings, stale scan data.
 - **Reusable assets**: triage template, clustering taxonomy, exploitability assessment prompts, tier definitions.
+
+- **Department continuation**: re-run when new scan results are produced, using the triage template and clustering method.
 
 Pattern candidates:
 - **"Exploitability-weighted triage"**: ranking findings by exploitability (reachable from user input, known exploit exists) rather than raw CVSS score focuses effort on the highest-risk items.

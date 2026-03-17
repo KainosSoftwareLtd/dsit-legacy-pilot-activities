@@ -149,6 +149,8 @@ Done when all of the following are true:
 - **Limits and risks to document**: any inaccurate setup instructions, missing business context, sections requiring manual input.
 - **Reusable assets**: onboarding pack template structure, section-generation prompt templates, walkthrough feedback form.
 
+- **Department continuation**: update the pack as the system or team changes. The pack template and assembly process are documented for department use.
+
 Pattern candidates:
 - **"Repository-grounded onboarding generation"**: feeding the AI the full repo context (code, config, README) produces more accurate onboarding material than prompting from memory.
 - **"Walkthrough-driven validation"**: testing the pack with a real new joiner catches gaps that expert reviewers miss.

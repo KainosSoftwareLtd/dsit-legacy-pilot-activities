@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h per change request (scope-dependent). Schedule as needed during Weeks 2-4.
 
+Expandability: this activity can be repeated per change request. Each additional change request adds approximately 1.5h.
 
 ---
 
@@ -156,6 +157,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: test framework availability, CI access, change request clarity, impact map availability.
 - **Limits and risks to document**: shallow tests, tests insensitive to the change, implementation-coupled tests.
 - **Reusable assets**: change-scoped test generation prompt template, pre/post-change testing workflow.
+
+- **Department continuation**: re-run for each future change using the test generation prompt template and change-scoped testing workflow.
 
 Pattern candidates:
 - **"Impact-map-driven test scoping"**: using the Change Impact Map to scope test generation ensures tests cover the right paths and avoids wasting time on unaffected areas.

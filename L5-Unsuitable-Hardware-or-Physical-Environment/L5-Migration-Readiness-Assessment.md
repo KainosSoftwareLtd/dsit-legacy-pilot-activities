@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for the checklist assessment and scoring; 30 minutes for report drafting and review. Total: 2h. Schedule in Week 1-2.
 
+Expandability: this activity can be repeated per workload. Each additional workload adds approximately 2h.
 
 ---
 
@@ -148,6 +149,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: repository access, architecture context, SBOM availability.
 - **Limits and risks to document**: missed platform-specific issues, optimistic scoring, categories lacking evidence.
 - **Reusable assets**: readiness checklist template, six-category scoring framework, blocker documentation format.
+
+- **Department continuation**: re-assess additional workloads using the readiness checklist and scoring framework.
 
 Pattern candidates:
 - **"Six-category readiness checklist"**: assessing compute, storage, networking, dependencies, automation maturity, and security/compliance provides comprehensive coverage with minimal overhead.

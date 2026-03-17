@@ -148,6 +148,8 @@ Cross-type note: failure mode cards may also feed into L4 activities. Recurring 
 ---
 
 ## 12) Playbook contribution
+- **Department continuation**: update the register as new failure modes are identified. The failure mode card template and cross-referencing method are reusable.
+
 - Pattern candidates: "structured failure mode card" (repeatable format for capturing recurring issues with all fields needed for prioritisation and assignment); "cross-reference triangulation" (using cluster report, incident patterns, and RCA evidence together to confirm a mode is genuinely recurring, not coincidental).
 - Anti-pattern candidates: "catalogue without action" (producing a detailed failure mode register that is never linked to backlog items or assigned for remediation); "single-source identification" (relying on only one upstream analysis to identify failure modes, missing patterns visible only via cross-referencing).
 - Where AI helped: record time saved in cross-referencing, card drafting, and prioritisation. Note accuracy of AI-proposed failure mode descriptions versus reviewers corrections.

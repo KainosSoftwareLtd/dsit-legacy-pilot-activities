@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for a repository with fewer than 20 direct dependencies; 1.5h for larger or multi-module repositories. Schedule in Week 2 (early Execute phase), after the Extract SBOM activity has completed.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 1 to 1.5h.
 
 ---
 
@@ -151,6 +152,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: SBOM availability, lockfile completeness, internet access for release notes.
 - **Limits and risks to document**: any cases where AI proposed an incorrect upgrade order or missed a prerequisite.
 - **Reusable assets**: compatibility map template, AI analysis prompt, dependency-tree generation command.
+
+- **Department continuation**: re-run when new SBOM outputs are produced or when the dependency landscape changes, using the compatibility map template.
 
 Pattern candidates:
 - **"SBOM-to-map pipeline"**: feeding SBOM output directly into an AI prompt to generate the compatibility map is faster and more complete than starting from scratch. Record the time saving.

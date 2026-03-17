@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h per change request. For changes crossing multiple services, allow 2h. Schedule as needed during Weeks 2-4.
 
+Expandability: this activity can be repeated per change request. Each additional change request adds approximately 1.5 to 2h.
 
 ---
 
@@ -150,6 +151,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: repository access, change request clarity, availability of architecture context.
 - **Limits and risks to document**: missed dependencies (dynamic dispatch, reflection), overestimated blast radius, confidence gaps.
 - **Reusable assets**: impact map template, dependency tracing prompt templates.
+
+- **Department continuation**: re-run for each new change request using the impact map template and tracing prompts.
 
 Pattern candidates:
 - **"AI-assisted blast radius analysis"**: using the AI to trace call chains and data flows from a change point produces a more complete impact map than manual tracing alone.

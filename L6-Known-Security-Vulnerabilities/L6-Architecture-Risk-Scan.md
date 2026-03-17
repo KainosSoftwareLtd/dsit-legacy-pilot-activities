@@ -79,6 +79,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h for scanning across all six risk categories; 1h for report compilation and review. Total: 3h. Schedule in Week 1-2.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 2 to 3h.
 
 ---
 
@@ -145,6 +146,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: repository access, architecture context, infrastructure configuration availability.
 - **Limits and risks to document**: missed implicit risks, false positives, scope constraints.
 - **Reusable assets**: six-category risk scan checklist, risk report template, mitigation pattern library.
+
+- **Department continuation**: re-run periodically or on new repositories using the six-category scan checklist and risk report template.
 
 Pattern candidates:
 - **"Six-category architectural risk scan"**: systematically scanning auth, secrets, crypto, storage, access control, and network ensures comprehensive coverage rather than ad-hoc spot checks.

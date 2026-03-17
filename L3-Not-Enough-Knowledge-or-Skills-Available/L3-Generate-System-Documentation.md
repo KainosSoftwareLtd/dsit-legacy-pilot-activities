@@ -80,6 +80,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for 2-3 documentation sections; 2h if the codebase is large or the gaps are extensive. Schedule in Week 2 (Execute phase).
 
+Expandability: this activity can be repeated per documentation section. Each additional documentation section adds approximately 45min.
 
 ---
 
@@ -147,6 +148,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: gap register, repo access, SME availability.
 - **Limits and risks to document**: any hallucinated content caught in review, areas where code was too opaque for AI to document.
 - **Reusable assets**: documentation generation prompts, section templates, output format.
+
+- **Department continuation**: generate additional sections using the documentation prompts and section templates as new gaps are identified.
 
 Pattern candidates:
 - **"Code-grounded documentation with citations"**: requiring the AI to cite source files for each claim makes review faster and builds trust.

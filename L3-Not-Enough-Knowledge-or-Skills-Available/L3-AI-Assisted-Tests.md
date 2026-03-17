@@ -83,6 +83,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for a single module; 2h for a larger module or if the test framework needs setup. Schedule in Week 2-3.
 
+Expandability: this activity can be repeated per module. Each additional module adds approximately 1.5 to 2h.
 
 ---
 
@@ -152,6 +153,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: test framework availability, coverage tool, CI access.
 - **Limits and risks to document**: any trivial or flaky tests generated, bugs encoded as expected behaviour.
 - **Reusable assets**: test generation prompt template, module-targeting strategy, coverage measurement commands.
+
+- **Department continuation**: generate tests for additional modules using the test generation prompt template and module-targeting strategy.
 
 Pattern candidates:
 - **"Coverage-targeted test generation"**: directing the AI to generate tests for the lowest-coverage or highest-churn areas maximises impact per hour.

@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h to 2.5h for a batch of 3 to 5 incidents (scope band S, confidence Medium +/-30%). Evidence gathering (step 2) typically takes 30min to 1h across the batch. AI drafting and cross-referencing (steps 3 to 4) take 30min. Review, correction, and action finalisation (steps 5 to 6) take 30min to 1h. Adjust upward if evidence is scattered across multiple systems or if incidents are complex.
 
+Expandability: this activity can be repeated per incident. Each additional incident adds approximately 30min.
 
 ---
 
@@ -146,6 +147,8 @@ Suggested: 1.5h to 2.5h for a batch of 3 to 5 incidents (scope band S, confidenc
 ---
 
 ## 12) Playbook contribution
+- **Department continuation**: produce RCA summaries for future incidents using the five-section template and evidence-gathering checklist.
+
 - Pattern candidates: "five-section RCA template" (Summary, Timeline, Root Cause, Contributing Factors, Actions as a repeatable structure); "evidence-first drafting" (gather all primary sources before prompting the AI, to reduce hallucination).
 - Anti-pattern candidates: "AI-only RCA" (publishing AI-drafted root cause analysis without SRE review risks propagating incorrect conclusions); "action without owner" (corrective actions that lack an assigned owner and target date are rarely completed).
 - Where AI helped: record time saved in evidence synthesis, narrative drafting, and action item generation. Note proportion of AI-drafted content retained versus edited during review.

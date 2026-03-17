@@ -88,6 +88,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h for Dockerfile hardening and build; 2h for Helm chart generation, static checks, and deployment validation. Total: half a day. Schedule in Week 3-4.
 
+Expandability: this activity can be repeated per component. Each additional component adds approximately half a day.
 
 ---
 
@@ -162,6 +163,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: container runtime, registry access, Kubernetes cluster access, exemplar availability.
 - **Limits and risks to document**: security issues in generated Dockerfiles, non-parameterised chart values, namespace policy conflicts.
 - **Reusable assets**: Dockerfile template (multi-stage), Helm chart template, hadolint config, build/deploy README template.
+
+- **Department continuation**: produce production-grade artefacts for additional components using the templates and static check pipeline from the pilot.
 
 Pattern candidates:
 - **"Hardening checklist for AI-generated Dockerfiles"**: applying a structured security checklist (non-root, pinned base, no secrets, multi-stage) after AI generation catches the most common issues.

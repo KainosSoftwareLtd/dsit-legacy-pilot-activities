@@ -80,6 +80,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h if cost data is readily available; 2h if significant estimation is needed. Schedule in Week 2, to feed into the Options Appraisal.
 
+Expandability: this activity can be repeated per vendor decision. Each additional vendor decision adds approximately 1 to 2h.
 
 ---
 
@@ -147,6 +148,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: availability of cost data, extraction register completeness.
 - **Limits and risks to document**: any cases where AI-generated figures were misleading, cost drivers that were missed, or sensitivity concerns.
 - **Reusable assets**: cost comparison template, cost-driver checklist, AI prompt.
+
+- **Department continuation**: re-run for future vendor decisions using the cost comparison template and cost-driver checklist.
 
 Pattern candidates:
 - **"Extraction-register-driven cost identification"**: using the extraction register to identify cost drivers ensures no contractual cost element is missed.

@@ -179,7 +179,80 @@ These estimates assume all activities within the selected types are run. In prac
 
 ---
 
-## 7) Activity dependency graphs
+## 7) Expanding and continuing activities
+
+### 7a) Expanding scope within the pilot
+
+34 of the 41 activities operate on a discrete, repeatable unit (a repository, a module, a finding, an incident). If the pilot has time remaining after the initial pass, the team can expand scope by repeating these activities on additional units. This is valuable because:
+
+- It fills available pilot time with productive, measured work rather than idle days.
+- Repeated runs produce a per-unit time curve for P1 (Task Time delta), strengthening the evidence that AI-assisted work is genuinely faster.
+- Wider scope means more P2 quality scores, giving a more reliable average.
+
+| Activity | Unit | Per-unit time |
+|---|---|---|
+| L1-Extract-SBOM | per repo | 1-1.5h |
+| L1-Autonomous-Code-Analysis | per repo | 1h |
+| L1-Dependency-Compatibility-Mapping | per repo | 1-1.5h |
+| L1-Upgrade-Plan-Breaking-Change-Notes | per repo | 1-1.5h |
+| L1-Exemplar-Upgrade-PRs | per dependency | 1.5h |
+| L2-Contract-Summarisation | per contract | 1-2h |
+| L2-Extract-Constraints-Risks-Obligations | per contract | 1-2h |
+| L2-Cost-Comparison-Analysis | per vendor decision | 1-2h |
+| L2-Options-Appraisal | per vendor decision | 1.5-2h |
+| L2-Onboarding-Material | per system | 1.5-2h |
+| L3-Documentation-Gap-Analysis | per repo | 1-2h |
+| L3-Architecture-Summary | per system | 1-1.5h |
+| L3-Generate-System-Documentation | per doc section | 45min |
+| L3-AI-Assisted-Tests | per module | 1.5-2h |
+| L3-Tribal-Knowledge-Capture | per SME interview | 2h |
+| L4-Change-Impact-Mapping | per change request | 1.5-2h |
+| L4-Tests-for-Change-Requests | per change request | 1.5h |
+| L4-Refactoring-Opportunities | per repo | 1.5-2h |
+| L4-Validate-Refactors-Exemplar | per refactoring item | 2h |
+| L4-Enhance-CI-CD | per pipeline | 3h |
+| L4-Improve-Observability | per service | 3h |
+| L5-Migration-Readiness-Assessment | per workload | 2h |
+| L5-Containerisation-Exemplar | per component | 3h |
+| L5-Dockerfiles-Helm-Charts | per component | half day |
+| L6-Triage-SAST-SCA | per repo | 2h |
+| L6-Reachability-Mapping | per finding | 5-10min |
+| L6-Architecture-Risk-Scan | per repo | 2-3h |
+| L6-Fix-PRs | per finding | 30min-1.5h |
+| L6-Translate-Tech-to-Business-Impact | per finding | 15-20min |
+| L6-Continuous-Security-Agent | per repo | 2h |
+| L7-Log-Clustering | per service | 1.5-2.5h |
+| L7-RCA-Summaries | per incident | 30min |
+| L7-Improve-Logging-Observability | per service | 2-3h |
+| L7-Runbook-Updates | per failure mode | 20-30min |
+
+The following 7 activities are **one-shot** and do not benefit from repetition within the same pilot. They are synthesis or setup tasks that consolidate upstream outputs into a single artefact:
+
+- L3-Onboarding-Pack (bundles all L3 outputs into one pack)
+- L3-Repo-QA-Assistant (one-time setup; ongoing use is consumption, not repetition)
+- L5-Generate-Migration-Options (one options paper per migration decision)
+- L5-IaC-Patterns (one set of starter templates per landing zone)
+- L5-Evaluate-Feasibility-Risk (one consolidation of all L5 evidence)
+- L7-Incident-Analysis (one-pass clustering of the full incident window)
+- L7-Recurring-Failure-Modes (one synthesis register from upstream analyses)
+
+### 7b) Department continuation beyond the pilot
+
+The pilot produces reusable artefacts, validated prompts, and measured approaches. Each activity's Section 12 (Playbook contribution) lists the specific assets. The department can continue using these independently after the pilot in four ways:
+
+**Run again on new scope.** Most activities (34 of 41) can be re-run whenever new repositories, modules, contracts, or incidents come into scope. For example: re-run SBOM extraction when a new service is onboarded; repeat AI-assisted test generation as new modules are developed; run contract summarisation for newly expired agreements. The prompt templates and output formats are designed for self-service.
+
+**Keep running.** Two activities set up ongoing tools that persist beyond the pilot:
+- L6-Continuous-Security-Agent: the agent monitors for new findings automatically. The department keeps it running and reviews alerts on a regular cadence.
+- L3-Repo-QA-Assistant: the indexed knowledge base answers questions on demand. The department maintains the index as the codebase changes.
+
+**Reuse the template.** Every activity produces a structured output format (RCA template, onboarding pack format, options matrix, compatibility note). These templates can be reused for future work without AI assistance, or with AI to accelerate drafting. The Playbook captures these as reusable assets.
+
+**Feed the backlog.** Several activities produce prioritised shortlists that are intentionally larger than the pilot can address: the refactoring opportunities shortlist (L4), the triaged vulnerability list (L6), the documentation gap register (L3), and the failure mode register (L7). Items not tackled in the pilot become backlog items the department can work through at its own pace using the same approach and templates.
+
+---
+
+## 8) Activity dependency graphs
 
 Three diagrams show the major dependency chains.
 
@@ -263,10 +336,11 @@ flowchart LR
 
 ---
 
-## 8) How to use this guide
+## 9) How to use this guide
 
 1. **Before the pilot:** obtain the system's LITRAF scores (or assess informally using the likelihood criteria). Identify which types score >= 3.
 2. **During Prepare:** use section 3 to find the matching cluster. Use section 6 to estimate total effort and confirm it fits the pilot timebox.
 3. **During Assess (Week 1):** schedule the hub activities from section 5 first. These produce the shared outputs that downstream activities depend on.
-4. **During Execute (Weeks 2-4):** follow the type-specific chains from section 5, using the dependency graph in section 7 to sequence cross-type handoffs.
+4. **During Execute (Weeks 2-4):** follow the type-specific chains from section 5, using the dependency graph in section 8 to sequence cross-type handoffs.
 5. **During Evaluate (Week 5):** record which cross-type dependencies were exercised, which shared outputs provided the most value, and where the activity set could be improved.
+6. **When expanding or handing over:** use section 7 to identify which activities can be repeated on wider scope within the pilot, and how the department can continue running activities independently after the pilot ends.

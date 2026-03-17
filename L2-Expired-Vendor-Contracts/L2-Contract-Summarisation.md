@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for a single contract with fewer than 50 pages; 2h for multiple contracts or contracts with extensive schedules and amendments. Schedule in Week 1 (Assess phase) or early Week 2.
 
+Expandability: this activity can be repeated per contract. Each additional contract adds approximately 1 to 2h.
 
 ---
 
@@ -148,6 +149,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: tool approval for commercial-in-confidence material, document format quality (OCR), complete document set.
 - **Limits and risks to document**: any misinterpreted clauses, missed provisions, or confidentiality concerns encountered.
 - **Reusable assets**: AI extraction prompt template, contract summary template, extraction checklist.
+
+- **Department continuation**: re-run for newly expired or expiring contracts using the extraction prompt and summary template.
 
 Pattern candidates:
 - **"AI-assisted clause extraction with source references"**: prompting the AI to cite clause numbers alongside extracted terms makes validation faster and builds trust in the output. Record accuracy rate.

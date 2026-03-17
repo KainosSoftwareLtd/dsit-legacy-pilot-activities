@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for a single-module repository; 1.5h for a multi-module mono-repository. Schedule in Days 3-5 of Week 1 (Assess phase) so outputs are available for Dependency Mapping and Upgrade Planning in Week 2.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 1h (single-module) to 1.5h (mono-repo).
 
 ---
 
@@ -153,6 +154,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: minimum repo access level, lockfile availability, SBOM tool installation.
 - **Limits and risks to document**: any false positives on EOL status, licence misclassifications, or components the AI could not classify.
 - **Reusable assets**: SBOM generation script/command, AI analysis prompt template, compatibility note template, upgrade-order note format.
+
+- **Department continuation**: re-run on new repositories as they are onboarded, using the SBOM generation command and analysis prompt template. The process is designed for department self-service.
 
 Pattern candidates:
 - **"SBOM-first triage"**: generating the SBOM before any manual code review gives a faster, more complete risk picture. Record time saving and coverage.

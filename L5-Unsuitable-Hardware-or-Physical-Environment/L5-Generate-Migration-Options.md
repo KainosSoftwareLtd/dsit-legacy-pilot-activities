@@ -149,6 +149,8 @@ Done when all of the following are true:
 - **Limits and risks to document**: generic options, unreliable effort estimates, missing constraints.
 - **Reusable assets**: options paper template, evaluation matrix format, effort estimation guidance (pilot-scope bands).
 
+- **Department continuation**: reuse the options paper format and evaluation matrix for future migration decisions.
+
 Pattern candidates:
 - **"Constraint-scored options"**: scoring each option against identified constraints using a simple green/amber/red matrix makes the trade-offs immediately visible.
 - **"System-specific option generation"**: feeding the AI the full architecture and dependency context produces options tailored to the system rather than generic migration patterns.

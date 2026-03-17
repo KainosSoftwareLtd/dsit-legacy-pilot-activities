@@ -83,6 +83,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h to 2.5h (scope band S, confidence Medium +/-30%). Scoping and export (steps 1 to 2) typically take 30min. Normalisation and clustering (steps 3 to 4) take 30min to 1h. Validation and report (steps 5 to 8) take 30min to 1h. If the log volume is very large, the export and normalisation steps may take longer.
 
+Expandability: this activity can be repeated per service or log source. Each additional service or log source adds approximately 1.5 to 2.5h.
 
 ---
 
@@ -140,6 +141,8 @@ Suggested: 1.5h to 2.5h (scope band S, confidence Medium +/-30%). Scoping and ex
 ---
 
 ## 12) Playbook contribution
+- **Department continuation**: re-run on additional services or re-run periodically using the normalisation rules and clustering prompts.
+
 - Pattern candidates: "normalise-then-cluster" (systematic approach: strip variables, cluster by similarity, validate with samples); "frequency-times-impact ranking for log clusters" (simple scoring model to focus investigation on the noisiest and most impactful error families).
 - Anti-pattern candidates: "cluster raw logs without normalisation" (variable fields like timestamps and request IDs cause every entry to look unique, producing thousands of spurious clusters); "cluster everything" (including INFO and DEBUG entries drowns error signals in noise).
 - Where AI helped: record time saved in normalisation, clustering, and labelling. Note accuracy of AI-proposed clusters versus manual corrections.

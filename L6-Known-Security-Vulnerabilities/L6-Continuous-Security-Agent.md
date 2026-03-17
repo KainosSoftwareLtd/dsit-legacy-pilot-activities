@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for configuration and deployment; observation period runs passively over 1-2 weeks; 1h for evaluation and recommendation. Total active time: 2h. Schedule configuration in Week 1-2, evaluation in Week 4.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 2h for setup and initial evaluation.
 
 ---
 
@@ -149,6 +150,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: tool approval, data residency confirmation, repository write access.
 - **Limits and risks to document**: alert fatigue, false positive rate, data residency concerns.
 - **Reusable assets**: agent configuration template, observation log format, evaluation template, recommended rule sets.
+
+- **Department continuation**: keep the agent running beyond the pilot. The configuration, alert review cadence, and evaluation method are documented for ongoing use.
 
 Pattern candidates:
 - **"High-severity-only initial configuration"**: starting with critical/high-only rules and expanding later produces a manageable alert volume and builds team confidence in the agent.

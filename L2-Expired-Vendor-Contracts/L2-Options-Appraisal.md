@@ -80,6 +80,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for a straightforward renew/replace/retire choice; 2h if multiple replacement options exist or cost data is incomplete. Schedule in Week 2-3, after the upstream L2 activities.
 
+Expandability: this activity can be repeated per vendor decision. Each additional vendor decision adds approximately 1.5 to 2h.
 
 ---
 
@@ -148,6 +149,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: contract summary, extraction register, cost data availability, decision-maker engagement.
 - **Limits and risks to document**: any cases where AI bias was detected, where incomplete evidence led to low-confidence scores, or where the appraisal was insufficient for a decision.
 - **Reusable assets**: options matrix template, evaluation criteria checklist, ROM adder rationale format, AI appraisal prompt.
+
+- **Department continuation**: re-run for future commercial decisions using the options matrix template and evaluation criteria checklist.
 
 Pattern candidates:
 - **"Evidence-grounded options scoring"**: linking each pro/con to a specific clause reference or extraction register item builds trust in the appraisal and makes review faster.

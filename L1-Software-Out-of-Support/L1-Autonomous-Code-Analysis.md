@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h (including 15-20 minutes for the engineer validation walkthrough). Schedule in Days 1-3 of Week 1 (Assess phase) so output can shape the scope for subsequent L1 activities.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 1h.
 
 ---
 
@@ -152,6 +153,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: tool availability, repo access level, engineer availability for validation.
 - **Limits and risks to document**: false positive rate, any hotspots missed due to scope limits, rule sets that produced too much noise.
 - **Reusable assets**: analysis profile configuration, AI clustering prompt, hotspot shortlist template.
+
+- **Department continuation**: re-run on additional repositories or re-run periodically as the codebase evolves, using the analysis profile and clustering prompt.
 
 Pattern candidates:
 - **"AI-clustered analysis triage"**: using AI to cluster and rank static analysis findings is significantly faster than manual triage and produces a more consistent prioritisation. Record the time saving and the false-positive rate.

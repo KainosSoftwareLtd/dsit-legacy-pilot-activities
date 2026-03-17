@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h per exemplar PR (so 1.5-3h total for 1-2 PRs). If CI failures require more than 3 fix iterations, stop and document the blocker rather than exceeding the timebox. Schedule in Weeks 2-3 (Execute phase).
 
+Expandability: this activity can be repeated per dependency. Each additional dependency adds approximately 1.5h.
 
 ---
 
@@ -158,6 +159,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: write access to a feature branch, CI pipeline accessibility, merge policy agreement.
 - **Limits and risks to document**: any cases where AI-generated fixes were incorrect, where cascading failures required manual intervention, or where the exemplar was not representative.
 - **Reusable assets**: upgrade PR prompt template, PR description template, lessons-learned format, CI failure diagnosis prompt.
+
+- **Department continuation**: use the upgrade prompt template and PR description format to tackle remaining dependencies from the shortlist at the department's pace.
 
 Pattern candidates:
 - **"Exemplar-first estimation"**: creating a real PR before estimating the full upgrade provides far more accurate effort data than abstract analysis alone. Record the delta between the plan estimate and actual effort.

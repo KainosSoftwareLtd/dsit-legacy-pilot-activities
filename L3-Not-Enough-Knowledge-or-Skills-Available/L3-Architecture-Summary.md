@@ -85,6 +85,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for a small/medium codebase; 1.5h for a large or multi-service system. Schedule in Week 1-2.
 
+Expandability: this activity can be repeated per system or service. Each additional system or service adds approximately 1 to 1.5h.
 
 ---
 
@@ -151,6 +152,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: repo access, SME availability.
 - **Limits and risks to document**: any hallucinated components or interactions.
 - **Reusable assets**: summary template, generation prompt, diagram format.
+
+- **Department continuation**: update the summary as the system evolves or produce summaries for additional systems using the generation prompt and diagram format.
 
 Pattern candidates:
 - **"Repo-to-architecture-summary in one pass"**: AI can produce a usable first draft from the repository alone, which the SME then refines. This is faster than interviewing the SME from scratch.

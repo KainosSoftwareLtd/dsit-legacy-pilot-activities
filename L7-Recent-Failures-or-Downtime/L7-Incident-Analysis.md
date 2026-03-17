@@ -138,6 +138,8 @@ Suggested: 2h to 3h (scope band S, confidence Medium +/-30%). Scoping and ingest
 ---
 
 ## 12) Playbook contribution
+- **Department continuation**: re-run for a new time window using the incident analysis template and normalisation approach.
+
 - Pattern candidates: "structured incident ingestion and normalisation" (repeatable method for turning scattered incident data into an analysable register); "frequency-times-impact ranking" (simple scoring model for prioritising incident patterns).
 - Anti-pattern candidates: "cluster without validation" (accepting AI-generated clusters without ops team review leads to incorrect prioritisation); "all incidents equal" (analysing all severities without filtering wastes time on noise and dilutes the pattern signal).
 - Where AI helped: record time saved in normalisation, clustering, and shortlist generation. Note accuracy of AI-proposed clusters versus manual corrections.

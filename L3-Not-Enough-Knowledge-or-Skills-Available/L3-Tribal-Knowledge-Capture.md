@@ -83,6 +83,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h preparation (questions), 45 minutes per interview, 1h for card drafting and review per interview. Plan for 2-3 interviews in the pilot. Total: approximately half a day to 1 day across multiple sessions. Schedule interviews in Week 2-3.
 
+Expandability: this activity can be repeated per SME interview. Each additional SME interview adds approximately 2h.
 
 ---
 
@@ -151,6 +152,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: SME availability, repository access, documentation platform access, consent process for recordings.
 - **Limits and risks to document**: misinterpretations in AI-drafted cards, SME reluctance, knowledge areas that remain undocumented.
 - **Reusable assets**: interview question template, knowledge card template, tagging taxonomy.
+
+- **Department continuation**: conduct additional SME interviews using the interview template and knowledge card format as new topics arise or new SMEs become available.
 
 Pattern candidates:
 - **"Code-grounded interview questions"**: generating interview questions from the actual codebase (e.g. referencing specific scripts, config files, or undocumented steps) produces more targeted and useful interviews than generic questions.

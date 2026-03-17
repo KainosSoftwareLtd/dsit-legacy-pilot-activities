@@ -82,6 +82,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for 10-20 findings. For larger backlogs, prioritise the top findings and note the remainder as unassessed. Schedule in Week 2.
 
+Expandability: this activity can be repeated per finding. Each additional finding adds approximately 5 to 10min.
 
 ---
 
@@ -152,6 +153,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: SCA findings availability, CVE detail quality, repository access.
 - **Limits and risks to document**: missed dynamic paths, insufficient CVE detail, static-analysis-only limitations.
 - **Reusable assets**: reachability analysis method, call chain documentation format, classification taxonomy.
+
+- **Department continuation**: apply the reachability analysis method and call chain documentation format to new findings as they are triaged.
 
 Pattern candidates:
 - **"Triage-then-reachability pipeline"**: running triage first (L6-Triage-SAST-SCA) to reduce the backlog, then reachability analysis on the top-priority items, prevents wasting effort tracing non-critical findings.

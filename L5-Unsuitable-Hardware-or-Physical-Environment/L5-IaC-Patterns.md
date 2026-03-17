@@ -154,6 +154,8 @@ Done when all of the following are true:
 - **Limits and risks to document**: security issues in generated templates, environment-specific failures, over-engineered modules.
 - **Reusable assets**: IaC starter templates, module structure patterns, static check configuration, README template.
 
+- **Department continuation**: extend or adapt the IaC templates as the target environment evolves. The module structure and parameterisation are documented.
+
 Pattern candidates:
 - **"Security-scanned IaC generation"**: running security-focused scanning (checkov, tfsec) immediately after AI generation catches the most common IaC security issues.
 - **"Architecture-grounded IaC"**: feeding the AI the Architecture Summary and migration option produces templates tailored to the specific system rather than generic cloud scaffolds.

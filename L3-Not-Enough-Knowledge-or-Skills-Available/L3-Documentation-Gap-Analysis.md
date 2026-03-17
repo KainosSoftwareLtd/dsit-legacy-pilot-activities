@@ -79,6 +79,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for a well-structured repository; 2h if documentation is scattered across multiple stores. Schedule in Week 1 (Assess phase).
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 1 to 2h.
 
 ---
 
@@ -145,6 +146,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: repo access, documentation store locations, SME availability.
 - **Limits and risks to document**: any false gaps, stale documentation issues, or informal knowledge sources the AI could not access.
 - **Reusable assets**: documentation checklist template, AI scanning prompt, gap register format.
+
+- **Department continuation**: re-run on additional repositories or schedule a periodic review using the documentation checklist and gap register format.
 
 Pattern candidates:
 - **"Checklist-driven gap analysis"**: defining what good documentation looks like before scanning produces a structured, comparable result across different systems.

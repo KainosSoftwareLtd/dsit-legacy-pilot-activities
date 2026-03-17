@@ -80,6 +80,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1h for a straightforward upgrade path (fewer than 5 components); 1.5h if the compatibility map includes complex chains or Low-confidence steps. Schedule in Week 2 (Execute phase), after the compatibility map is approved.
 
+Expandability: this activity can be repeated per repository. Each additional repository adds approximately 1 to 1.5h.
 
 ---
 
@@ -149,6 +150,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: compatibility map availability, internet access for release notes, repo read access.
 - **Limits and risks to document**: any hallucinated breaking changes, missed deprecations, or incorrect code snippets.
 - **Reusable assets**: upgrade plan template, AI prompt for breaking-change extraction, before/after snippet format.
+
+- **Department continuation**: re-run for additional dependency sets using the upgrade plan template and breaking-change extraction prompt.
 
 Pattern candidates:
 - **"AI-drafted breaking-change notes"**: using AI to extract and summarise breaking changes from multiple release notes is significantly faster than manual research. Record the time saving and accuracy rate.

@@ -82,6 +82,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h to 3h (scope band S, confidence Medium +/-30%). The audit and gap register (steps 1 to 3) typically take 1h. Implementation and dashboard creation (steps 5 to 6) take 1h to 1.5h. Validation walkthrough (step 7) takes 30min. Larger estates may require a second pass.
 
+Expandability: this activity can be repeated per service. Each additional service adds approximately 2 to 3h.
 
 ---
 
@@ -147,6 +148,8 @@ Suggested: 2h to 3h (scope band S, confidence Medium +/-30%). The audit and gap 
 ---
 
 ## 12) Playbook contribution
+- **Department continuation**: extend to additional services using the structured log format standard, dashboard templates, and gap audit checklist.
+
 - Pattern candidates: "incident-driven logging gap audit" (systematic method for identifying and closing diagnostic gaps); "structured log format standard" (reusable template for consistent logging across services).
 - Anti-pattern candidates: "log everything" (adding verbose logging without targeting specific diagnostic gaps increases cost and noise); "dashboard without alerts" (dashboards that nobody watches provide no operational value without alert rules).
 - Where AI helped: record time saved in gap identification, log statement drafting, and dashboard generation. Note accuracy of AI-suggested log placements versus manual review corrections.

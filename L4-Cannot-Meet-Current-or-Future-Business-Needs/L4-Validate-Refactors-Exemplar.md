@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h per refactoring item (including measurement). For 2 items, allow half a day total. Schedule in Week 3-4.
 
+Expandability: this activity can be repeated per refactoring item. Each additional refactoring item adds approximately 2h.
 
 ---
 
@@ -156,6 +157,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: shortlist availability, test coverage of the refactoring area, static analysis tools.
 - **Limits and risks to document**: regressions introduced, metrics improvement without delivery improvement, unsafe AI suggestions.
 - **Reusable assets**: before/after measurement template, refactoring patterns used, review checklist.
+
+- **Department continuation**: apply the refactoring pattern and before/after measurement template to additional shortlist items at the department's pace.
 
 Pattern candidates:
 - **"Measured refactoring"**: recording before/after metrics for every refactoring provides evidence-based decisions about whether to continue. This pattern should become standard practice.

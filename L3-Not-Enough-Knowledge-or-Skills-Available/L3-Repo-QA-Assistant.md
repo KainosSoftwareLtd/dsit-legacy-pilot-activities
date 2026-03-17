@@ -149,6 +149,8 @@ Done when all of the following are true:
 - **Limits and risks to document**: hallucination rate, areas where the assistant fails, data scope concerns.
 - **Reusable assets**: index configuration, validation question set template, accuracy scoring method.
 
+- **Department continuation**: keep the assistant running and update its index as the codebase and documentation evolve. The configuration and validation question set are documented.
+
 Pattern candidates:
 - **"Documentation-enriched indexing"**: indexing L3 outputs (Architecture Summary, Gap Analysis, Onboarding Pack) alongside code significantly improves answer quality.
 - **"Curated validation before rollout"**: testing with a known-answer question set before team rollout catches accuracy problems early.

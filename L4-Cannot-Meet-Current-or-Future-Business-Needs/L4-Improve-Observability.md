@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h for SLO definition, telemetry audit, and dashboard drafting; 1h for alert rules and validation. Total: 3h. Schedule in Week 2-3.
 
+Expandability: this activity can be repeated per service. Each additional service adds approximately 3h.
 
 ---
 
@@ -155,6 +156,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: monitoring platform access, existing telemetry availability, dashboard write permissions.
 - **Limits and risks to document**: alert noise, SLOs not matching user experience, missing telemetry.
 - **Reusable assets**: SLO template, dashboard configuration files, alert rule patterns, telemetry audit checklist.
+
+- **Department continuation**: extend the SLO definitions, dashboards, and alert rules to additional services using the templates produced.
 
 Pattern candidates:
 - **"SLO-first observability"**: defining SLOs before building dashboards ensures the monitoring answers the right questions instead of displaying arbitrary metrics.

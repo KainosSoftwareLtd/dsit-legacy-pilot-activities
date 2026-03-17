@@ -84,6 +84,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h to 2h (scope band S, confidence Medium +/-30%). Inventory and cross-referencing (steps 1 to 3) typically take 30min. Drafting updates (steps 4 to 5) take 30min to 45min. Review and dry-run validation (steps 6 to 7) take 30min to 45min. Adjust upward if many runbooks are stale or if the system has no existing runbooks.
 
+Expandability: this activity can be repeated per failure mode. Each additional failure mode adds approximately 20 to 30min.
 
 ---
 
@@ -149,6 +150,8 @@ Suggested: 1.5h to 2h (scope band S, confidence Medium +/-30%). Inventory and cr
 ---
 
 ## 12) Playbook contribution
+- **Department continuation**: update additional runbook sections as new failure modes are documented, using the four-part runbook section template.
+
 - Pattern candidates: "four-part runbook section" (Trigger, Diagnosis, Resolution, Escalation and Verification as a repeatable structure for every runbook entry); "incident-driven runbook review" (using RCA evidence and failure mode cards as the trigger for runbook updates rather than arbitrary schedules).
 - Anti-pattern candidates: "copy-paste from incident notes" (pasting raw incident chat or log snippets into runbooks without structuring them into reproducible steps); "update without validation" (publishing runbook changes without a dry-run walkthrough against a real incident scenario).
 - Where AI helped: record time saved in gap identification, command generation, and section drafting. Note accuracy of AI-generated commands versus corrections during review.

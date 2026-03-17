@@ -81,6 +81,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 1.5h for the draft and walkthrough; up to 2h if the existing documentation is sparse and significant gap-filling is needed. Schedule in Week 2-3.
 
+Expandability: this activity can be repeated per system under transition. Each additional system under transition adds approximately 1.5 to 2h.
 
 ---
 
@@ -150,6 +151,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: documentation availability, AI tool approval, walkthrough participant availability.
 - **Limits and risks to document**: any hallucinated content caught in review, stale documentation issues, sensitive information handling.
 - **Reusable assets**: onboarding pack template, AI drafting prompt, gap-list format, walkthrough feedback template.
+
+- **Department continuation**: update the onboarding pack as the vendor situation changes, or adapt it for other systems under transition.
 
 Pattern candidates:
 - **"AI-drafted onboarding from existing docs"**: using AI to consolidate scattered documentation into a structured pack is significantly faster than manual authoring and catches gaps.

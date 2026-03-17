@@ -85,6 +85,7 @@ Use department-approved tools. Names below are illustrative examples only.
 ## 6) Timebox
 Suggested: 2h for Dockerfile generation, build, and initial run; 1h for troubleshooting and documentation. Total: 3h. Schedule in Week 2-3.
 
+Expandability: this activity can be repeated per component. Each additional component adds approximately 3h.
 
 ---
 
@@ -154,6 +155,8 @@ Done when all of the following are true:
 - **Prerequisites to document**: container runtime availability, backend mock availability, repository access.
 - **Limits and risks to document**: undocumented dependencies, secrets handling, runtime failures not caught at build time.
 - **Reusable assets**: Dockerfile template, dependency audit checklist, troubleshooting log format.
+
+- **Department continuation**: containerise additional components using the Dockerfile pattern and dependency audit checklist from the exemplar.
 
 Pattern candidates:
 - **"Dependency-audit-first containerisation"**: scanning the application for host dependencies before writing the Dockerfile avoids the trial-and-error cycle of repeated build failures.
