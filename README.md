@@ -14,7 +14,6 @@ L4-Cannot-Meet-Current-or-Future-Business-Needs/  6 activities
 L5-Unsuitable-Hardware-or-Physical-Environment/   6 activities
 L6-Known-Security-Vulnerabilities/   6 activities
 L7-Recent-Failures-or-Downtime/      6 activities
-context/                          Reference docs (LITRAF guidance, pilot approach, bid response)
 ```
 
 ## Getting started
