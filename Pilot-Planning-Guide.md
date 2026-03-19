@@ -114,37 +114,48 @@ This template maps activities to the four pilot phases. Adjust based on the spec
 ### Prepare (before kick-off)
 - Confirm LITRAF scores and select legacy types.
 - Validate pilot candidate against suitability criteria.
-- Arrange tooling, access, environments, and governance.
 - Identify hub activities that serve multiple selected types.
 
 ### Assess: Week 1
-**Foundational activities (run first, outputs shared across types):**
-- L1: Autonomous Code Analysis (Days 1-3)
-- L1: Extract SBOM (Days 3-5)
-- L3: Documentation Gap Analysis (Days 1-3)
-- L3: Architecture Summary (Days 3-5)
-- L6: Triage SAST/SCA (Days 3-5, benefits from SBOM)
-- L7: Log Clustering (Days 1-5)
+**Scene setting and access activities:**
+- Day 1
+  - Introduction to whole Pilot team (Day 1)
+  - Arrange tooling, access, environments, and governance
+- Day 2
+  - Deep dive meeting covering department’s estate
+- Day 3
+  - Produce agreed list of target systems and identify possible clusters
+  - Capture baseline metrics
+- Day 4
+  - Produce agreed list of hypotheses to test based on pre-defined AICA accelerators
+- Day 5
+  - Generate plan for Execute stage
+  - Meeting to share baseline metrics, hypotheses, success criteria and Execute plan
+  - Introduce and demonstrate AICA accelerators to Pilot team
 
 **Baseline measurement:**
 - P3 Developer Sentiment survey
 - Current-state P4 to P7 metrics
 - Manual task-time estimates for P1 comparison
 
-### Execute: Weeks 2-3
+### Execute: Weeks 2-4 (example activities)
+
+**Foundational activities (run first, outputs shared across types):**
+- Week 2:
+  - L1: Autonomous Code Analysis (Days 1-3)
+  - L1: Extract SBOM (Days 3-5)
+  - L3: Documentation Gap Analysis (Days 1-3)
+  - L3: Architecture Summary (Days 3-5)
+  - L6: Triage SAST/SCA (Days 3-5, benefits from SBOM)
+  - L7: Log Clustering (Days 1-5)
+
 **Type-specific chains using shared outputs as inputs:**
 
 | Week | L1 | L2 | L3 | L4 | L5 | L6 | L7 |
 |---|---|---|---|---|---|---|---|
-| 2 | Dependency Mapping, Upgrade Plan | Contract Summary, Extract Constraints | Generate Documentation, Tribal Knowledge Capture | Change Impact Mapping, Refactoring Opportunities | Migration Readiness, Migration Options | Reachability Mapping, Architecture Risk Scan | Incident Analysis, RCA Summaries |
-| 3 | Exemplar Upgrade PRs | Options Appraisal, Cost Comparison | AI-Assisted Tests, Onboarding Pack | Tests for Changes, Validate Refactors, Enhance CI/CD | Containerisation Exemplar, IaC Patterns | Fix PRs, Continuous Security Agent | Recurring Failure Modes, Runbook Updates |
+| 3 | Dependency Mapping, Upgrade Plan | Contract Summary, Extract Constraints | Generate Documentation, Tribal Knowledge Capture | Change Impact Mapping, Refactoring Opportunities | Migration Readiness, Migration Options | Reachability Mapping, Architecture Risk Scan | Incident Analysis, RCA Summaries |
+| 4 | Exemplar Upgrade PRs | Options Appraisal, Cost Comparison | AI-Assisted Tests, Onboarding Pack | Tests for Changes, Validate Refactors, Enhance CI/CD | Containerisation Exemplar, IaC Patterns | Fix PRs, Continuous Security Agent | Recurring Failure Modes, Runbook Updates |
 
-**Continuous during execution:**
-- Collect P1 task times and P2 quality scores after each activity.
-- Record P8 reusable artefacts as they are produced.
-- Note cross-type handoffs: when one activity's output becomes another type's input.
-
-### Execute: Week 4
 **Late-stage activities that depend on earlier outputs:**
 - L2: Onboarding Material (uses all L2 outputs)
 - L3: Repo QA Assistant (indexes all L3 outputs)
@@ -152,6 +163,11 @@ This template maps activities to the four pilot phases. Adjust based on the spec
 - L5: Dockerfiles/Helm Charts, Evaluate Feasibility and Risk
 - L6: Translate Tech to Business Impact (uses all L6 findings)
 - L7: Improve Logging and Observability (uses gap evidence from earlier L7 activities)
+
+**Continuous during execution:**
+- Collect P1 task times and P2 quality scores after each activity.
+- Record P8 reusable artefacts as they are produced.
+- Note cross-type handoffs: when one activity's output becomes another type's input.
 
 ### Evaluate: Week 5
 - Repeat P3 Developer Sentiment survey.
