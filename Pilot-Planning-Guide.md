@@ -84,11 +84,11 @@ Several activities produce outputs that serve multiple legacy types. When runnin
 
 | Activity | Legacy Type | Consumed by | What it provides |
 |---|---|---|---|
-| Architecture Summary | L3 | L4 (5 activities), L5 (5 activities), L6 (2 activities), L7 (1 activity) | System-level context: component boundaries, interactions, dependencies, hotspots. |
-| Extract SBOM | L1 | L5 (2 activities), L6 (1 activity) | Dependency inventory: component names, versions, licences, EOL status. |
-| Autonomous Code Analysis | L1 | L4 (1 activity), L6 (1 activity) | Hotspot shortlist: complexity, duplication, deprecated APIs. |
-| Log Clustering | L7 | L4 (1 activity), L3 (1 activity) | Error families: ranked clusters of recurring log errors. |
-| Triage SAST/SCA | L6 | L6 (3 activities) | Filtered, prioritised vulnerability list (also benefits from L1-SBOM as input). |
+| [Architecture Summary](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Architecture-Summary.md) | L3 | L4 (5 activities), L5 (5 activities), L6 (2 activities), L7 (1 activity) | System-level context: component boundaries, interactions, dependencies, hotspots. |
+| [Extract SBOM](L1-Software-Out-of-Support/L1-Extract-SBOM.md) | L1 | L5 (2 activities), L6 (1 activity) | Dependency inventory: component names, versions, licences, EOL status. |
+| [Autonomous Code Analysis](L1-Software-Out-of-Support/L1-Autonomous-Code-Analysis.md) | L1 | L4 (1 activity), L6 (1 activity) | Hotspot shortlist: complexity, duplication, deprecated APIs. |
+| [Log Clustering](L7-Recent-Failures-or-Downtime/L7-Log-Clustering.md) | L7 | L4 (1 activity), L3 (1 activity) | Error families: ranked clusters of recurring log errors. |
+| [Triage SAST/SCA](L6-Known-Security-Vulnerabilities/L6-Triage-SAST-SCA.md) | L6 | L6 (3 activities) | Filtered, prioritised vulnerability list (also benefits from L1-SBOM as input). |
 
 ### Effort savings from shared outputs
 
@@ -142,27 +142,27 @@ This template maps activities to the four pilot phases. Adjust based on the spec
 
 **Foundational activities (run first, outputs shared across types):**
 - Week 2:
-  - L1: Autonomous Code Analysis (Days 1-3)
-  - L1: Extract SBOM (Days 3-5)
-  - L3: Documentation Gap Analysis (Days 1-3)
-  - L3: Architecture Summary (Days 3-5)
-  - L6: Triage SAST/SCA (Days 3-5, benefits from SBOM)
-  - L7: Log Clustering (Days 1-5)
+  - [L1: Autonomous Code Analysis](L1-Software-Out-of-Support/L1-Autonomous-Code-Analysis.md) (Days 1-3)
+  - [L1: Extract SBOM](L1-Software-Out-of-Support/L1-Extract-SBOM.md) (Days 3-5)
+  - [L3: Documentation Gap Analysis](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Documentation-Gap-Analysis.md) (Days 1-3)
+  - [L3: Architecture Summary](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Architecture-Summary.md) (Days 3-5)
+  - [L6: Triage SAST/SCA](L6-Known-Security-Vulnerabilities/L6-Triage-SAST-SCA.md) (Days 3-5, benefits from SBOM)
+  - [L7: Log Clustering](L7-Recent-Failures-or-Downtime/L7-Log-Clustering.md) (Days 1-5)
 
 **Type-specific chains using shared outputs as inputs:**
 
 | Week | L1 | L2 | L3 | L4 | L5 | L6 | L7 |
 |---|---|---|---|---|---|---|---|
-| 3 | Dependency Mapping, Upgrade Plan | Contract Summary, Extract Constraints | Generate Documentation, Tribal Knowledge Capture | Change Impact Mapping, Refactoring Opportunities | Migration Readiness, Migration Options | Reachability Mapping, Architecture Risk Scan | Incident Analysis, RCA Summaries |
-| 4 | Exemplar Upgrade PRs | Options Appraisal, Cost Comparison | AI-Assisted Tests, Onboarding Pack | Tests for Changes, Validate Refactors, Enhance CI/CD | Containerisation Exemplar, IaC Patterns | Fix PRs, Continuous Security Agent | Recurring Failure Modes, Runbook Updates |
+| 3 | [Dependency Mapping](L1-Software-Out-of-Support/L1-Dependency-Compatibility-Mapping.md), [Upgrade Plan](L1-Software-Out-of-Support/L1-Upgrade-Plan-Breaking-Change-Notes.md) | [Contract Summary](L2-Expired-Vendor-Contracts/L2-Contract-Summarisation.md), [Extract Constraints](L2-Expired-Vendor-Contracts/L2-Extract-Constraints-Risks-Obligations.md) | [Generate Documentation](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Generate-System-Documentation.md), [Tribal Knowledge Capture](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Tribal-Knowledge-Capture.md) | [Change Impact Mapping](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Change-Impact-Mapping.md), [Refactoring Opportunities](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Refactoring-Opportunities.md) | [Migration Readiness](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Migration-Readiness-Assessment.md), [Migration Options](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Generate-Migration-Options.md) | [Reachability Mapping](L6-Known-Security-Vulnerabilities/L6-Reachability-Mapping.md), [Architecture Risk Scan](L6-Known-Security-Vulnerabilities/L6-Architecture-Risk-Scan.md) | [Incident Analysis](L7-Recent-Failures-or-Downtime/L7-Incident-Analysis.md), [RCA Summaries](L7-Recent-Failures-or-Downtime/L7-RCA-Summaries.md) |
+| 4 | [Exemplar Upgrade PRs](L1-Software-Out-of-Support/L1-Exemplar-Upgrade-PRs.md) | [Options Appraisal](L2-Expired-Vendor-Contracts/L2-Options-Appraisal.md), [Cost Comparison](L2-Expired-Vendor-Contracts/L2-Cost-Comparison-Analysis.md) | [AI-Assisted Tests](L3-Not-Enough-Knowledge-or-Skills-Available/L3-AI-Assisted-Tests.md), [Onboarding Pack](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Onboarding-Pack.md) | [Tests for Changes](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Tests-for-Change-Requests.md), [Validate Refactors](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Validate-Refactors-Exemplar.md), [Enhance CI/CD](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Enhance-CI-CD.md) | [Containerisation Exemplar](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Containerisation-Exemplar.md), [IaC Patterns](L5-Unsuitable-Hardware-or-Physical-Environment/L5-IaC-Patterns.md) | [Fix PRs](L6-Known-Security-Vulnerabilities/L6-Fix-PRs.md), [Continuous Security Agent](L6-Known-Security-Vulnerabilities/L6-Continuous-Security-Agent.md) | [Recurring Failure Modes](L7-Recent-Failures-or-Downtime/L7-Recurring-Failure-Modes.md), [Runbook Updates](L7-Recent-Failures-or-Downtime/L7-Runbook-Updates.md) |
 
 **Late-stage activities that depend on earlier outputs:**
-- L2: Onboarding Material (uses all L2 outputs)
-- L3: Repo QA Assistant (indexes all L3 outputs)
-- L4: Improve Observability (uses L7 patterns if available)
-- L5: Dockerfiles/Helm Charts, Evaluate Feasibility and Risk
-- L6: Translate Tech to Business Impact (uses all L6 findings)
-- L7: Improve Logging and Observability (uses gap evidence from earlier L7 activities)
+- L2: [Onboarding Material](L2-Expired-Vendor-Contracts/L2-Onboarding-Material.md) (uses all L2 outputs)
+- L3: [Repo QA Assistant](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Repo-QA-Assistant.md) (indexes all L3 outputs)
+- L4: [Improve Observability](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Improve-Observability.md) (uses L7 patterns if available)
+- L5: [Dockerfiles/Helm Charts](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Dockerfiles-Helm-Charts.md), [Evaluate Feasibility and Risk](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Evaluate-Feasibility-Risk.md)
+- L6: [Translate Tech to Business Impact](L6-Known-Security-Vulnerabilities/L6-Translate-Tech-to-Business-Impact.md) (uses all L6 findings)
+- L7: [Improve Logging and Observability](L7-Recent-Failures-or-Downtime/L7-Improve-Logging-Observability.md) (uses gap evidence from earlier L7 activities)
 
 **Continuous during execution:**
 - Collect P1 task times and P2 quality scores after each activity.
@@ -207,50 +207,50 @@ These estimates assume all activities within the selected types are run. In prac
 
 | Activity | Unit | Per-unit time |
 |---|---|---|
-| L1-Extract-SBOM | per repo | 1-1.5h |
-| L1-Autonomous-Code-Analysis | per repo | 1h |
-| L1-Dependency-Compatibility-Mapping | per repo | 1-1.5h |
-| L1-Upgrade-Plan-Breaking-Change-Notes | per repo | 1-1.5h |
-| L1-Exemplar-Upgrade-PRs | per dependency | 1.5h |
-| L2-Contract-Summarisation | per contract | 1-2h |
-| L2-Extract-Constraints-Risks-Obligations | per contract | 1-2h |
-| L2-Cost-Comparison-Analysis | per vendor decision | 1-2h |
-| L2-Options-Appraisal | per vendor decision | 1.5-2h |
-| L2-Onboarding-Material | per system | 1.5-2h |
-| L3-Documentation-Gap-Analysis | per repo | 1-2h |
-| L3-Architecture-Summary | per system | 1-1.5h |
-| L3-Generate-System-Documentation | per doc section | 45min |
-| L3-AI-Assisted-Tests | per module | 1.5-2h |
-| L3-Tribal-Knowledge-Capture | per SME interview | 2h |
-| L4-Change-Impact-Mapping | per change request | 1.5-2h |
-| L4-Tests-for-Change-Requests | per change request | 1.5h |
-| L4-Refactoring-Opportunities | per repo | 1.5-2h |
-| L4-Validate-Refactors-Exemplar | per refactoring item | 2h |
-| L4-Enhance-CI-CD | per pipeline | 3h |
-| L4-Improve-Observability | per service | 3h |
-| L5-Migration-Readiness-Assessment | per workload | 2h |
-| L5-Containerisation-Exemplar | per component | 3h |
-| L5-Dockerfiles-Helm-Charts | per component | half day |
-| L6-Triage-SAST-SCA | per repo | 2h |
-| L6-Reachability-Mapping | per finding | 5-10min |
-| L6-Architecture-Risk-Scan | per repo | 2-3h |
-| L6-Fix-PRs | per finding | 30min-1.5h |
-| L6-Translate-Tech-to-Business-Impact | per finding | 15-20min |
-| L6-Continuous-Security-Agent | per repo | 2h |
-| L7-Log-Clustering | per service | 1.5-2.5h |
-| L7-RCA-Summaries | per incident | 30min |
-| L7-Improve-Logging-Observability | per service | 2-3h |
-| L7-Runbook-Updates | per failure mode | 20-30min |
+| [L1-Extract-SBOM](L1-Software-Out-of-Support/L1-Extract-SBOM.md) | per repo | 1-1.5h |
+| [L1-Autonomous-Code-Analysis](L1-Software-Out-of-Support/L1-Autonomous-Code-Analysis.md) | per repo | 1h |
+| [L1-Dependency-Compatibility-Mapping](L1-Software-Out-of-Support/L1-Dependency-Compatibility-Mapping.md) | per repo | 1-1.5h |
+| [L1-Upgrade-Plan-Breaking-Change-Notes](L1-Software-Out-of-Support/L1-Upgrade-Plan-Breaking-Change-Notes.md) | per repo | 1-1.5h |
+| [L1-Exemplar-Upgrade-PRs](L1-Software-Out-of-Support/L1-Exemplar-Upgrade-PRs.md) | per dependency | 1.5h |
+| [L2-Contract-Summarisation](L2-Expired-Vendor-Contracts/L2-Contract-Summarisation.md) | per contract | 1-2h |
+| [L2-Extract-Constraints-Risks-Obligations](L2-Expired-Vendor-Contracts/L2-Extract-Constraints-Risks-Obligations.md) | per contract | 1-2h |
+| [L2-Cost-Comparison-Analysis](L2-Expired-Vendor-Contracts/L2-Cost-Comparison-Analysis.md) | per vendor decision | 1-2h |
+| [L2-Options-Appraisal](L2-Expired-Vendor-Contracts/L2-Options-Appraisal.md) | per vendor decision | 1.5-2h |
+| [L2-Onboarding-Material](L2-Expired-Vendor-Contracts/L2-Onboarding-Material.md) | per system | 1.5-2h |
+| [L3-Documentation-Gap-Analysis](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Documentation-Gap-Analysis.md) | per repo | 1-2h |
+| [L3-Architecture-Summary](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Architecture-Summary.md) | per system | 1-1.5h |
+| [L3-Generate-System-Documentation](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Generate-System-Documentation.md) | per doc section | 45min |
+| [L3-AI-Assisted-Tests](L3-Not-Enough-Knowledge-or-Skills-Available/L3-AI-Assisted-Tests.md) | per module | 1.5-2h |
+| [L3-Tribal-Knowledge-Capture](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Tribal-Knowledge-Capture.md) | per SME interview | 2h |
+| [L4-Change-Impact-Mapping](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Change-Impact-Mapping.md) | per change request | 1.5-2h |
+| [L4-Tests-for-Change-Requests](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Tests-for-Change-Requests.md) | per change request | 1.5h |
+| [L4-Refactoring-Opportunities](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Refactoring-Opportunities.md) | per repo | 1.5-2h |
+| [L4-Validate-Refactors-Exemplar](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Validate-Refactors-Exemplar.md) | per refactoring item | 2h |
+| [L4-Enhance-CI-CD](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Enhance-CI-CD.md) | per pipeline | 3h |
+| [L4-Improve-Observability](L4-Cannot-Meet-Current-or-Future-Business-Needs/L4-Improve-Observability.md) | per service | 3h |
+| [L5-Migration-Readiness-Assessment](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Migration-Readiness-Assessment.md) | per workload | 2h |
+| [L5-Containerisation-Exemplar](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Containerisation-Exemplar.md) | per component | 3h |
+| [L5-Dockerfiles-Helm-Charts](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Dockerfiles-Helm-Charts.md) | per component | half day |
+| [L6-Triage-SAST-SCA](L6-Known-Security-Vulnerabilities/L6-Triage-SAST-SCA.md) | per repo | 2h |
+| [L6-Reachability-Mapping](L6-Known-Security-Vulnerabilities/L6-Reachability-Mapping.md) | per finding | 5-10min |
+| [L6-Architecture-Risk-Scan](L6-Known-Security-Vulnerabilities/L6-Architecture-Risk-Scan.md) | per repo | 2-3h |
+| [L6-Fix-PRs](L6-Known-Security-Vulnerabilities/L6-Fix-PRs.md) | per finding | 30min-1.5h |
+| [L6-Translate-Tech-to-Business-Impact](L6-Known-Security-Vulnerabilities/L6-Translate-Tech-to-Business-Impact.md) | per finding | 15-20min |
+| [L6-Continuous-Security-Agent](L6-Known-Security-Vulnerabilities/L6-Continuous-Security-Agent.md) | per repo | 2h |
+| [L7-Log-Clustering](L7-Recent-Failures-or-Downtime/L7-Log-Clustering.md) | per service | 1.5-2.5h |
+| [L7-RCA-Summaries](L7-Recent-Failures-or-Downtime/L7-RCA-Summaries.md) | per incident | 30min |
+| [L7-Improve-Logging-Observability](L7-Recent-Failures-or-Downtime/L7-Improve-Logging-Observability.md) | per service | 2-3h |
+| [L7-Runbook-Updates](L7-Recent-Failures-or-Downtime/L7-Runbook-Updates.md) | per failure mode | 20-30min |
 
 The following 7 activities are **one-shot** and do not benefit from repetition within the same pilot. They are synthesis or setup tasks that consolidate upstream outputs into a single artefact:
 
-- L3-Onboarding-Pack (bundles all L3 outputs into one pack)
-- L3-Repo-QA-Assistant (one-time setup; ongoing use is consumption, not repetition)
-- L5-Generate-Migration-Options (one options paper per migration decision)
-- L5-IaC-Patterns (one set of starter templates per landing zone)
-- L5-Evaluate-Feasibility-Risk (one consolidation of all L5 evidence)
-- L7-Incident-Analysis (one-pass clustering of the full incident window)
-- L7-Recurring-Failure-Modes (one synthesis register from upstream analyses)
+- [L3-Onboarding-Pack](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Onboarding-Pack.md) (bundles all L3 outputs into one pack)
+- [L3-Repo-QA-Assistant](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Repo-QA-Assistant.md) (one-time setup; ongoing use is consumption, not repetition)
+- [L5-Generate-Migration-Options](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Generate-Migration-Options.md) (one options paper per migration decision)
+- [L5-IaC-Patterns](L5-Unsuitable-Hardware-or-Physical-Environment/L5-IaC-Patterns.md) (one set of starter templates per landing zone)
+- [L5-Evaluate-Feasibility-Risk](L5-Unsuitable-Hardware-or-Physical-Environment/L5-Evaluate-Feasibility-Risk.md) (one consolidation of all L5 evidence)
+- [L7-Incident-Analysis](L7-Recent-Failures-or-Downtime/L7-Incident-Analysis.md) (one-pass clustering of the full incident window)
+- [L7-Recurring-Failure-Modes](L7-Recent-Failures-or-Downtime/L7-Recurring-Failure-Modes.md) (one synthesis register from upstream analyses)
 
 ### 7b) Department continuation beyond the pilot
 
@@ -259,8 +259,8 @@ The pilot produces reusable artefacts, validated prompts, and measured approache
 **Run again on new scope.** Most activities (34 of 41) can be re-run whenever new repositories, modules, contracts, or incidents come into scope. For example: re-run SBOM extraction when a new service is onboarded; repeat AI-assisted test generation as new modules are developed; run contract summarisation for newly expired agreements. The prompt templates and output formats are designed for self-service.
 
 **Keep running.** Two activities set up ongoing tools that persist beyond the pilot:
-- L6-Continuous-Security-Agent: the agent monitors for new findings automatically. The department keeps it running and reviews alerts on a regular cadence.
-- L3-Repo-QA-Assistant: the indexed knowledge base answers questions on demand. The department maintains the index as the codebase changes.
+- [L6-Continuous-Security-Agent](L6-Known-Security-Vulnerabilities/L6-Continuous-Security-Agent.md): the agent monitors for new findings automatically. The department keeps it running and reviews alerts on a regular cadence.
+- [L3-Repo-QA-Assistant](L3-Not-Enough-Knowledge-or-Skills-Available/L3-Repo-QA-Assistant.md): the indexed knowledge base answers questions on demand. The department maintains the index as the codebase changes.
 
 **Reuse the template.** Every activity produces a structured output format (RCA template, onboarding pack format, options matrix, compatibility note). These templates can be reused for future work without AI assistance, or with AI to accelerate drafting. The Playbook captures these as reusable assets.
 
