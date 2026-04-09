@@ -23,6 +23,45 @@ L7-Recent-Failures-or-Downtime/      6 activities
 3. **Select activities** from the relevant type folders. Not every activity needs to be run; choose based on pilot hypotheses.
 4. **Follow the 5-week pilot structure**: Prepare, Assess (Week 1), Execute (Weeks 2-4), Evaluate (Week 5).
 
+## Using the Pilot Orchestrator Agent
+
+This repository now treats activities as mostly offline work completed by the pilot team and client stakeholders. The agents in this repo are used to orchestrate tracking, artefact validation, and reporting.
+
+### Start a new pilot
+
+1. Open Copilot Chat and select the **Pilot Orchestrator** agent.
+2. Provide:
+	- Pilot identifier (for example: `hmrc-hr-platform-2026q2`)
+	- Target system name
+	- Completed LITRAF report content or path
+3. The orchestrator will initialize:
+	- `.github/pilots/<pilot-id>/litraf-report.md`
+	- `.github/pilots/<pilot-id>/state.yaml`
+	- `.github/pilots/<pilot-id>/tracker.md`
+	- phase folders: `prepare/`, `assess/`, `execute/`, `evaluate/`, `report/`
+4. The orchestrator will select in-scope activities based on the LITRAF report and build dependency-aware tracker rows.
+5. During execution, when an activity is completed offline, provide the outcome artefact(s) to the orchestrator.
+6. The orchestrator will call the **Pilot Artefact Gatekeeper** to validate evidence before marking an activity `done`.
+
+### Resume an existing pilot
+
+1. Open Copilot Chat and select the **Pilot Orchestrator** agent.
+2. Provide the pilot identifier.
+3. The orchestrator will load:
+	- `.github/pilots/<pilot-id>/state.yaml` (machine-readable state)
+	- `.github/pilots/<pilot-id>/tracker.md` (human-readable progress)
+4. It will resume from the highest-priority item in `waiting-on-human` or `ready` status.
+5. After you provide new offline outputs, the orchestrator validates them and updates phase progression.
+
+### Final reporting
+
+When Evaluate is complete, the orchestrator delegates report generation to **Pilot Report Synthesiser**, which builds:
+
+- `.github/pilots/<pilot-id>/report/final-report.md`
+- `.github/pilots/<pilot-id>/report/continuation-roadmap.md`
+
+Reports are generated from stored artefacts and tracker state, not from chat memory.
+
 ## Activity page format
 
 Each activity follows a 12-section template:
