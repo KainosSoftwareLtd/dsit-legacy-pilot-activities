@@ -28,7 +28,8 @@ L7-Recent-Failures-or-Downtime/      6 activities
 This repository includes reusable Copilot custom agents that can be copied into client repositories.
 
 - Shared agent catalog location: [reusable-agents/](reusable-agents/)
-- Current agent: [reusable-agents/architecture-discovery-and-dsl.agent.md](reusable-agents/architecture-discovery-and-dsl.agent.md)
+- Agent 1: [reusable-agents/architecture-discovery-and-dsl.agent.md](reusable-agents/architecture-discovery-and-dsl.agent.md)
+- Agent 2: [reusable-agents/behavior-baseline-and-onboarding.agent.md](reusable-agents/behavior-baseline-and-onboarding.agent.md)
 
 ### Architecture Discovery and DSL Agent
 
@@ -65,6 +66,37 @@ Required evidence sources:
 - Every architectural claim should cite repository evidence.
 - Missing evidence categories should be logged as explicit gaps.
 - Previous architecture outputs should not be deleted.
+
+### Behavior Baseline and Onboarding Agent
+
+Use this agent to document how the system currently behaves so teams can:
+- understand existing behavior during onboarding,
+- identify ambiguous areas for product-team confirmation offline,
+- create a source-grounded current-state behavior baseline.
+
+Important scope boundary:
+- It does not infer or define expected behavior.
+- It does not judge correctness against product intent.
+- It only documents observed behavior from available evidence.
+
+What it generates (per run):
+- behavior-baseline.md
+- system-behavior-catalog.md
+- onboarding-guide.md
+
+Default output behavior:
+- Writes latest artifacts to docs/behavior-baseline/
+- Preserves run history in docs/behavior-baseline/history/<timestamp>/
+- Updates docs/behavior-baseline/history/index.md for traceability
+
+How to use in a client repo:
+1. Copy [reusable-agents/behavior-baseline-and-onboarding.agent.md](reusable-agents/behavior-baseline-and-onboarding.agent.md) into the client repo at .github/agents/behavior-baseline-and-onboarding.agent.md.
+2. Open Copilot Chat and select Behavior Baseline and Onboarding Agent.
+3. Run one of these prompts:
+	- Run Behavior Baseline and Onboarding Agent for this repository.
+	- Document current behavior for services in /src and write to docs/behavior-baseline/.
+	- Produce onboarding behavior docs from this monolith without expected-behavior comparison.
+4. Share the generated ambiguity list with product stakeholders for offline validation.
 
 ## Activity page format
 
