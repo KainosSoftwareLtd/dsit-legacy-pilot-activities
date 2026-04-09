@@ -23,6 +23,49 @@ L7-Recent-Failures-or-Downtime/      6 activities
 3. **Select activities** from the relevant type folders. Not every activity needs to be run; choose based on pilot hypotheses.
 4. **Follow the 5-week pilot structure**: Prepare, Assess (Week 1), Execute (Weeks 2-4), Evaluate (Week 5).
 
+## Reusable agents
+
+This repository includes reusable Copilot custom agents that can be copied into client repositories.
+
+- Shared agent catalog location: [reusable-agents/](reusable-agents/)
+- Current agent: [reusable-agents/architecture-discovery-and-dsl.agent.md](reusable-agents/architecture-discovery-and-dsl.agent.md)
+
+### Architecture Discovery and DSL Agent
+
+Use this agent when a team needs a source-grounded architecture view of an existing codebase.
+
+What it generates (per run):
+- Markdown architecture summary
+- C4 Context diagram (Mermaid)
+- C4 Container diagram (Mermaid)
+- Structurizr DSL
+
+Default output behavior:
+- Writes latest artifacts to docs/architecture/
+- Preserves run history in docs/architecture/history/<timestamp>/
+- Updates docs/architecture/history/index.md for traceability
+
+Required evidence sources:
+- Source code and configuration files
+- CI/CD pipeline definitions
+- Infrastructure manifests (Docker, Helm, Terraform)
+
+### How to use in a client repo
+
+1. Copy [reusable-agents/architecture-discovery-and-dsl.agent.md](reusable-agents/architecture-discovery-and-dsl.agent.md) into the client repo at .github/agents/architecture-discovery-and-dsl.agent.md.
+2. Open Copilot Chat and select Architecture Discovery and DSL Agent from the agent picker.
+3. Run one of these prompts:
+	- Run Architecture Discovery and DSL Agent for this repository.
+	- Generate architecture artifacts for services in /src and write to docs/architecture/.
+	- Create C4 context/container plus Structurizr DSL for this monolith.
+4. Review outputs in docs/architecture/ and validate that each major claim is backed by evidence citations.
+
+### Governance expectations
+
+- Every architectural claim should cite repository evidence.
+- Missing evidence categories should be logged as explicit gaps.
+- Previous architecture outputs should not be deleted.
+
 ## Activity page format
 
 Each activity follows a 12-section template:
