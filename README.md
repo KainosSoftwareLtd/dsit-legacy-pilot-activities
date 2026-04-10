@@ -23,6 +23,51 @@ L7-Recent-Failures-or-Downtime/      6 activities
 3. **Select activities** from the relevant type folders. Not every activity needs to be run; choose based on pilot hypotheses.
 4. **Follow the 5-week pilot structure**: Prepare, Assess (Week 1), Execute (Weeks 2-4), Evaluate (Week 5).
 
+## Reusable agents
+
+This repository includes reusable custom agents under [reusable-agents/legacy-architecture-docs.agent.md](reusable-agents/legacy-architecture-docs.agent.md).
+
+Use this agent when a pilot codebase has limited or outdated architecture information and you need a living architecture pack plus C4 DSL diagrams that can be updated over time.
+
+### Copy to a pilot codebase repository
+
+1. In the pilot repository, create the target folder: `.github/agents/`.
+2. Copy [reusable-agents/legacy-architecture-docs.agent.md](reusable-agents/legacy-architecture-docs.agent.md) from this repo into the pilot repo as `.github/agents/legacy-architecture-docs.agent.md`.
+3. Commit the new agent file so the whole team can use the same architecture-documentation workflow.
+
+### Use the agent for an initial architecture baseline
+
+1. In Copilot Chat, switch to the `Legacy Architecture Living Docs` agent.
+2. Provide system scope and known evidence sources (repo paths, config files, infra manifests, APIs, ops docs, contracts, SME notes).
+3. Ask for a first-pass architecture pack with strict evidence tagging and confidence levels.
+
+Example prompt:
+
+"Create an initial living architecture pack for <system-name>. Use strict evidence policy, produce C4 Context and Container DSL, and capture unknowns/questions for validation."
+
+Expected outputs:
+
+1. `architecture/<system-name>/` document set.
+2. C4 DSL files for context and container views.
+3. Confidence summary and an explicit unknowns/assumptions list.
+
+### Iterate after system changes
+
+1. Provide the change context (new integration, dependency upgrade, deployment/runtime change, incident fix, contract change).
+2. Ask the agent to update only impacted sections and append a dated entry in `CHANGELOG.md`.
+3. Re-generate only affected C4 DSL views and keep diagram identifiers stable.
+
+Example prompt:
+
+"Update the living architecture for <system-name> after the recent change. Identify impacted docs/diagrams, apply minimal updates, append changelog entries, and list follow-up validation questions."
+
+### Interaction tips
+
+1. Always include evidence locations in your prompt to reduce ambiguity.
+2. Ask for confidence tags (`High`, `Medium`, `Low`) on all major claims.
+3. Request unresolved questions as a checklist for SME walkthroughs.
+4. Use short, repeatable update prompts after each material system change to keep docs truly living.
+
 ## Activity page format
 
 Each activity follows a 12-section template:
