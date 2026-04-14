@@ -1,7 +1,7 @@
 pilot:
   id: <pilot-id>
-  target_system: <target-system>
-  litraf_report_path: .github/pilots/<pilot-id>/litraf-report.md
+  target_systems: []
+  litraf_reports: {}
   selected_legacy_types: []
   selected_clusters: []
   current_phase: prepare
@@ -17,7 +17,8 @@ pilot:
 phase_gates:
   prepare:
     required_artefacts:
-      - .github/pilots/<pilot-id>/litraf-report.md
+      - LITRAF report artefacts for in-scope systems where provided
+      - scoped activity discovery artefact when LITRAF reports are unavailable
       - .github/pilots/<pilot-id>/tracker.md
       - .github/pilots/<pilot-id>/state.yaml
     notes: selected in-scope activities and dependencies must be initialized before assess starts
@@ -41,9 +42,10 @@ phase_gates:
     notes: report inputs must be validated before report starts
   report:
     required_artefacts:
-      - .github/pilots/<pilot-id>/report/final-report.md
+      - .github/pilots/<pilot-id>/report/final-report-private.md
+      - .github/pilots/<pilot-id>/report/playbook-public.md
       - .github/pilots/<pilot-id>/report/continuation-roadmap.md
-    notes: report must be generated from stored artefacts and tracker state
+    notes: report outputs must be generated from stored artefacts and tracker state, with public playbook anonymized
 
 summary:
   ready_activities: []
@@ -53,3 +55,8 @@ summary:
   next_actions: []
 
 activities: []
+
+outputs:
+  final_report_private: .github/pilots/<pilot-id>/report/final-report-private.md
+  playbook_public: .github/pilots/<pilot-id>/report/playbook-public.md
+  continuation_roadmap: .github/pilots/<pilot-id>/report/continuation-roadmap.md

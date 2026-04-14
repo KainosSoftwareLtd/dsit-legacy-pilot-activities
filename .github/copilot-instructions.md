@@ -6,13 +6,23 @@
 - Generate reports from artefacts and tracker state, not from chat memory.
 - Preserve phase isolation: complete the current phase gate before advancing the pilot to the next phase.
 
+## Multi-System Pilot Boundaries
+
+- A pilot can span one or more target systems.
+- For multi-system pilots, each target system has its own completed LITRAF assessment and score.
+- The pilot tracker must coordinate activities across all in-scope systems in a single pilot view.
+- Do not collapse multi-system evidence into one synthetic score unless that aggregation is supplied explicitly by humans.
+- Track cross-system dependencies explicitly through activity dependencies and shared handoff entries.
+
 ## Pilot Folder Layout
 
 Every pilot should use this structure:
 
 ```text
 .github/pilots/<pilot-id>/
-  litraf-report.md
+  litraf-reports/
+    <system-a>.md
+    <system-b>.md
   state.yaml
   tracker.md
   prepare/
@@ -41,6 +51,7 @@ Each tracked activity should record:
 - `activity_id`
 - `activity_name`
 - `legacy_type`
+- `target_systems`
 - `phase`
 - `status`
 - `dependencies`
@@ -61,13 +72,32 @@ Each tracked activity should record:
 - If an activity produces a shared output used by downstream activities, record that handoff explicitly in the tracker.
 - When confidence is low because an input is missing or partial, record the assumption in the artefact.
 
+## LITRAF Integration
+
+- Ask for completed LITRAF report artefacts before pilot kickoff where they are available.
+- If direct LITRAF access is unavailable, run a structured discovery conversation to identify in-scope systems, legacy types, risks, and candidate activities.
+- For multi-system pilots, store one LITRAF report per system under `litraf-reports/` and map each system to its report path in `state.yaml` when provided.
+- Record discovery outputs as a Prepare artefact when LITRAF reports are not provided.
+- Use available LITRAF and discovery outputs to determine scope and sequencing inputs during Prepare.
+- LITRAF inputs guide prioritization and risk context; they do not replace tracker-level dependency management.
+
+## Report And Playbook Separation
+
+- Produce two distinct outputs in the Report phase:
+  - private report for DSIT, containing pilot-organization-specific details and evidence
+  - public playbook, generalized and anonymized for publication
+- The private report may include specific organization names, architecture details, constraints, and sensitive context.
+- The public playbook must not include client-identifying details, direct references to pilot organizations, or sensitive operational specifics.
+- If anonymization confidence is low, mark the playbook output as `waiting-on-human` for editorial review.
+
 ## Phase Gates
 
 ### Prepare
 
 Must produce:
 
-- `litraf-report.md`
+- LITRAF report artefacts for in-scope systems where provided
+- scoped activity discovery artefact when LITRAF reports are unavailable
 - selected in-scope activities
 - initial `tracker.md`
 - initial `state.yaml`
@@ -101,7 +131,8 @@ Must produce:
 
 Must produce:
 
-- final pilot report
+- private final pilot report for DSIT
+- public playbook for publication
 - continuation and backlog recommendation
 
 ## Agent Behavior
