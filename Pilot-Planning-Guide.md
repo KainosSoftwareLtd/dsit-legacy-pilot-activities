@@ -127,7 +127,8 @@ This template maps activities to the four pilot phases. Adjust based on the spec
 - L7: Log Clustering (Days 1-5)
 
 **Baseline measurement:**
-- P3 Developer Sentiment survey
+- Use [Metrics and Measurement Guidance](Metrics.md) as the canonical definition for P1 to P8 and for evidence capture expectations.
+- P3 Developer Sentiment using the SPACE survey
 - Current-state P4 to P7 metrics
 - Manual task-time estimates for P1 comparison
 
@@ -154,7 +155,8 @@ This template maps activities to the four pilot phases. Adjust based on the spec
 - L7: Improve Logging and Observability (uses gap evidence from earlier L7 activities)
 
 ### Evaluate: Week 5
-- Repeat P3 Developer Sentiment survey.
+- Review results against [Metrics and Measurement Guidance](Metrics.md) before finalising the scorecard and evidence pack.
+- Repeat P3 Developer Sentiment using the SPACE survey.
 - Capture updated P4 to P7 metrics.
 - Finalise P8 artefact count.
 - Produce evidence pack and Four-Box summary per legacy type.
