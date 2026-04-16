@@ -17,7 +17,7 @@ Use the **Pilot Orchestrator** whenever you:
 - Complete an activity offline (it validates artefacts before marking `done`)
 - Need to coordinate across multiple legacy types and systems
 - Want automated dependency tracking and phase gating
-- Need final pilot reporting (it delegates to the Report Synthesiser)
+- Need final pilot reporting (it delegates private-report generation to the Report Synthesiser)
 
 ### How the agent supports your pilot plan
 
@@ -38,7 +38,7 @@ The Pilot Orchestrator:
 2. **Session 2 (Assess):** Complete Assess phase activities offline → provide outputs to agent for validation
 3. **Sessions 3-N (Execute):** Pick `ready` activities from agent's tracker → complete offline using activity pages → submit artefacts to agent for validation and state update
 4. **Session N+1 (Evaluate):** Provide evaluation evidence to agent
-5. **Session N+2 (Report):** Agent delegates to Report Synthesiser; you review outputs
+5. **Session N+2 (Report):** Agent delegates to Report Synthesiser for the private DSIT report
 
 See **README.md** for detailed agent usage workflows (new pilot, resume, execution, reporting).
 

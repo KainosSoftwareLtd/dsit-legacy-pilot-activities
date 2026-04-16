@@ -73,7 +73,7 @@ Every pilot follows a five-phase structure. The orchestrator enforces phase gate
 - Gate: Evaluation evidence must be complete before Report phase
 
 **Report** (post-pilot)
-- Output: Private pilot report, public playbook, continuation recommendations
+- Output: Private pilot report
 - Process: Orchestrator delegates to Pilot Report Synthesiser; you review and approve outputs
 
 ### Workflow: starting a new pilot
@@ -141,12 +141,10 @@ When returning to an in-progress pilot:
 **Report phase:**
 
 1. The orchestrator delegates to **Pilot Report Synthesiser**.
-2. Say: "Generate the final report. Private report for DSIT, public playbook for publication."
+2. Say: "Generate the final private report for DSIT."
 3. The synthesiser builds:
-   - `.github/pilots/{pilot-id}/report/final-report.md` (private, includes client-specific details)
-   - `.github/pilots/{pilot-id}/report/playbook.md` (public, anonymized and generalized)
-   - `.github/pilots/{pilot-id}/report/continuation-roadmap.md` (backlog and recommendations)
-4. Review outputs and request edits if needed.
+   - `.github/pilots/{pilot-id}/report/final-report-private.md` (private, includes client-specific details and continuation recommendations)
+4. Review report and request edits if needed.
 
 ### Multi-system pilots
 

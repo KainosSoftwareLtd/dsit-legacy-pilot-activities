@@ -81,14 +81,11 @@ Each tracked activity should record:
 - Use available LITRAF and discovery outputs to determine scope and sequencing inputs during Prepare.
 - LITRAF inputs guide prioritization and risk context; they do not replace tracker-level dependency management.
 
-## Report And Playbook Separation
+## Report Output Policy
 
-- Produce two distinct outputs in the Report phase:
+- Produce one output in the Report phase:
   - private report for DSIT, containing pilot-organization-specific details and evidence
-  - public playbook, generalized and anonymized for publication
 - The private report may include specific organization names, architecture details, constraints, and sensitive context.
-- The public playbook must not include client-identifying details, direct references to pilot organizations, or sensitive operational specifics.
-- If anonymization confidence is low, mark the playbook output as `waiting-on-human` for editorial review.
 
 ## Phase Gates
 
@@ -132,8 +129,6 @@ Must produce:
 Must produce:
 
 - private final pilot report for DSIT
-- public playbook for publication
-- continuation and backlog recommendation
 
 ## Agent Behavior
 

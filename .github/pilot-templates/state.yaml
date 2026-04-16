@@ -43,9 +43,7 @@ phase_gates:
   report:
     required_artefacts:
       - .github/pilots/<pilot-id>/report/final-report-private.md
-      - .github/pilots/<pilot-id>/report/playbook-public.md
-      - .github/pilots/<pilot-id>/report/continuation-roadmap.md
-    notes: report outputs must be generated from stored artefacts and tracker state, with public playbook anonymized
+    notes: report output must be generated from stored artefacts and tracker state
 
 summary:
   ready_activities: []
@@ -58,5 +56,3 @@ activities: []
 
 outputs:
   final_report_private: .github/pilots/<pilot-id>/report/final-report-private.md
-  playbook_public: .github/pilots/<pilot-id>/report/playbook-public.md
-  continuation_roadmap: .github/pilots/<pilot-id>/report/continuation-roadmap.md

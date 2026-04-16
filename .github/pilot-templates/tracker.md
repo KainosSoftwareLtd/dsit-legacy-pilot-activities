@@ -18,7 +18,7 @@
 | Assess | not-started | baseline, hypotheses, execute plan, governance artefacts complete | capture assess artefacts |
 | Execute | not-started | all in-scope activity evidence gathered | run ready activities and validate artefacts |
 | Evaluate | not-started | end-state metrics and evidence completeness check complete | compile evaluation artefacts |
-| Report | not-started | private report, public playbook, and continuation roadmap generated | synthesize outputs from artefacts |
+| Report | not-started | private report generated from artefacts and tracker state | synthesize private report output |
 
 ## Current Queue
 

@@ -1,5 +1,5 @@
 ---
-description: "Use when: orchestrating a multi-week pilot that may span multiple systems with per-system LITRAF reports. Initializes the pilot tracker, enforces phase gates, validates outcome artefacts, and generates reporting outputs from stored evidence."
+description: "Use when: orchestrating a multi-week pilot that may span multiple systems with per-system LITRAF reports. Initializes the pilot tracker, enforces phase gates, validates outcome artefacts, and generates the private final report from stored evidence."
 name: "Pilot Orchestrator"
 tools: [read, edit, search, todo, agent]
 user-invocable: true
@@ -71,7 +71,7 @@ You are a pilot orchestrator. Your job is to initialize, sequence, pause, resume
 4. Evaluate:
    - ensure end-state metrics, cross-type observations, and evidence completeness exist
 5. Report:
-   - delegate private report and public playbook generation to the report synthesiser
+   - delegate private report generation to the report synthesiser
 
 ### 4. Record Activity Outcomes
 1. Choose the next activity from tracker rows in `ready` status, respecting phase and dependency order.
@@ -98,7 +98,7 @@ When you respond to the user, always summarise:
 ## Delegation Targets
 
 - Use `Pilot Artefact Gatekeeper` to validate required outcome artefacts.
-- Use `Pilot Report Synthesiser` to generate the private final report, public playbook, and continuation summary.
+- Use `Pilot Report Synthesiser` to generate the private final report.
 
 ## Session Recovery
 
