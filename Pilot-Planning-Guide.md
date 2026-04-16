@@ -16,6 +16,8 @@ This guide helps teams:
 - Plan a multi-type pilot that shares outputs across activity chains.
 - Estimate total effort realistically.
 
+For architecture-related activities in this repository, users should start with the `Architecture Docs and Governance Orchestrator`. The orchestrator is the single user entrypoint and it invokes internal review, ADR, drift, and consistency stages automatically when needed.
+
 ---
 
 ## 2) From LITRAF scores to activity selection
@@ -81,6 +83,10 @@ These combinations occur frequently in practice. The rationale explains why they
 Several activities produce outputs that serve multiple legacy types. When running a multi-type pilot, these **hub activities** are done once and their outputs are reused across activity chains.
 
 ### Hub activities
+
+Architecture workflow note:
+- When a hub activity requires architecture generation, architecture update, legacy inference, or architecture validation, use the [Architecture Docs and Governance Orchestrator](reusable-agents/architecture/architecture-docs-governance.agent.md).
+- Do not route users directly to the supporting architecture subagents. The orchestrator handles those phases internally.
 
 | Activity | Legacy Type | Consumed by | What it provides |
 |---|---|---|---|
@@ -150,6 +156,10 @@ This template maps activities to the four pilot phases. Adjust based on the spec
   - [L7: Log Clustering](L7-Recent-Failures-or-Downtime/L7-Log-Clustering.md) (Days 1-5)
 
 **Type-specific chains using shared outputs as inputs:**
+
+Architecture execution note:
+- For any architecture-producing or architecture-dependent activity, start with the Architecture Docs and Governance Orchestrator and provide the target system, mode (`greenfield`, `legacy`, or `hybrid`), and relevant evidence sources.
+- Let the orchestrator decide whether to run internal review, ADR governance, drift validation, and consistency gates before closure.
 
 | Week | L1 | L2 | L3 | L4 | L5 | L6 | L7 |
 |---|---|---|---|---|---|---|---|

@@ -1,0 +1,28 @@
+version: 1
+system_name: <system-name>
+mode: <greenfield|legacy|hybrid>
+current_phase: generate
+workflow_status: BLOCKED
+last_updated: <yyyy-mm-dd>
+next_handoff_target: Architecture Security Review
+architecture_philosophy: <default|event-driven|layered|domain-driven|other>
+human_overrides: []
+approved_deviations: []
+persisted_preferences: []
+gates:
+  security_review:
+    status: pending
+    blocker_count: 0
+    blocking_severity: []
+  adr_required:
+    status: not-required
+  adr_quality_gate:
+    status: not-required
+  consistency_gate:
+    status: pending
+  drift_required:
+    status: not-required
+  drift_validation:
+    status: not-required
+blockers: []
+notes: []

@@ -33,6 +33,7 @@ Sub tasks:
 3. If the codebase supports it, generate a high-level component diagram (Mermaid or similar) showing the main components and their connections.
 4. Walk through the draft with an SME to validate accuracy, correct any misrepresentations, and add context the AI could not infer (e.g. "this service was originally part of the monolith and still has tight coupling").
 5. Finalise the summary (1-2 pages plus diagram) and publish in the agreed documentation location.
+	- Standard path: `docs/architecture/<system-name>/`.
 6. Log time spent (start/end timestamps) for P1 measurement.
 
 > **Sequencing:** can run in parallel with or shortly after Documentation Gap Analysis. Schedule in Week 1-2.
@@ -75,6 +76,7 @@ Use department-approved tools. Names below are illustrative examples only.
 | Category | Examples | Notes |
 |---|---|---|
 | AI code reasoning | an enterprise LLM with repository access |  |
+| Reusable architecture agent | [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) | Use the orchestrator as the only entrypoint; it will run any required internal review and governance stages |
 | Diagramming | Mermaid (AI can generate), draw.io, PlantUML |  |
 | Documentation platform | Markdown (in repo), Confluence, SharePoint |  |
 | Not typically needed | SCA/SBOM tools, SIEM tools |  |
@@ -102,6 +104,7 @@ Expandability: this activity can be repeated per system or service. Each additio
 ## 8) Outputs and artefacts
 - Architecture summary (1-2 pages, Markdown or Word): components, responsibilities, interaction patterns, external integrations, dependencies, and hotspots.
 - Component diagram (Mermaid or similar) if the codebase supports it.
+- Store artefacts under `docs/architecture/<system-name>/`.
 - Time log entry for P1.
 
 Audience: new engineers, Solution Architect, Tech Lead. This becomes the system entry point.
