@@ -5,6 +5,45 @@ Date: 17 Mar 2026
 
 ---
 
+## Pilot Orchestrator Agent
+
+The **Pilot Orchestrator** agent automates pilot lifecycle management—initialization, activity sequencing, state tracking, artefact validation, and reporting. Use it to manage your pilot.
+
+### When to use the agent
+
+Use the **Pilot Orchestrator** whenever you:
+- Start a new pilot (it initializes structure and selects in-scope activities)
+- Resume an existing pilot (it loads your state and shows next actions)
+- Complete an activity offline (it validates artefacts before marking `done`)
+- Need to coordinate across multiple legacy types and systems
+- Want automated dependency tracking and phase gating
+- Need final pilot reporting (it delegates to the Report Synthesiser)
+
+### How the agent supports your pilot plan
+
+The Pilot Orchestrator:
+
+1. **Reads LITRAF scores** and maps them to legacy types and activity clusters (next section)
+2. **Initializes tracker and state files** mapping all activities, dependencies, and target systems
+3. **Tracks hub activities** that serve multiple legacy types, ensuring they are run first to maximize reuse
+4. **Sequences activities** respecting dependencies and phase gates (Prepare → Assess → Execute → Evaluate → Report)
+5. **Validates artefacts** using the Pilot Artefact Gatekeeper before marking activities complete
+6. **Unblocks downstream activities** when shared outputs are ready
+7. **Provides resumability** so you can pause and return without losing context
+8. **Generates final reports** from stored evidence, not from chat memory
+
+### Typical pilot workflow with the agent
+
+1. **Session 1 (Prepare):** Provide LITRAF report to Pilot Orchestrator → agent initializes and selects activities based on this guide's clusters
+2. **Session 2 (Assess):** Complete Assess phase activities offline → provide outputs to agent for validation
+3. **Sessions 3-N (Execute):** Pick `ready` activities from agent's tracker → complete offline using activity pages → submit artefacts to agent for validation and state update
+4. **Session N+1 (Evaluate):** Provide evaluation evidence to agent
+5. **Session N+2 (Report):** Agent delegates to Report Synthesiser; you review outputs
+
+See **README.md** for detailed agent usage workflows (new pilot, resume, execution, reporting).
+
+---
+
 ## 1) Purpose
 
 The activity pages are organised by legacy type (L1 to L7), but real government systems rarely score on just one LITRAF criterion. A department's HR platform might be simultaneously out of support (L1), have known security vulnerabilities (L6), and lack documentation (L3). Running all three activity sets in isolation wastes effort because they share foundational outputs.
@@ -109,7 +148,14 @@ Note: these are **activity execution days** (1 day = 7.5h), not calendar time. A
 
 ## 5) Recommended activity sequence for multi-type pilots
 
-This template maps activities to the four pilot phases. Adjust based on the specific types selected.
+This template maps activities to the four pilot phases. **The Pilot Orchestrator agent automates sequencing based on dependencies and phase gates.** When you use the agent, it:
+
+- Creates a dependency-aware tracker showing which activities are `ready`, `blocked`, or `waiting-on-human`
+- Ensures hub activities (Code Analysis, SBOM, Architecture Summary, Log Clustering, Triage SAST/SCA) run first
+- Unblocks downstream activities only when required inputs are complete
+- Prevents advancing to the next phase until current phase gates are satisfied
+
+**Manual adjustment:** If you are not using the agent, adjust this sequence based on your team's access constraints, resource availability, and specific hypotheses. Adjust based on the specific types selected.
 
 ### Prepare (before kick-off)
 - Confirm LITRAF scores and select legacy types.
