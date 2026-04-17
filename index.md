@@ -17,6 +17,11 @@ For detailed workflows, see **[README.md](README.md)** (agent usage guide) and *
 - **[Pilot Planning Guide](Pilot-Planning-Guide.md)**: how to compose activities across multiple legacy types, common type clusters, shared outputs, effort estimates, and a week-by-week schedule template.
 - **[Metrics and Measurement Guidance](Metrics.md)**: published canonical definitions for P1 to P8, plus baseline, evidence, and scoring guidance.
 
+## Architecture workflow
+- Use the [Architecture Docs and Governance Orchestrator](reusable-agents/architecture/architecture-docs-governance.agent.md) as the single user entrypoint for architecture work.
+- Provide the system name, mode (`greenfield`, `legacy`, or `hybrid`), and any known evidence sources.
+- Let the orchestrator invoke review, ADR, drift, and consistency stages automatically.
+
 ## Bands and usage
 - Activities are timeboxed in hours or half-days.
 - Options tables (where present) use pilot-scope bands: **XS 1-2 pd, S 3-5 pd, M 6-10 pd, L 11-16 pd, XL 17-25 pd**.

@@ -34,6 +34,8 @@ Sub tasks:
 4. Walk through the gap matrix with a subject matter expert (SME). For each gap, ask: is this a genuine gap or is the knowledge documented elsewhere? Is this critical for onboarding or change safety?
 5. Prioritise gaps: tag each as high (needed for the pilot), medium (needed soon), or low (can wait). Assign an owner for each high-priority gap.
 6. Produce a one-page gap register with priorities, owners, and recommended next activities (e.g. "Architecture overview: absent, high priority, owner: [name], fill via Architecture Summary activity").
+	- If architecture gaps are high priority, recommend [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) as the architecture workflow entrypoint.
+	- If architecture docs already exist but need challenge or validation, still route users to the orchestrator and let it invoke the internal review stages.
 7. Log time spent (start/end timestamps) for P1 measurement.
 
 > **Sequencing:** run this as the first L3 activity. Its output shapes the scope for Generate System Documentation, Architecture Summary, and other L3 activities. Schedule in Week 1 (Assess phase).
@@ -95,6 +97,7 @@ Expandability: this activity can be repeated per repository. Each additional rep
 ## 8) Outputs and artefacts
 - Gap matrix (spreadsheet or Markdown table): one row per checklist category, columns for status (present/partial/absent), last-modified date, quality note, and source location.
 - Prioritised gap register (one page): high/medium/low priority per gap, assigned owner for high-priority items, and recommended L3 activity to fill each gap.
+- Agent routing note for architecture-related gaps: generation vs independent review.
 - Time log entry for P1.
 
 Audience: Solution Architect, Tech Lead, department engineering lead. The gap register is the primary scoping input for subsequent L3 activities.

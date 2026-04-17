@@ -68,6 +68,7 @@ Use department-approved tools. Names below are illustrative examples only.
 | Category | Examples | Notes |
 |---|---|---|
 | AI reasoning over artefacts | an enterprise LLM grounded on the codebase and architecture context |  |
+| Reusable architecture agent | [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) | Use the orchestrator as the only entrypoint; it will establish the architecture baseline and invoke internal security review automatically |
 | Secret scanning | git-secrets, gitleaks, truffleHog, GitHub secret scanning |  |
 | SAST (for code-level security patterns) | Semgrep, CodeQL, SonarQube |  |
 | Code assistants | GitHub Copilot, Sourcegraph Cody |  |
@@ -95,6 +96,7 @@ Expandability: this activity can be repeated per repository. Each additional rep
 ## 8) Outputs and artefacts
 - Risk scan report: findings categorised by the six risk categories (auth, secrets, crypto, storage, access control, network) with severity ratings, evidence, and mitigation recommendations.
 - Summary of critical and high findings for immediate attention.
+- If architecture baseline docs are generated in this pilot, reference `docs/architecture/<system-name>/` in the report.
 - Time log entry for P1.
 
 Audience: Solution Architect, Tech Lead, security team. Findings feed into Fix PRs (L6), Translate Tech to Business Impact (L6), and the wider risk management process.

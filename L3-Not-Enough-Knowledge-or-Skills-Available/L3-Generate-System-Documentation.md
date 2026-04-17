@@ -32,6 +32,7 @@ Sub tasks:
 2. For each gap, use the AI code assistant grounded on the repository to generate draft documentation: (a) system overview covering purpose, users, and business context, (b) component/service descriptions with responsibilities and boundaries, (c) data-flow notes covering key data paths, transformations, and storage, (d) interface catalogue covering key APIs, events, or integration points with request/response formats.
 3. For each generated section, prompt the AI to cite the source files or modules it derived the information from so reviewers can verify.
 4. Compile drafts into a single documentation set in the department's preferred format (Markdown in repo, Confluence, or Word).
+	- Standard path for in-repo artefacts: `docs/architecture/<system-name>/`.
 5. Peer review: a department engineer or SME reviews each section for accuracy, corrects any AI hallucinations, and fills in context the AI could not infer (e.g. business rules, historical decisions).
 6. Publish the reviewed documentation in the agreed location and link it from the repository README.
 7. Log time spent (start/end timestamps) for P1 measurement.
@@ -70,6 +71,7 @@ Use department-approved tools. Names below are illustrative examples only.
 | Category | Examples | Notes |
 |---|---|---|
 | AI code reasoning | an enterprise LLM with repository access |  |
+| Reusable architecture agent | [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) | Use the orchestrator as the only entrypoint; it will generate baseline docs and run required internal gates |
 | Documentation platform | Markdown (in repo /docs), Confluence, SharePoint, or the department's standard |  |
 | Diagramming (if needed) | Mermaid (AI can generate), draw.io, PlantUML |  |
 | Not typically needed | SCA/SBOM tools, SIEM tools |  |
@@ -96,6 +98,7 @@ Expandability: this activity can be repeated per documentation section. Each add
 ## 8) Outputs and artefacts
 - Documentation set covering the selected high-priority gaps: system overview, component descriptions, data-flow notes, and/or interface catalogue (as applicable).
 - Each section includes source-file citations.
+- Store architecture artefacts under `docs/architecture/<system-name>/`.
 - Published in the agreed location with links from the repository README.
 - Time log entry for P1.
 

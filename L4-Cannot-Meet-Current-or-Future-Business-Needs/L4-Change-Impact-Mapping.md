@@ -70,6 +70,7 @@ Use department-approved tools. Names below are illustrative examples only.
 | Category | Examples | Notes |
 |---|---|---|
 | Code assistants (for dependency tracing) | GitHub Copilot, Sourcegraph Cody, Cursor, JetBrains AI |  |
+| Reusable architecture agent | [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) | Use the orchestrator as the only entrypoint; it will update architecture context and run internal review/governance gates if needed |
 | Static analysis and dependency graphing | IDE dependency features (Find Usages, Call Hierarchy), Sourcegraph search, madge (JS), pydeps (Python), NDepend | .NET |
 | Test coverage tools | Istanbul/nyc, JaCoCo, coverage.py | to identify which impacted areas have tests |
 | Notes and reporting | Markdown, Confluence, spreadsheets |  |
