@@ -73,6 +73,11 @@ Baseline accessibility report (WCAG 2.2 A/AA mapped), prioritised remediation ba
 | **P7 — Vulnerability / Risk Reduction** | Reduction in open WCAG 2.2 A/AA violations, broken down by Critical / Major / Minor and by journey. Track count of blockers to task completion at baseline vs post-remediation. Also note any reduction in a11y-related support tickets as a directional signal. | Scanner outputs (axe, Lighthouse, Pa11y), triage backlog, support ticket counts |
 | **P8 — Reusable Artefacts** | Count of prompt templates, remediation pattern examples, AT validation checklists, CI/CD regression snippets, and do/don't guidance pages produced that another team could reuse with minor adaptation. Include a link to each artefact. | Repository paths, published markdown pages, shared component examples |
 
+> **Activity-specific supplementary measures** — these can supplement general metrics and are specific to accessibility work:
+> - **Journey coverage:** % of priority journeys/pages that have been both scanned by an automated tool and manually spot-checked. Record at baseline and at end of each remediation sprint. This is a prerequisite check before claiming P7 risk reduction is complete.
+> - **Fix quality signals:** reopen rate and reviewer rejection rate for remediation PRs. Record alongside P2 scores; a pattern of reopens or rejections should trigger a prompt or process review, not just individual fix rework.
+> - **Timebox completion:** % of triaged issues resolved or formally deferred within the agreed timebox. Pairs with P4 lead time to show whether the scope was realistic as well as whether individual fixes were fast.
+
 ## 10) Risks and controls
 
 | Risk | Control |
