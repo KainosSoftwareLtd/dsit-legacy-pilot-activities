@@ -24,7 +24,6 @@ docs/architecture/                  Standard location for generated architecture
 3. **Select activities** from the relevant type folders. Not every activity needs to be run; choose based on pilot hypotheses.
 4. **Follow the 5-week pilot structure**: Prepare, Assess (Week 1), Execute (Weeks 2-4), Evaluate (Week 5).
 
-<<<<<<< HEAD
 ## Reusable agents
 
 This repository includes reusable custom agents under:
@@ -174,7 +173,6 @@ Example prompt:
 Rule of thumb:
 - Use **Architecture Docs and Governance Orchestrator** for all user-driven architecture work.
 - Let the orchestrator invoke the supporting architecture agents internally.
-=======
 ## Using the Pilot Orchestrator Agent
 
 The Pilot Orchestrator agent manages the entire lifecycle of a pilot: initialization, activity sequencing, artefact validation, state tracking, and final reporting. Activities themselves are executed offline by the pilot team; the orchestrator records outcomes, validates evidence, and coordinates cross-system dependencies.
@@ -375,7 +373,6 @@ Pilots are designed to be pauseable across sessions:
 5. **Use tracker as your roadmap.** Check the tracker frequently to see what's `ready`, what's `blocked`, and what's next.
 6. **Record cross-system handoffs.** When one system's output becomes another system's input (e.g. shared Architecture Summary), the orchestrator tracks this explicitly.
 7. **Ask for clarification.** If you don't understand a gate requirement or a gatekeeper feedback, ask the orchestrator to explain.
->>>>>>> main
 
 ## Activity page format
 
