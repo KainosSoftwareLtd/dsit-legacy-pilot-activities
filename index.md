@@ -15,6 +15,7 @@ For detailed workflows, see **[README.md](README.md)** (agent usage guide) and *
 
 ## Planning
 - **[Pilot Planning Guide](Pilot-Planning-Guide.md)**: how to compose activities across multiple legacy types, common type clusters, shared outputs, effort estimates, and a week-by-week schedule template.
+- **[Metrics and Measurement Guidance](Metrics.md)**: published canonical definitions for P1 to P8, plus baseline, evidence, and scoring guidance.
 
 ## Bands and usage
 - Activities are timeboxed in hours or half-days.

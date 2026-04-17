@@ -265,13 +265,6 @@ Keep ROMs in person-days for cross-pilot comparability. Convert to calendar time
 
 ## Metrics
 
-Activities are measured using a consistent set so DSIT can roll up findings across departments:
+Activities are measured using a consistent published set so DSIT can roll up findings across departments.
 
-- **P1** Task time delta (median-based, percent change vs baseline)
-- **P2** Quality score (reviewer rubric 1-5)
-- **P3** Developer sentiment (SPACE survey)
-- **P4** Lead time for changes (DORA)
-- **P5** Change failure rate (DORA)
-- **P6** Test coverage delta
-- **P7** Vulnerability/risk reduction
-- **P8** Reusable artefacts produced
+See [Metrics and Measurement Guidance](Metrics.md) for the canonical definitions, measurement principles, and evidence expectations for P1 to P8.

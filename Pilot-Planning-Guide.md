@@ -180,7 +180,8 @@ This template maps activities to the four pilot phases. **The Pilot Orchestrator
   - Introduce and demonstrate AICA accelerators to Pilot team
 
 **Baseline measurement:**
-- P3 Developer Sentiment survey
+- Use [Metrics and Measurement Guidance](Metrics.md) as the canonical definition for P1 to P8 and for evidence capture expectations.
+- P3 Developer Sentiment using the SPACE survey
 - Current-state P4 to P7 metrics
 - Manual task-time estimates for P1 comparison
 
@@ -216,7 +217,8 @@ This template maps activities to the four pilot phases. **The Pilot Orchestrator
 - Note cross-type handoffs: when one activity's output becomes another type's input.
 
 ### Evaluate: Week 5
-- Repeat P3 Developer Sentiment survey.
+- Review results against [Metrics and Measurement Guidance](Metrics.md) before finalising the scorecard and evidence pack.
+- Repeat P3 Developer Sentiment using the SPACE survey.
 - Capture updated P4 to P7 metrics.
 - Finalise P8 artefact count.
 - Produce evidence pack and Four-Box summary per legacy type.
