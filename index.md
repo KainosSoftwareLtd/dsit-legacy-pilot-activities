@@ -1,6 +1,18 @@
 # DSIT Legacy Modernisation: Activity Pages (Markdown Pack)
 Generated: 2026-03-17 10:20 UTC
 
+## Getting started with the Pilot Orchestrator Agent
+
+**New to pilots?** Start here:
+
+1. Obtain or assess LITRAF scores for your target system
+2. Open Copilot Chat and select **Pilot Orchestrator** agent
+3. Say: *"Start a new pilot. Pilot ID: `my-org-system-2026q2`. Target system: `[system-name]`. Here is the LITRAF report: [paste or attach]"*
+4. The agent will initialize your pilot tracker, select in-scope activities, and show next steps
+5. During execution, pick activities from the tracker's `ready` list and submit outputs to the agent for validation
+
+For detailed workflows, see **[README.md](README.md)** (agent usage guide) and **[Pilot-Planning-Guide.md](Pilot-Planning-Guide.md)** (activity composition and clusters).
+
 ## Planning
 - **[Pilot Planning Guide](Pilot-Planning-Guide.md)**: how to compose activities across multiple legacy types, common type clusters, shared outputs, effort estimates, and a week-by-week schedule template.
 
