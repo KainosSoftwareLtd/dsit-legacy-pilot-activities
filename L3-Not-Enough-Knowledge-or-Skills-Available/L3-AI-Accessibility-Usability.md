@@ -60,18 +60,18 @@ Baseline accessibility report (WCAG 2.2 A/AA mapped), prioritised remediation ba
 
 ## 9) Metrics and measurement plan
 
-> Track metrics before/after and at each release thereafter.
+> Metrics follow the definitions in [Metrics.md](../Metrics.md). Record only the metrics that are applicable; capture baseline and observed values with evidence links for each one. Track before/after and at each release thereafter.
 
-| Metric area | What to measure |
-|---|---|
-| **Coverage** | % of priority journeys/pages scanned and manually spot-checked |
-| **Compliance** | Count of WCAG 2.2 A/AA issues open vs fixed; pass rate in automated checks |
-| **Severity** | Critical/Major/Minor issues by journey; number of blockers to task completion |
-| **Regression** | New a11y issues introduced per release; pipeline a11y gate pass rate |
-| **User impact** | Reduction in a11y-related support tickets; qualitative feedback from testing |
-| **Delivery** | Lead time to fix top issues; % issues fixed within the timebox |
-| **Quality of fixes** | Reopen rate; reviewer rejection rate; consistency with component standards |
-| **Sustainability** | % components covered by a11y tests; number of reusable patterns added |
+| Metric (P-code) | What to measure for this activity | Typical evidence |
+|---|---|---|
+| **P1 — Task Time Delta** | Time to complete an audit and triage pass (AI-assisted vs manual baseline estimate); time to produce a first round of remediation PRs. Use median where multiple journeys or fix batches are run. | Engineer time logs, PR timestamps, workshop notes |
+| **P2 — Quality Score** | Accessibility reviewer scores the AI-generated issue list and proposed fixes on accuracy, completeness, and actionability (1–5 rubric). Score each batch of fixes separately; note any score below 3 with a short explanation. The reviewer should be a qualified accessibility practitioner, not just a tech lead. | PR review comments, reviewer sign-off notes, scoring spreadsheet |
+| **P3 — Developer Sentiment (SPACE)** | Run the SPACE survey at baseline and again post-pilot to capture whether the team found the AI-assisted audit and remediation approach useful and trustworthy. Capture qualitative comments if sentiment on WCAG mapping confidence is mixed. | Survey forms/export, retro notes |
+| **P4 — Lead Time for Changes (DORA)** | Elapsed time from first commit on a remediation fix to deployment into a test or production environment. Compare against the baseline for typical UI change lead time on this system. | Git history, PR timestamps, deployment records |
+| **P5 — Change Failure Rate (DORA)** | Proportion of accessibility fix PRs that introduce functional regressions, fail CI checks, or require a rollback or hotfix. This is especially relevant here given the risk of side effects in tightly coupled legacy UI. | CI results, incident logs, post-deployment review notes |
+| **P6 — Test Coverage Delta** | Change in automated accessibility test coverage for the priority journeys before and after adding regression checks to CI/CD. Record the baseline pass rate from the initial automated scan and the post-activity gate pass rate. | Coverage reports, CI output, axe/Pa11y pipeline results |
+| **P7 — Vulnerability / Risk Reduction** | Reduction in open WCAG 2.2 A/AA violations, broken down by Critical / Major / Minor and by journey. Track count of blockers to task completion at baseline vs post-remediation. Also note any reduction in a11y-related support tickets as a directional signal. | Scanner outputs (axe, Lighthouse, Pa11y), triage backlog, support ticket counts |
+| **P8 — Reusable Artefacts** | Count of prompt templates, remediation pattern examples, AT validation checklists, CI/CD regression snippets, and do/don't guidance pages produced that another team could reuse with minor adaptation. Include a link to each artefact. | Repository paths, published markdown pages, shared component examples |
 
 ## 10) Risks and controls
 
