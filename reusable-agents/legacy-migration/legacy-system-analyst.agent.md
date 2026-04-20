@@ -24,7 +24,8 @@ You are a forensic codebase analyst. Your sole job is to read, understand, and d
 ## Step 1: Setup
 
 - `WORKSPACE_ROOT` — Use the full workspace root as the analysis scope.
-- `OUTPUT_DIR` — Use `legacy-migration` folder in the root of the repo as the output directory for all generated documents. Do not write any files outside this directory.
+- `MIGRATION_ID` — Use the migration identifier provided by the orchestrator.
+- `OUTPUT_DIR` — Use `.github/migrations/<MIGRATION_ID>/discover` as the output directory for all generated documents. Do not write any files outside this directory.
 
 The output files are:
 | File | Path |
@@ -385,3 +386,14 @@ Before marking the task complete:
 - Does not infer what code *should* do — only what it *demonstrably does*.
 - Does not fill documentation gaps with plausible assumptions.
 - Does not record the value of any secret, token, password, or credential.
+
+## Orchestrator Checkpoint Contract
+
+At completion (or pause), return a checkpoint block with:
+- `migration_id`
+- `phase`: `discover`
+- `activity_id_or_slice_id`: `discover-current-state`
+- `status_transition`
+- `artefacts_created_or_updated` (all files in `OUTPUT_DIR`)
+- `blockers_or_waiting_on_human`
+- `next_action`

@@ -108,6 +108,91 @@ Automatic governance workflow includes:
 
 The orchestrator keeps the workflow blocked until the required gates pass.
 
+## Migration agent workflow (start and continue)
+
+This repository now includes a migration-specific multi-agent workflow in [reusable-agents/legacy-migration](reusable-agents/legacy-migration).
+
+Primary entrypoint:
+
+- [Migration Orchestrator](reusable-agents/legacy-migration/migration-orchestrator.agent.md)
+
+Specialist subagents used by the orchestrator:
+
+- [Legacy System Analyst](reusable-agents/legacy-migration/legacy-system-analyst.agent.md)
+- [Target Architecture and Intent](reusable-agents/legacy-migration/target-architecture-intent.agent.md)
+- [Behaviour Baseline and Characterisation Testing](reusable-agents/legacy-migration/behaviour-baseline-characterisation-testing.agent.md)
+- [Migration Planner and Slice Designer](reusable-agents/legacy-migration/migration-planner-slice-designer.agent.md)
+- [Slice Implementer Agent (Worker)](reusable-agents/legacy-migration/slice-implementer-worker.agent.md)
+- [PR Quality Gate Agent](reusable-agents/legacy-migration/pr-quality-gate-verification.agent.md)
+- [Drift and Retrospective Learning Agent](reusable-agents/legacy-migration/drift-retrospective-learning.agent.md)
+
+### Migration workspace and source of truth
+
+The migration workflow stores state and artefacts under:
+
+- `.github/migrations/<migration-id>/state.yaml`
+- `.github/migrations/<migration-id>/tracker.md`
+- `.github/migrations/<migration-id>/discover/`
+- `.github/migrations/<migration-id>/target/`
+- `.github/migrations/<migration-id>/test/`
+- `.github/migrations/<migration-id>/planning/`
+- `.github/migrations/<migration-id>/execution/`
+- `.github/migrations/<migration-id>/evaluate/`
+
+Use `state.yaml` as machine-readable truth and `tracker.md` as the human-readable operational view. They should always be synchronized.
+
+### Start a new migration
+
+1. Copy migration agent files from [reusable-agents/legacy-migration](reusable-agents/legacy-migration) into your target repo at `.github/agents/`.
+2. In Copilot Chat, select the Migration Orchestrator agent.
+3. Provide migration configuration:
+   - `migration-id`
+   - migration type and target systems
+   - repository context
+   - build and test commands
+   - known approvals or constraints
+4. Ask the orchestrator to initialize the migration.
+5. The orchestrator creates migration folders, initializes state/tracker, and begins phase dispatch.
+
+Suggested prompt:
+
+"Start migration `<migration-id>` for `<system-name>`. Initialize `.github/migrations/<migration-id>/` with state and tracker. Use these build/test commands: `<commands>`."
+
+### Continue an existing migration
+
+1. Re-open Copilot Chat and select Migration Orchestrator.
+2. Ask to resume the existing migration ID.
+3. The orchestrator loads state/tracker and reports:
+   - current phase and gate status
+   - ready work
+   - waiting-on-human items
+   - blockers
+   - next action
+
+Suggested prompt:
+
+"Resume migration `<migration-id>` and show current phase, ready slices, blockers, and required approvals."
+
+### Phase journey (end-to-end)
+
+1. Discover: current system context and evidence.
+2. Target: intended end-state architecture and constraints.
+3. Test baseline: characterization tests and harness evidence.
+4. Planning: migration slices, sequencing, acceptance criteria.
+5. Execution: one approved slice implemented, then PR quality gate; failed gates loop back to implementer.
+6. Evaluate: retrospective drift analysis and improvements for future migrations.
+
+Human approval checkpoints:
+
+1. current-state accuracy
+2. target-state design
+3. slice plan approval
+4. PR review and merge decision
+
+### Jump in and out safely
+
+You can pause and resume at any point. The orchestrator enforces resumability by requiring sub-agent checkpoint outputs before state transitions are applied. If a checkpoint is missing, phase progression is blocked until state is explicit.
+
 ### Workflow outputs you should expect
 
 1. `docs/architecture/<system-name>/` architecture documents and C4 DSL.
