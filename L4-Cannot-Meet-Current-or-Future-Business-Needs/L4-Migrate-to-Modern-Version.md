@@ -44,17 +44,18 @@ How to run this activity with the migration agent:
 5. Update tracker/state before moving to the next slice or phase.
 
 Sub tasks:
-1. Define scope and target: pick the migration slice (service/module/app area), the target version, and success criteria for this activity.
-2. Run readiness checks: validate runtime prerequisites, library compatibility, and deployment environment constraints.
-3. Build dependency baseline: extract SBOM/dependency list and identify version blockers, deprecated packages/APIs, and likely breaking changes.
-4. Apply code and configuration modernisation: use AI assistance for syntax updates, API replacements, config changes, and build file updates.
-5. Handle schema/data migration where relevant: generate and review migration scripts, then validate data compatibility in a non-production environment.
-6. Regenerate and run tests: create or update regression tests for migrated paths and run in CI/staging.
-7. Validate deployment behaviour: execute smoke tests, basic performance checks, and rollback verification in controlled environments.
-8. Produce handover artefacts: migration notes, known issues, reusable prompts/scripts, and next-slice recommendations.
-9. Log time spent (start/end timestamps) for P1 measurement.
+1. Pre-activity gate: document current-state legacy architecture, only if existing architecture documention doesn't exist, using [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) in `mode=legacy`.
+2. Define scope and target: pick the migration slice (service/module/app area), the target version, and success criteria for this activity.
+3. Run readiness checks: validate runtime prerequisites, library compatibility, and deployment environment constraints.
+4. Build dependency baseline: extract SBOM/dependency list and identify version blockers, deprecated packages/APIs, and likely breaking changes.
+5. Apply code and configuration modernisation: use AI assistance for syntax updates, API replacements, config changes, and build file updates.
+6. Handle schema/data migration where relevant: generate and review migration scripts, then validate data compatibility in a non-production environment.
+7. Regenerate and run tests: create or update regression tests for migrated paths and run in CI/staging.
+8. Validate deployment behaviour: execute smoke tests, basic performance checks, and rollback verification in controlled environments.
+9. Produce handover artefacts: migration notes, known issues, reusable prompts/scripts, and next-slice recommendations.
+10. Log time spent (start/end timestamps) for P1 measurement.
 
-> **Sequencing:** use after L1 dependency analysis and L3 architecture outputs where available. This can feed L4-Tests-for-Change-Requests, L4-Validate-Refactors-Exemplar, and L6 security remediation activities. Schedule during Weeks 2-4.
+> **Sequencing:** architecture baseline is mandatory before migration starts. First generate/update current-state architecture using [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md), then run this activity. This can feed L4-Tests-for-Change-Requests, L4-Validate-Refactors-Exemplar, and L6 security remediation activities. Schedule during Weeks 2-4.
 
 > **Out of scope:**
 > - Full-system migration in one activity.
@@ -80,6 +81,7 @@ Sub tasks:
 - Named reviewer (Tech Lead/Solution Architect) available for migration sign-off.
 - Migration agent files available in repo (`.github/agents/` in the target codebase) and a `migration-id` agreed.
 - Migration state files available or creatable: `.github/migrations/<migration-id>/state.yaml` and `.github/migrations/<migration-id>/tracker.md`.
+- Current-state architecture artefacts exist and are up to date, produced via [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) (for example under `docs/architecture/<system-name>/`).
 - ATRS trigger: No. DPIA check: No.
 
 
@@ -109,10 +111,10 @@ Expandability: repeat per service/module/slice. Each additional slice adds appro
 ## 7) Inputs and data sources
 - Target legacy codebase and build configuration.
 - Dependency manifests and lockfiles.
-- Architecture Summary (from L3, if available) and change impact context (from L4-Change-Impact-Mapping, if available).
+- Current-state architecture artefacts from [Architecture Docs and Governance Orchestrator](../reusable-agents/architecture/architecture-docs-governance.agent.md) and change impact context (from L4-Change-Impact-Mapping, if available).
 - CI pipeline definitions and recent run history.
 - Existing test suites and coverage reports.
-- If unavailable: if architecture or dependency baselines are missing, perform discovery during this activity and note reduced confidence in migration estimates.
+- If unavailable: stop and run the architecture pre-activity first. Do not start migration implementation without current-state architecture documentation.
 
 
 ---
@@ -123,6 +125,7 @@ Expandability: repeat per service/module/slice. Each additional slice adds appro
 - Validation evidence: test results, smoke checks, and compatibility outcomes.
 - Updated architecture/migration notes and reusable prompt/script snippets.
 - Time log entry for P1.
+- Reference link/path to the architecture baseline used as migration input.
 - Migration orchestration state updates for this activity in:
 	- `.github/migrations/<migration-id>/state.yaml`
 	- `.github/migrations/<migration-id>/tracker.md`
@@ -164,6 +167,7 @@ Secondary:
 
 ## 11) Review and definition of done
 Done when all of the following are true:
+- [ ] Current-state architecture has been documented via Architecture Docs and Governance Orchestrator before migration implementation started.
 - [ ] Scoped migration target and success criteria are documented.
 - [ ] Exemplar modernisation change is implemented and reviewed.
 - [ ] Functional/regression tests for migrated paths pass.
