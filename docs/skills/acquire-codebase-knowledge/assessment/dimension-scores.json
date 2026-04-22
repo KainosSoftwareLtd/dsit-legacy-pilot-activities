@@ -1,0 +1,82 @@
+{
+  "skill": "acquire-codebase-knowledge",
+  "version": "1.3",
+  "assessed": "2026-04-22",
+  "framework": ["OWASP LLM Top 10 (2025)", "MITRE ATLAS", "STRIDE"],
+  "dimensions": [
+    {
+      "id": 1,
+      "name": "Permission Scope",
+      "weight": 0.15,
+      "score": 5,
+      "contribution": 0.75,
+      "owasp_mapping": "LLM06 Excessive Agency",
+      "evidence": "scan.py lines 561-564: output_dir.mkdir(), open(args.output, 'w')"
+    },
+    {
+      "id": 2,
+      "name": "Data Egress",
+      "weight": 0.20,
+      "score": 1,
+      "contribution": 0.20,
+      "owasp_mapping": "LLM02 Sensitive Info Disclosure, LLM03 Supply Chain, STRIDE-I",
+      "evidence": "No HTTP client or external endpoints found in any skill file"
+    },
+    {
+      "id": 3,
+      "name": "Code Execution",
+      "weight": 0.15,
+      "score": 5,
+      "contribution": 0.75,
+      "owasp_mapping": "LLM05 Improper Output Handling, ATLAS Execution, STRIDE-T/E",
+      "evidence": "scan.py lines 326, 343, 364: subprocess.run(['git', 'log', ...]) — fixed args, no dynamic injection"
+    },
+    {
+      "id": 4,
+      "name": "Prompt Injection Surface",
+      "weight": 0.10,
+      "score": 6,
+      "contribution": 0.60,
+      "owasp_mapping": "LLM01 Prompt Injection",
+      "evidence": "SKILL.md lines 68-69: reads README/SPEC/DESIGN without sanitisation guidance"
+    },
+    {
+      "id": 5,
+      "name": "Sensitive Data Handling",
+      "weight": 0.10,
+      "score": 4,
+      "contribution": 0.40,
+      "owasp_mapping": "LLM02 Sensitive Info Disclosure",
+      "evidence": "scan.py lines 607-612: unconditional env template preview, no redaction"
+    },
+    {
+      "id": 6,
+      "name": "Supply Chain",
+      "weight": 0.10,
+      "score": 1,
+      "contribution": 0.10,
+      "owasp_mapping": "LLM03 Supply Chain",
+      "evidence": "Python stdlib only: os, sys, argparse, subprocess, json, pathlib, typing, re, collections"
+    },
+    {
+      "id": 7,
+      "name": "Agency & Autonomy",
+      "weight": 0.10,
+      "score": 4,
+      "contribution": 0.40,
+      "owasp_mapping": "LLM06, LLM05 Improper Output Handling",
+      "evidence": "SKILL.md lines 23, 57-89: end-to-end write workflow with no confirmation gate"
+    },
+    {
+      "id": 8,
+      "name": "Transparency & Intent Integrity",
+      "weight": 0.10,
+      "score": 2,
+      "contribution": 0.20,
+      "owasp_mapping": "LLM09 Misinformation, STRIDE-R",
+      "evidence": "Declared purpose matches observed behavior; no hidden capabilities detected"
+    }
+  ],
+  "total_score": 34,
+  "score_calculation": "((5*0.15)+(1*0.20)+(5*0.15)+(6*0.10)+(4*0.10)+(1*0.10)+(4*0.10)+(2*0.10))*10 = 34"
+}

@@ -1,0 +1,17 @@
+{
+  "skill": "acquire-codebase-knowledge",
+  "version": "1.3",
+  "assessed": "2026-04-22",
+  "source": ".agents/skills/acquire-codebase-knowledge",
+  "total_score": 34,
+  "severity": "Medium",
+  "recommendation": "Approve with Conditions",
+  "automatic_block_triggers": [],
+  "required_conditions": [
+    "Add a prompt-injection safety clause: repository text must not directly influence tool usage or execution behavior",
+    "Add secret-pattern redaction in scanner output before writing to disk",
+    "Add a user confirmation step before writing or overwriting docs/codebase/ files",
+    "Optionally gate git-history collection behind explicit user consent"
+  ],
+  "report": "docs/skills/acquire-codebase-knowledge/assessment/report.md"
+}
