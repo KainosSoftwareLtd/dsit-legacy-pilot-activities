@@ -27,16 +27,16 @@ All AI agent skills used in pilots, documentation, or pilot orchestration must b
 - **Changed skills**: If logic, references, or scripts change, the skill must be reassessed. Metadata-only or comment-only changes may reuse the prior assessment with documented rationale.
 - **Approved skills**: Skills scored Low or Medium (with acceptance) may be used. See [docs/skills/approved-skills.md](docs/skills/approved-skills.md) for the current allowlist.
 - **Blocked skills**: Skills scored High or Critical, or marked "Review Required", are prohibited. See [docs/skills/blocked-skills.md](docs/skills/blocked-skills.md) for the current blocklist.
-- **Conditional approval**: Medium-severity skills may be used only if required conditions have been remediated or explicitly accepted. Acceptance records must link to risk rationale and expiry/review dates. See the skill's `assessment/` folder for remediation and acceptance records.
+- **Conditional approval**: Medium-severity skills may be used only when the **Conditions / Acceptance** column in [docs/skills/approved-skills.md](docs/skills/approved-skills.md) confirms conditions are complete or explicitly accepted.
 
 **Process:**
 
 1. **New Skill Intake**: Perform full assessment → review verdict → record decision in approved/blocked-skills.md.
 2. **Changed Skill**: Compare current manifest/scripts against stored snapshot → if changed, reassess → update records.
 3. **Blocked Prevention**: Pilot orchestrators check that no blocked skills are used; usage violations cause pilot rejection.
-4. **Conditional Use**: Confirm acceptance/remediation records exist in the skill's `docs/skills/<skill-name>/assessment/` folder before use.
+4. **Conditional Use**: Confirm the **Conditions / Acceptance** column in [docs/skills/approved-skills.md](docs/skills/approved-skills.md) marks the skill as complete or accepted before use.
 
-For details on the assessment framework, required conditions, remediation, and acceptance workflows, see [.github/skills/skill-security-assessment/SKILL.md](.github/skills/skill-security-assessment/SKILL.md).
+For details on the assessment framework and required conditions, see [.github/skills/skill-security-assessment/SKILL.md](.github/skills/skill-security-assessment/SKILL.md).
 
 ## Getting started
 

@@ -101,7 +101,7 @@ Before any skill can be used in a pilot or pilot-related workflow:
 
 **Low-severity (0-19):** Use freely. No conditions required.
 
-**Medium-severity (20-39):** Check that either a `REMEDIATION.md` or `RISK-ACCEPTANCE.md` record exists in `docs/skills/<skill-name>/assessment/` before use. If neither exists, create one or escalate to security owner.
+**Medium-severity (20-39):** Check the **Conditions / Acceptance** column in [docs/skills/approved-skills.md](docs/skills/approved-skills.md). Use the skill only when that field states conditions are complete or explicitly accepted.
 
 **High, Critical, or Review-Required:** Do not use. Skill is blocked. Contact security owner to request unblock evaluation.
 
