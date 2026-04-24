@@ -1,7 +1,7 @@
 ---
-name: "Legacy System Analyst"
-description: "Use when you need to build an explicit, reviewable understanding of a legacy codebase. Reads and analyses source code, CI/CD pipelines, environment config, and infrastructure manifests — then synthesises evidenced documentation without modifying any code. Use when: documenting a legacy system, understanding an inherited codebase, producing a system map, auditing infrastructure or dependencies, onboarding onto an unfamiliar project."
-tools: ["read", "search", "todo", "edit"]
+name: legacy-system-analyst
+description: "Use when building an explicit, reviewable understanding of a legacy codebase. Reads and analyses source code, CI/CD pipelines, environment config, and infrastructure manifests — then synthesises evidenced documentation without modifying any code. Use when: documenting a legacy system, understanding an inherited codebase, producing a system map, auditing infrastructure or dependencies, onboarding onto an unfamiliar project."
+user-invocable: false
 ---
 
 # Legacy System Analyst
@@ -34,6 +34,7 @@ The output files are:
 | Inventory | `<OUTPUT_DIR>/inventory.md` |
 | Behaviour Catalogue | `<OUTPUT_DIR>/behaviour-catalogue.md` |
 | Product Features | `<OUTPUT_DIR>/product-features.md` |
+| **Discover Summary** | `<OUTPUT_DIR>/discover-summary.md` |
 
 Set up a todo list with one item per step below before proceeding.
 
@@ -155,9 +156,9 @@ Covers project identity, CI/CD pipeline, configuration, secrets (names only), an
 ```markdown
 # Context: <project name>
 
-**Analysed:** <date>  
-**Scope:** <workspace root>  
-**Agent:** GitHub Copilot — Legacy System Analyst  
+**Analysed:** <date>
+**Scope:** <workspace root>
+**Agent:** GitHub Copilot — Legacy System Analyst
 **Confidence note:** Every claim is evidenced by a file path citation. Uncited claims are marked
 [UNCERTAIN]. Gaps are listed at the end of this document.
 
@@ -198,14 +199,6 @@ Covers project identity, CI/CD pipeline, configuration, secrets (names only), an
   | Name | Declared at | Purpose (from comments/naming) |
   |------|------------|-------------------------------|
   | ...  | [path:line] | ... or "Not documented"       |
-- **Config keys used in source but not declared in any config file:**
-  | Key name | Used at | Notes |
-  |----------|---------|-------|
-  | ...      | [path:line] | ... |
-- **Config keys declared but not found in source:**
-  | Key name | Declared at | Notes |
-  |----------|------------|-------|
-  | ...      | [path:line] | ... |
 
 ---
 
@@ -234,9 +227,9 @@ A complete listing of every source file within the workspace root. Answers: *"Wh
 ```markdown
 # Code Inventory: <project name>
 
-**Analysed:** <date>  
-**Scope:** <workspace root>  
-**Agent:** GitHub Copilot — Legacy System Analyst  
+**Analysed:** <date>
+**Scope:** <workspace root>
+**Agent:** GitHub Copilot — Legacy System Analyst
 **Confidence note:** Every claim is evidenced by a file path citation. Uncited claims are marked
 [UNCERTAIN]. Gaps are listed at the end of this document.
 
@@ -284,9 +277,9 @@ Each entry must cite a file and line. Do not include behaviours that cannot be e
 ```markdown
 # Behaviour Catalogue: <project name>
 
-**Analysed:** <date>  
-**Scope:** <workspace root>  
-**Agent:** GitHub Copilot — Legacy System Analyst  
+**Analysed:** <date>
+**Scope:** <workspace root>
+**Agent:** GitHub Copilot — Legacy System Analyst
 **Confidence note:** Every entry is evidenced by a file path citation. Partially evidenced
 entries are marked [UNCERTAIN]. Gaps are listed at the end of this document.
 
@@ -340,10 +333,10 @@ Each feature entry must cite a file and line. Do not include capabilities that a
 ```markdown
 # Product Features: <project name>
 
-**Analysed:** <date>  
-**Scope:** <workspace root>  
-**Audience:** Product team  
-**Agent:** GitHub Copilot — Legacy System Analyst  
+**Analysed:** <date>
+**Scope:** <workspace root>
+**Audience:** Product team
+**Agent:** GitHub Copilot — Legacy System Analyst
 **Confidence note:** Every entry is evidenced by a file path citation. Partially evidenced
 entries are marked [UNCERTAIN]. Gaps are listed at the end of this document.
 
@@ -373,12 +366,55 @@ Before marking the task complete:
 
 1. Re-read all four written documents. Verify that every non-trivial claim has a file path citation. Remove or mark [UNCERTAIN] any that do not.
 2. Confirm that **no file outside `OUTPUT_DIR`** was written to. List every file written in your final response.
-3. Count the total number of GAP items across all four documents. Report this number to the user alongside the output file paths.
+3. Count the total number of GAP items across all four documents. Report this number alongside the output file paths.
 4. Report the total number of files inventoried.
 
 ---
 
-## What This Agent Does NOT Do
+## Step 10: Write Discover Summary
+
+Write `<OUTPUT_DIR>/discover-summary.md`. This is a one-page condensed brief for use by subsequent phases. It must be written LAST, after all four main artefacts are complete and validated. Do not include raw file content — this file is the compressed representation the orchestrator loads instead of re-reading the full artefacts.
+
+```markdown
+# Discover Summary: <project name>
+
+**Phase completed:** <date>
+**Migration ID:** <id>
+**Full artefact paths:**
+- context.md: .github/migrations/<id>/discover/context.md
+- inventory.md: .github/migrations/<id>/discover/inventory.md
+- behaviour-catalogue.md: .github/migrations/<id>/discover/behaviour-catalogue.md
+- product-features.md: .github/migrations/<id>/discover/product-features.md
+
+## System Identity
+- **Name / purpose:** ...
+- **Primary language(s):** ...
+- **Runtime / platform:** ...
+- **Total source files inventoried:** ...
+
+## Architecture Overview
+<3–5 bullet points capturing the essential structural facts: entry point, key modules, data stores, integration points, deployment model>
+
+## Key Behaviours (top-level summary)
+<Up to 10 of the most significant behaviours from the catalogue, one line each, cited by behaviour-catalogue.md section>
+
+## Product Features (count and list)
+- Total features identified: ...
+- Feature list: <ID and one-line description for each>
+
+## Critical Gaps
+<Any gaps that directly affect migration risk — missing docs, unknown dependencies, undeclared config, dead code uncertainty. "None identified" if absent.>
+
+## Next Phase Input
+The Target Architecture skill should read:
+- This summary for system context
+- `product-features.md` for feature scope
+- `context.md` section 4 (Dependencies) for stack constraints
+```
+
+---
+
+## What This Skill Does NOT Do
 
 - Does not modify, refactor, or improve source code.
 - Does not run build commands, tests, or scripts.
@@ -387,13 +423,23 @@ Before marking the task complete:
 - Does not fill documentation gaps with plausible assumptions.
 - Does not record the value of any secret, token, password, or credential.
 
-## Orchestrator Checkpoint Contract
+---
 
-At completion (or pause), return a checkpoint block with:
-- `migration_id`
-- `phase`: `discover`
-- `activity_id_or_slice_id`: `discover-current-state`
-- `status_transition`
-- `artefacts_created_or_updated` (all files in `OUTPUT_DIR`)
-- `blockers_or_waiting_on_human`
-- `next_action`
+## Checkpoint Block
+
+On completion (or pause), record this structure in the migration state files:
+
+```yaml
+migration_id: <id>
+phase: discover
+activity_id_or_slice_id: discover-current-state
+status_transition: <in-progress → done | in-progress → blocked>
+artefacts_created_or_updated:
+  - .github/migrations/<id>/discover/context.md
+  - .github/migrations/<id>/discover/inventory.md
+  - .github/migrations/<id>/discover/behaviour-catalogue.md
+  - .github/migrations/<id>/discover/product-features.md
+  - .github/migrations/<id>/discover/discover-summary.md
+blockers_or_waiting_on_human: <none | description>
+next_action: <human to confirm current-state accuracy, then advance to Target Intent phase>
+```
