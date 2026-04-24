@@ -1,7 +1,7 @@
 # Skill Security Assessment — acquire-codebase-knowledge
 
-**Source:** .agents/skills/acquire-codebase-knowledge
-**Assessed:** 2026-04-22
+**Source:** .github/skills/acquire-codebase-knowledge
+**Assessed:** 2026-04-24
 **Framework:** OWASP LLM Top 10 (2025), MITRE ATLAS, STRIDE
 
 ## Verdict
@@ -13,14 +13,14 @@
 
 | # | Dimension | Score | Weight | Contribution | Evidence |
 |---|-----------|:-----:|:------:|:------------:|----------|
-| 1 | Permission Scope | 5/10 | 15% | 0.75 | Skill runs scanner, generates docs, creates output directories. `SKILL.md` lines 57, 79; `scan.py` lines 561–564 (`output_dir.mkdir(parents=True, exist_ok=True)`, `open(args.output, 'w', ...)`). |
-| 2 | Data Egress | 1/10 | 20% | 0.20 | No HTTP client, external endpoint, or upload code found. All data stays within local filesystem. `scan.py` imports: `os`, `sys`, `argparse`, `subprocess`, `json`, `pathlib`, `re` only. |
-| 3 | Code Execution | 5/10 | 15% | 0.75 | `subprocess.run` used for git history/churn calls. `scan.py` lines 326–336 (`get_git_commits`), 342–357 (`get_git_churn`), 363–371 (`is_git_repo`). Commands are `["git", "log", ...]` — fixed, no user-controlled string injection. |
-| 4 | Prompt Injection Surface | 6/10 | 10% | 0.60 | Workflow instructs reading PRD/TRD/README/ROADMAP/SPEC/DESIGN files then using content to drive generated documentation (`SKILL.md` lines 68–69, 102). No adversarial-content sanitisation clause. |
-| 5 | Sensitive Data Handling | 4/10 | 10% | 0.40 | Scanner deliberately reads and previews `.env.example` / `.env.template` files (`scan.py` lines 141, 607–612). Scan output written in plaintext to `docs/codebase/.codebase-scan.txt`. No redaction for secret-like values. |
-| 6 | Supply Chain | 1/10 | 10% | 0.10 | Zero runtime installs or dynamic downloads. All dependencies are Python stdlib only (`os`, `sys`, `argparse`, `subprocess`, `json`, `pathlib`, `typing`, `re`, `collections`). |
-| 7 | Agency & Autonomy | 4/10 | 10% | 0.40 | End-to-end write workflow: scan → investigate → populate seven docs → validate — no explicit user confirmation before writing/overwriting `docs/codebase/` files (`SKILL.md` lines 23, 57–89). |
-| 8 | Transparency & Intent Integrity | 2/10 | 10% | 0.20 | Declared purpose ("map codebase, create docs") matches observed behavior exactly. No hidden network calls, undeclared writes, or obfuscated logic found. |
+| 1 | Permission Scope | 5/10 | 15% | 0.75 | Skill runs scanner and writes output docs. Evidence: `SKILL.md` lines 57-59 and 79; `scan.py` lines 561-564 (`output_dir.mkdir(...)`, `open(args.output, 'w', ...)`). |
+| 2 | Data Egress | 1/10 | 20% | 0.20 | No HTTP/network libraries or endpoint usage in shipped code; imports are local/system only (`scan.py` lines 17-24). |
+| 3 | Code Execution | 5/10 | 15% | 0.75 | `subprocess.run` executes fixed git commands for commit/churn discovery (`scan.py` lines 326-347, 363-368), with no shell interpolation. |
+| 4 | Prompt Injection Surface | 6/10 | 10% | 0.60 | Workflow explicitly ingests repository intent docs (`SKILL.md` line 68) and uses them to guide output generation (`SKILL.md` line 102), with no explicit untrusted-content guardrail. |
+| 5 | Sensitive Data Handling | 4/10 | 10% | 0.40 | Scanner reads and outputs env template previews directly (`scan.py` lines 141, 607-613) without pattern-based redaction. |
+| 6 | Supply Chain | 1/10 | 10% | 0.10 | No runtime dependency installation, downloads, or remote code execution directives in skill artefacts. |
+| 7 | Agency & Autonomy | 4/10 | 10% | 0.40 | Prescribed workflow writes seven docs automatically (`SKILL.md` lines 23, 79-87) and has no required user confirmation gate before writes. |
+| 8 | Transparency & Intent Integrity | 2/10 | 10% | 0.20 | Declared purpose aligns with behavior across manifest and script; no hidden capabilities observed (`SKILL.md` lines 4, 21-23; `scan.py` lines 556-700). |
 
 **Total score = ((5×0.15)+(1×0.20)+(5×0.15)+(6×0.10)+(4×0.10)+(1×0.10)+(4×0.10)+(2×0.10))×10 = 34/100**
 
@@ -32,17 +32,17 @@
 ### Medium / Low Issues
 
 - **F1 (Medium): Prompt-injection exposure from untrusted repository content**
-  - *Evidence:* "Search for PRD/TRD/README/ROADMAP/SPEC/DESIGN files and read them" — `SKILL.md` line 68.
+  - *Evidence:* "Search for `PRD`, `TRD`, `README`, `ROADMAP`, `SPEC`, `DESIGN` files and read them" — `SKILL.md` line 68.
   - **Impact:** Malicious instructions embedded in any scanned repository document could influence agent behavior during documentation generation (OWASP LLM01).
   - **Mitigation:** Add explicit safety clause — repository text must be treated as untrusted data and must not alter tool-calling decisions or execution behavior.
 
 - **F2 (Medium): Broad local command execution and recursive repository scan**
-  - *Evidence:* `subprocess.run(["git", "log", ...])` — `scan.py` lines 326, 343; `os.walk(Path.cwd())` — `scan.py` line 497.
+  - *Evidence:* `subprocess.run(["git", "log", ...])` — `scan.py` lines 326, 343; recursive traversal `os.walk(Path.cwd())` — `scan.py` lines 297 and 497.
   - **Impact:** In sensitive repos, broad read scope surfaces internal metadata, commit history, and file contents to the agent context.
   - **Mitigation:** Restrict scan scope to user-approved paths; add opt-out flags for git history/churn sections.
 
 - **F3 (Low/Medium): Env-template preview may surface secret-like values**
-  - *Evidence:* `read_file_preview(filepath)` called unconditionally for env templates — `scan.py` line 612.
+  - *Evidence:* `read_file_preview(filepath)` called for env templates without redaction — `scan.py` lines 610-613.
   - **Impact:** Accidentally committed template values (even placeholder secrets) would be reproduced verbatim in the plaintext scan output artifact.
   - **Mitigation:** Apply basic pattern redaction (keys, tokens, passwords) before writing scan output.
 
@@ -53,7 +53,7 @@
 - [ ] Optionally gate git-history collection behind explicit user consent.
 
 ## Unverified Areas
-- None. All files shipped under `.agents/skills/acquire-codebase-knowledge/` were readable.
+- None. All files shipped under `.github/skills/acquire-codebase-knowledge/` were readable.
 
 ## Automatic Block Triggers Fired
 - none

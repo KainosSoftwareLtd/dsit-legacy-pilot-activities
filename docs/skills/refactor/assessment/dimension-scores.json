@@ -1,0 +1,40 @@
+{
+  "skill": "refactor",
+  "assessed_date": "2026-04-24",
+  "overall_score": 14.5,
+  "severity": "Low",
+  "recommendation": "Approve",
+  "weights": {
+    "permission_scope": 0.15,
+    "data_egress": 0.20,
+    "code_execution": 0.15,
+    "prompt_injection_surface": 0.10,
+    "sensitive_data_handling": 0.10,
+    "supply_chain": 0.10,
+    "agency_autonomy": 0.10,
+    "transparency_intent_integrity": 0.10
+  },
+  "scores": {
+    "permission_scope": 4,
+    "data_egress": 0,
+    "code_execution": 1,
+    "prompt_injection_surface": 2,
+    "sensitive_data_handling": 2,
+    "supply_chain": 0,
+    "agency_autonomy": 2,
+    "transparency_intent_integrity": 1
+  },
+  "contributions": {
+    "permission_scope": 6.0,
+    "data_egress": 0.0,
+    "code_execution": 1.5,
+    "prompt_injection_surface": 2.0,
+    "sensitive_data_handling": 2.0,
+    "supply_chain": 0.0,
+    "agency_autonomy": 2.0,
+    "transparency_intent_integrity": 1.0
+  },
+  "formula": "sum(score * weight)",
+  "scale": "0-100 where higher means higher risk",
+  "automatic_block_triggers": []
+}

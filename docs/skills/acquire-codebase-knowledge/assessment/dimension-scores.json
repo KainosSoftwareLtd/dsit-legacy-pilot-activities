@@ -1,7 +1,7 @@
 {
   "skill": "acquire-codebase-knowledge",
   "version": "1.3",
-  "assessed": "2026-04-22",
+  "assessed": "2026-04-24",
   "framework": ["OWASP LLM Top 10 (2025)", "MITRE ATLAS", "STRIDE"],
   "dimensions": [
     {
@@ -20,7 +20,7 @@
       "score": 1,
       "contribution": 0.20,
       "owasp_mapping": "LLM02 Sensitive Info Disclosure, LLM03 Supply Chain, STRIDE-I",
-      "evidence": "No HTTP client or external endpoints found in any skill file"
+      "evidence": "No HTTP client or external endpoints found in any skill file; imports at scan.py lines 17-24 are local/system libraries"
     },
     {
       "id": 3,
@@ -38,7 +38,7 @@
       "score": 6,
       "contribution": 0.60,
       "owasp_mapping": "LLM01 Prompt Injection",
-      "evidence": "SKILL.md lines 68-69: reads README/SPEC/DESIGN without sanitisation guidance"
+      "evidence": "SKILL.md line 68 instructs reading repository docs and line 102 uses them to drive generated outputs without explicit sanitisation guidance"
     },
     {
       "id": 5,
@@ -47,7 +47,7 @@
       "score": 4,
       "contribution": 0.40,
       "owasp_mapping": "LLM02 Sensitive Info Disclosure",
-      "evidence": "scan.py lines 607-612: unconditional env template preview, no redaction"
+      "evidence": "scan.py lines 607-613: env template previews are emitted without redaction"
     },
     {
       "id": 6,

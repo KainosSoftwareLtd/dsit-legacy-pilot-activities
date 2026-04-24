@@ -1,0 +1,11 @@
+{
+  "skill": "refactor",
+  "version": "unversioned",
+  "assessed_date": "2026-04-24",
+  "overall_score": 14.5,
+  "severity": "Low",
+  "recommendation": "Approve",
+  "automatic_block_triggers": [],
+  "source": ".github/skills/refactor/SKILL.md",
+  "manifest_sha256": "9986e42e3415ecd914b8ea17fd7414cb25c8182d28393a511c780b71eb3f46e9"
+}
