@@ -81,7 +81,33 @@ Not every activity within a selected type needs to be run. The team should choos
 
 ---
 
-## 3) Common type clusters
+## 3) Skill Governance in Pilot Planning
+
+Every AI agent skill used in your pilot must be assessed and approved before use. Pilot orchestrators enforce mandatory skill validation to prevent use of blocked or unapproved skills.
+
+### Skill Assessment Requirement
+
+Before any skill can be used in a pilot or pilot-related workflow:
+
+1. **If the skill is new or has changed:** Run the security assessment to produce a verdict. Use `/skill-security-assessment assess <skill-name>` in Copilot Chat.
+   - Assessment framework: OWASP Top 10 for LLM Applications (2025), MITRE ATLAS, STRIDE
+   - Scoring: 8 dimensions (Permission Scope, Data Egress, Code Execution, Prompt Injection Surface, Sensitive Data Handling, Supply Chain, Agency & Autonomy, Transparency & Intent Integrity), each 0-10, weighted to produce 0-100 total score
+   - Severity bands: 0-19 (Low), 20-39 (Medium), 40-69 (High), 70-100 (Critical)
+   - Output: Report, verdict, dimension scores, and manifest snapshot stored in `docs/skills/<skill-name>/assessment/`
+
+2. **If the skill is already assessed:** Check the current verdict in [docs/skills/approved-skills.md](docs/skills/approved-skills.md) or [docs/skills/blocked-skills.md](docs/skills/blocked-skills.md).
+
+### Skill Usage Rules
+
+**Low-severity (0-19):** Use freely. No conditions required.
+
+**Medium-severity (20-39):** Check the **Conditions / Acceptance** column in [docs/skills/approved-skills.md](docs/skills/approved-skills.md). Use the skill only when that field states conditions are complete or explicitly accepted.
+
+**High, Critical, or Review-Required:** Do not use. Skill is blocked. Contact security owner to request unblock evaluation.
+
+---
+
+## 4) Common type clusters
 
 These combinations occur frequently in practice. The rationale explains why they co-occur.
 
@@ -117,7 +143,7 @@ These combinations occur frequently in practice. The rationale explains why they
 
 ---
 
-## 4) Shared outputs and effort savings
+## 5) Shared outputs and effort savings
 
 Several activities produce outputs that serve multiple legacy types. When running a multi-type pilot, these **hub activities** are done once and their outputs are reused across activity chains.
 

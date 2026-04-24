@@ -1,0 +1,39 @@
+{
+  "skill": "architecture-blueprint-generator",
+  "assessed_date": "2026-04-24",
+  "overall_score": 8.5,
+  "severity": "Low",
+  "recommendation": "Approve",
+  "weights": {
+    "permission_scope": 0.15,
+    "data_egress": 0.20,
+    "code_execution": 0.15,
+    "prompt_injection_surface": 0.10,
+    "sensitive_data_handling": 0.10,
+    "supply_chain": 0.10,
+    "agency_autonomy": 0.10,
+    "transparency_intent_integrity": 0.10
+  },
+  "scores": {
+    "permission_scope": 1,
+    "data_egress": 1,
+    "code_execution": 0,
+    "prompt_injection_surface": 3,
+    "sensitive_data_handling": 1,
+    "supply_chain": 0,
+    "agency_autonomy": 1,
+    "transparency_intent_integrity": 0
+  },
+  "contributions": {
+    "permission_scope": 1.5,
+    "data_egress": 2.0,
+    "code_execution": 0.0,
+    "prompt_injection_surface": 3.0,
+    "sensitive_data_handling": 1.0,
+    "supply_chain": 0.0,
+    "agency_autonomy": 1.0,
+    "transparency_intent_integrity": 0.0
+  },
+  "formula": "sum(score * weight)",
+  "scale": "0-100 where higher means higher risk"
+}

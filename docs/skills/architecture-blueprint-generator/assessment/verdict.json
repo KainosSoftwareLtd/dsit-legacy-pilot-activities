@@ -1,0 +1,11 @@
+{
+  "skill": "architecture-blueprint-generator",
+  "version": "unversioned",
+  "assessed_date": "2026-04-24",
+  "overall_score": 8.5,
+  "severity": "Low",
+  "recommendation": "Approve",
+  "automatic_block_triggers": [],
+  "source": ".github/skills/architecture-blueprint-generator/SKILL.md",
+  "manifest_sha256": "6146b48679470d1dfbf64ca6a53f5650e89dcce6e83dc9990208e24b1f18ec2e"
+}
