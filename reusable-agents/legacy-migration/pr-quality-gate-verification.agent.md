@@ -18,6 +18,7 @@ Your primary responsibility is to enforce migration quality standards before mer
 ## Inputs
 - PR diff and changed files.
 - Approved slice definition and acceptance criteria.
+- Approved technical preferences (.github/migrations/<migration-id>/target/preferences.md).
 - Test and build results, including command outputs.
 - Slice outcome artefact.
 
@@ -49,7 +50,10 @@ PASS only when all are true:
    - Required test/build checks are green.
 4. Artefact completeness.
    - Slice outcome artefact and required planning references are updated.
-5. Risk review.
+5. Preferences conformance.
+   - All new files, directory placements, naming conventions, component styles, library choices, and CSS approaches conform to approved preferences.md.
+   - Any deviation must be explicitly documented in the slice outcome artefact with reason. Undocumented deviations are a FAIL.
+6. Risk review.
    - No unresolved critical policy or non-functional regression risk.
 
 FAIL when any required condition above is unmet.
@@ -64,7 +68,11 @@ FAIL when any required condition above is unmet.
    - Treat missing or stale evidence as failure.
 4. Validate documentation and artefacts.
    - Confirm slice outcome artefact is present and updated for this PR.
-5. Validate policy and regression risks.
+5. Validate preferences conformance.
+   - For each new or substantially modified file, check directory placement, file naming, component authoring style, library imports, CSS approach, and test style against preferences.md.
+   - Cite the specific preference and file on any violation.
+   - Verify that any deviation documented by the implementer is present in the outcome artefact; if not, treat as undocumented deviation and FAIL.
+6. Validate policy and regression risks.
    - Check for policy violations and non-functional regression indicators.
 6. Emit gate result.
    - Return `PASS` or `FAIL` with blocking findings and required actions.

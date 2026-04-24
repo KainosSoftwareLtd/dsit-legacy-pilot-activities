@@ -89,6 +89,8 @@ Create or resume migration state under:
    - Current-state artefacts exist and are human-confirmed accurate.
 2. Target gate.
    - Target architecture artefacts exist and human target-state approval is recorded.
+   - preferences.md exists in the target/ directory AND is marked approved by the human.
+   - If preferences.md is absent or unapproved, the Target gate CANNOT pass regardless of other artefacts. Block progression and set phase status to waiting-on-human with reason "Technical preferences not yet approved."
 3. Baseline gate.
    - Baseline tests exist, run, and are recorded.
 4. Planning gate.
@@ -108,8 +110,9 @@ Create or resume migration state under:
 
 ## Human Interaction Gates
 1. Confirm current-state accuracy before leaving Discover.
-2. Approve target-state design and constraints before Planning completion.
-3. Approve slice plan before Execution starts.
+2. Approve technical preferences (preferences.md) before architecture design proceeds within Target phase.
+3. Approve target-state design, constraints, and technical preferences before Planning phase starts.
+4. Approve slice plan before Execution starts.
 
 ## Failure Modes To Watch
 - Orchestrator skipping gates to accelerate flow.
@@ -135,6 +138,23 @@ Return updates with these sections:
 - PR Quality Gate Agent
 - Drift and Retrospective Learning Agent
 
+## Sub-Agent Dispatch Protocol
+
+Before composing any dispatch prompt for a sub-agent, the orchestrator MUST:
+
+1. **Read the target agent's `.agent.md` file in full.**
+   Located at `.github/agents/<agent-slug>.agent.md`. Do not skip this step.
+2. **Identify the agent's output contract.**
+   Every agent defines its required output files, their exact paths, and the section/schema each must contain. This is the authoritative output specification.
+3. **Use the agent's output contract verbatim in the dispatch prompt.**
+   The orchestrator MUST NOT substitute, rename, merge, or invent output files. The dispatch prompt must reference the exact file names and paths the agent itself specifies.
+4. **Provide only migration-specific values, not output overrides.**
+   The orchestrator supplies: WORKSPACE_ROOT, MIGRATION_ID, OUTPUT_DIR, and any runtime context (build commands, constraints, prior artefacts). It does NOT redefine what the agent writes.
+5. **Quote the agent's own output table in the dispatch prompt.**
+   Copy the output file table from the agent's instructions into the dispatch prompt so the agent is explicitly reminded of its own contract.
+
+**Violation of this protocol caused an incorrect dispatch in the Discover phase (2026-04-21): the orchestrator provided a custom output spec (system-map.md, build-analysis.md, risk-register.md) that overrode the Legacy System Analyst's contract (context.md, inventory.md, behaviour-catalogue.md, product-features.md). All four correct artefacts had to be re-produced.**
+
 ## Sub-Agent Checkpoint Contract
 Require every sub-agent response to include a checkpoint block that the orchestrator can apply to both state files:
 - migration_id
@@ -146,3 +166,10 @@ Require every sub-agent response to include a checkpoint block that the orchestr
 - next_action
 
 If a checkpoint block is missing, do not advance phase or status.
+
+## Artefact Validation After Dispatch
+After receiving a sub-agent checkpoint block, the orchestrator MUST:
+1. Verify every file listed in `artefacts_created_or_updated` actually exists on disk using file search.
+2. Cross-check each file path against the agent's output contract (read in step 1 of the Dispatch Protocol above).
+3. If any required file is missing or has an incorrect name, mark the phase as `incomplete`, record the discrepancy in state.yaml under `blockers`, and re-dispatch with the correct specification.
+4. Only update `gate_passed` and advance phase state after all required artefacts are confirmed present and match the agent contract.

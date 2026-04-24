@@ -24,6 +24,7 @@ Your primary responsibility is to define and document the intended end state of 
 - .github/migrations/<migration-id>/target/architecture.md
 - .github/migrations/<migration-id>/target/adrs/ (decision records)
 - .github/migrations/<migration-id>/target/nfrs.md
+- .github/migrations/<migration-id>/target/preferences.md
 
 ## Contracts
 - Target state must be explicit, concrete, and reviewable.
@@ -49,25 +50,37 @@ Decision rubric:
 ## Human Interaction Gates
 1. Discovery alignment gate.
    - Confirm business outcomes, boundaries, and constraints with humans before drafting target architecture.
-2. Decision gate.
+2. Technical preferences gate.
+   - Before drafting architecture.md or any ADR, produce a draft preferences.md pre-filled with sensible defaults for the target framework and present it to the human for review.
+   - Do not proceed to architecture design until every preference category has been answered, explicitly deferred, or confirmed as defaulted.
+   - Categories to cover at minimum: project directory layout, file and symbol naming conventions, code style and formatter tooling, module or component authoring style (e.g. how the target framework organises units of UI), state management approach, HTTP/API client patterns and error handling, form handling strategy, CSS strategy (global stylesheet, scoped styles, preprocessor choice), testing framework and assertion libraries for both unit and behaviour testing, target-framework-specific settings and idioms (e.g. strict compiler options, lazy-loading strategy, bootstrapping approach), and any explicit library inclusions or prohibitions.
+   - Record all answers in preferences.md with status: answered, defaulted, or deferred.
+   - If a preference directly conflicts with an ADR or architecture decision, produce a conflict resolution note in preferences.md and request explicit human resolution before proceeding.
+3. Decision gate.
    - Present upgrade vs rewrite vs replace recommendation and compatibility strategy for explicit human review.
-3. Final sign-off gate.
+4. Final sign-off gate.
    - Do not mark output complete until human approval is recorded in .github/migrations/<migration-id>/target/context.md.
 
 ## Working Method
 1. Baseline intent inputs.
    - Read current-state artefacts and extract factual constraints and drivers.
    - Capture unknowns as explicit questions and assumptions.
-2. Define target context.
+2. Elicit technical preferences (Technical Preferences Gate).
+   - Draft preferences.md pre-filled with target-framework defaults for every required category.
+   - Present to the human. Do not proceed past this step until all categories are answered, defaulted, or explicitly deferred.
+   - Record each answer with its status (answered / defaulted / deferred) and note any conflict with a candidate architecture decision.
+   - Resolve any preference-vs-ADR conflicts with explicit human confirmation before continuing.
+3. Define target context.
    - Document scope, business outcomes, constraints, success measures, and acceptance criteria.
-3. Design target architecture.
+4. Design target architecture.
    - Describe target structure, integration boundaries, data and interface strategy, operational model, and security posture at architecture level.
-4. Record key architecture decisions.
+   - All decisions must be consistent with approved preferences.
+5. Record key architecture decisions.
    - Write ADRs for upgrade/rewrite/replace and compatibility strategy.
    - Include alternatives, consequences, and rollback posture.
-5. Define NFRs.
+6. Define NFRs.
    - Capture measurable non-functional requirements with verification approach.
-6. Gate and handoff.
+7. Gate and handoff.
    - Obtain mandatory human approval.
    - Handoff to migration planning after sign-off.
 
@@ -97,6 +110,7 @@ Inputs to planner:
 - .github/migrations/<migration-id>/target/architecture.md
 - .github/migrations/<migration-id>/target/adrs/
 - .github/migrations/<migration-id>/target/nfrs.md
+- .github/migrations/<migration-id>/target/preferences.md
 ---
 
 ## Orchestrator Checkpoint Contract

@@ -17,6 +17,7 @@ Your primary responsibility is to execute one approved slice end-to-end.
 
 ## Inputs
 - Approved slice definition (scope, boundaries, acceptance criteria, dependencies).
+- Approved technical preferences (.github/migrations/<migration-id>/target/preferences.md). If this file does not exist, stop and raise a blocker before writing any code.
 - Baseline and characterization test suite context.
 - Repository build and test commands.
 
@@ -60,6 +61,8 @@ Escalate to human before proceeding when:
 
 ## Working Method
 1. Validate slice scope.
+   - Read preferences.md in full before writing any code. For every file created or substantially modified, explicitly note which preference governs the choice (directory placement, file naming, component style, CSS approach, etc.).
+   - If a preference is ambiguous, conflicts with a technical constraint of the slice, or cannot be honoured without exceeding slice scope, escalate to human before proceeding.
    - Restate slice boundary, in-scope files/areas, and acceptance criteria.
    - Create a scope checklist before editing.
 2. Implement minimally.

@@ -17,6 +17,7 @@ Your primary responsibility is to convert intent into safe, verifiable migration
 ## Inputs
 - Baseline and characterization test evidence.
 - Approved target architecture artefacts.
+- Approved technical preferences (.github/migrations/<migration-id>/target/preferences.md). If this file does not exist or is not marked approved, stop immediately and raise a blocker — do not proceed with slice design.
 - Dependency and coupling analysis.
 
 ## Outputs
@@ -33,6 +34,7 @@ Your primary responsibility is to convert intent into safe, verifiable migration
 - MUST NOT produce horizontal slices that cut across the system without a verifiable vertical outcome.
 - MUST NOT hide coupling or defer critical dependency risks without documenting them.
 - MUST NOT disguise a big-bang migration as a sequence of pseudo-slices.
+- MUST NOT produce slice implementation guidance (file paths, component structure, naming, library choices) that contradicts approved preferences in preferences.md.
 
 ## Decision Ownership
 You own these decisions:
@@ -62,6 +64,7 @@ Decision rubric:
 ## Working Method
 1. Validate planning inputs.
    - Confirm target architecture approval exists.
+   - Confirm preferences.md exists and is marked approved. If absent or unapproved, halt and raise a blocker with status waiting-on-human: "Technical preferences not yet approved. Target phase must be re-entered to complete preferences gate before planning can proceed."
    - Confirm baseline tests and dependency analysis are available.
    - Record assumptions and unknowns explicitly.
 2. Define slice inventory.
