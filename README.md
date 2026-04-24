@@ -17,6 +17,27 @@ L7-Recent-Failures-or-Downtime/      6 activities
 docs/architecture/                  Standard location for generated architecture artefacts
 ```
 
+## Skill Governance
+
+All AI agent skills used in pilots, documentation, or pilot orchestration must be assessed before use. The skill security assessment framework validates skills against OWASP Top 10 for LLM Applications (2025) and MITRE ATLAS, producing a severity score and recommendation.
+
+**Mandatory Policy:**
+
+- **New skills**: Must complete a full security assessment before use. Run `/skill-security-assessment assess <skill-name>` to initiate.
+- **Changed skills**: If logic, references, or scripts change, the skill must be reassessed. Metadata-only or comment-only changes may reuse the prior assessment with documented rationale.
+- **Approved skills**: Skills scored Low or Medium (with acceptance) may be used. See [docs/skills/approved-skills.md](docs/skills/approved-skills.md) for the current allowlist.
+- **Blocked skills**: Skills scored High or Critical, or marked "Review Required", are prohibited. See [docs/skills/blocked-skills.md](docs/skills/blocked-skills.md) for the current blocklist.
+- **Conditional approval**: Medium-severity skills may be used only if required conditions have been remediated or explicitly accepted. Acceptance records must link to risk rationale and expiry/review dates. See the skill's `assessment/` folder for remediation and acceptance records.
+
+**Process:**
+
+1. **New Skill Intake**: Perform full assessment → review verdict → record decision in approved/blocked-skills.md.
+2. **Changed Skill**: Compare current manifest/scripts against stored snapshot → if changed, reassess → update records.
+3. **Blocked Prevention**: Pilot orchestrators check that no blocked skills are used; usage violations cause pilot rejection.
+4. **Conditional Use**: Confirm acceptance/remediation records exist in the skill's `docs/skills/<skill-name>/assessment/` folder before use.
+
+For details on the assessment framework, required conditions, remediation, and acceptance workflows, see [.github/skills/skill-security-assessment/SKILL.md](.github/skills/skill-security-assessment/SKILL.md).
+
 ## Getting started
 
 1. **Obtain LITRAF scores** for the target system (or assess informally using the likelihood criteria in `context/LITRAF_GOVUK_Guidance.md`).
