@@ -44,6 +44,70 @@ See **README.md** for detailed agent usage workflows (new pilot, resume, executi
 
 ---
 
+## Migration Orchestrator Agent (legacy migration workflow)
+
+Use the migration-specific orchestrator when your goal is a controlled, slice-based system migration with explicit gates and resumable state.
+
+Primary agent:
+
+- [Migration Orchestrator](reusable-agents/legacy-migration/migration-orchestrator.agent.md)
+
+Subagent chain it coordinates:
+
+1. [Legacy System Analyst](reusable-agents/legacy-migration/legacy-system-analyst.agent.md)
+2. [Target Architecture and Intent](reusable-agents/legacy-migration/target-architecture-intent.agent.md)
+3. [Behaviour Baseline and Characterisation Testing](reusable-agents/legacy-migration/behaviour-baseline-characterisation-testing.agent.md)
+4. [Migration Planner and Slice Designer](reusable-agents/legacy-migration/migration-planner-slice-designer.agent.md)
+5. [Slice Implementer Agent (Worker)](reusable-agents/legacy-migration/slice-implementer-worker.agent.md)
+6. [PR Quality Gate Agent](reusable-agents/legacy-migration/pr-quality-gate-verification.agent.md)
+7. [Drift and Retrospective Learning Agent](reusable-agents/legacy-migration/drift-retrospective-learning.agent.md)
+
+### Start a new migration
+
+1. Select Migration Orchestrator in Copilot Chat.
+2. Provide:
+  - migration ID and type
+  - target system(s)
+  - build and test commands
+  - known constraints and approvals
+3. Ask to initialize migration state.
+4. The orchestrator creates `.github/migrations/<migration-id>/` with state, tracker, and phase folders.
+
+Suggested prompt:
+
+"Start migration `<migration-id>` for `<system-name>`. Initialize tracker/state and begin discover phase. Build/test commands: `<commands>`."
+
+### Continue an in-progress migration
+
+1. Select Migration Orchestrator.
+2. Ask to resume with the same migration ID.
+3. The orchestrator loads `state.yaml` and `tracker.md` and reports:
+  - current phase and gate status
+  - ready work
+  - waiting-on-human work
+  - blocked items
+  - next required action
+
+Suggested prompt:
+
+"Resume migration `<migration-id>` and list gate status, ready slices, blockers, and next action."
+
+### Gate and slice execution behavior
+
+The orchestrator enforces:
+
+1. No execution before baseline tests are recorded.
+2. No planning closure before slice acceptance criteria are explicit and approved.
+3. No slice completion without PR quality gate evidence.
+4. PR gate FAIL loops back to Slice Implementer.
+5. PR gate PASS routes to human merge decision and tracked state update.
+
+### Resumability contract
+
+Each subagent returns a checkpoint block used to update `state.yaml` and `tracker.md`. If checkpoint data is missing, phase advancement is blocked. This allows users to jump in and out without losing operational continuity.
+
+---
+
 ## 1) Purpose
 
 The activity pages are organised by legacy type (L1 to L7), but real government systems rarely score on just one LITRAF criterion. A department's HR platform might be simultaneously out of support (L1), have known security vulnerabilities (L6), and lack documentation (L3). Running all three activity sets in isolation wastes effort because they share foundational outputs.

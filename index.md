@@ -13,6 +13,27 @@ Generated: 2026-03-17 10:20 UTC
 
 For detailed workflows, see **[README.md](README.md)** (agent usage guide) and **[Pilot-Planning-Guide.md](Pilot-Planning-Guide.md)** (activity composition and clusters).
 
+## Getting started with the Migration Orchestrator Agent
+
+Use this for end-to-end migration journeys: context discovery, target intent, test baseline, slice planning, single-slice implementation, PR quality validation, and retrospective improvement.
+
+Primary entrypoint:
+
+- [Migration Orchestrator](reusable-agents/legacy-migration/migration-orchestrator.agent.md)
+
+Quick start:
+
+1. Select Migration Orchestrator in Copilot Chat.
+2. Say: "Start migration `<migration-id>` for `<system-name>` and initialize `.github/migrations/<migration-id>/`."
+3. Follow the orchestrator's phase and gate prompts.
+
+Resume:
+
+1. Select Migration Orchestrator.
+2. Say: "Resume migration `<migration-id>` and show current phase, blockers, ready work, and next action."
+
+See [README.md](README.md) for full migration-agent operating guidance and [Pilot-Planning-Guide.md](Pilot-Planning-Guide.md) for migration planning flow and gate behavior.
+
 ## Planning
 - **[Pilot Planning Guide](Pilot-Planning-Guide.md)**: how to compose activities across multiple legacy types, common type clusters, shared outputs, effort estimates, and a week-by-week schedule template.
 - **[Metrics and Measurement Guidance](Metrics.md)**: published canonical definitions for P1 to P8, plus baseline, evidence, and scoring guidance.
