@@ -130,6 +130,31 @@ Must produce:
 
 - private final pilot report for DSIT
 
+## Skill Governance Enforcement
+
+**Mandatory skill validation applies to all pilots and must not be bypassed.**
+
+### Skill Policy
+
+All AI agent skills used in a pilot must be assessed and approved before use:
+
+- **Approved skills:** Listed in [docs/skills/approved-skills.md](docs/skills/approved-skills.md)
+  - Low-severity: Use freely. No special conditions.
+  - Medium-severity: Use only if the "Conditions / Acceptance" column indicates they are complete or accepted.
+- **Blocked skills:** Listed in [docs/skills/blocked-skills.md](docs/skills/blocked-skills.md)
+  - High, Critical, or Review-Required verdicts
+  - PROHIBITED — refuse all use
+  - Contact the pilot security owner to request unblock evaluation
+
+### Enforcement
+
+Before a pilot begins, verify all skills referenced in the pilot plan are approved. During pilot execution:
+
+- Refuse to use any skill not listed in approved-skills.md
+- Refuse to use any skill appearing in blocked-skills.md; escalate to security owner for unblock evaluation
+- For Medium-severity skills, check the "Conditions / Acceptance" column in approved-skills.md to confirm conditions are complete or risks are accepted
+- Include skill governance compliance in the final pilot report
+
 ## Agent Behavior
 
 - The orchestrator owns state, sequencing, resumability, and phase advancement.
