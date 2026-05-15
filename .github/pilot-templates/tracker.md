@@ -15,7 +15,7 @@
 | Phase | Status | Gate condition | Next action |
 |---|---|---|---|
 | Prepare | not-started | tracker, state, selected activities initialized | initialize pilot files and selected activity list |
-| Assess | not-started | baseline, hypotheses, execute plan, governance artefacts complete | capture assess artefacts |
+| Assess | not-started | baseline, hypotheses, and execute plan artefacts complete | capture assess artefacts |
 | Execute | not-started | all in-scope activity evidence gathered | run ready activities and validate artefacts |
 | Evaluate | not-started | end-state metrics and evidence completeness check complete | compile evaluation artefacts |
 | Report | not-started | private report generated from artefacts and tracker state | synthesize private report output |

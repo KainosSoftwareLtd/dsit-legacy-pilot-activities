@@ -48,7 +48,7 @@ Use this exact structure in `report/final-report-private.md`.
 	- Ineffective or low-value activities and observed causes.
 
 5. `Operational and Governance Findings`
-	- Access, onboarding, governance, security, and data handling constraints.
+	- Onboarding, governance, security, data handling, and delivery constraints observed during the pilot.
 	- Enablers that accelerated delivery.
 	- Frictions that reduced delivery pace or evidence quality.
 
@@ -78,7 +78,7 @@ Use this exact structure in `report/final-report-private.md`.
 - Section 2: derive from assess artefacts (`hypotheses.md`, `execute-plan.md`) and defined baseline criteria.
 - Section 3: derive from tracker activity rows, shared handoffs, and decisions/blockers log.
 - Section 4: derive from `assess/baseline-metrics.md`, `evaluate/end-state-metrics.md`, and activity outcome artefacts.
-- Section 5: derive from `assess/access-and-governance.md` and execution blocker records.
+- Section 5: derive from tracker decisions/blockers, execution blocker records, and any governance or operational constraints explicitly recorded in pilot artefacts.
 - Section 6: derive from `evaluate/evidence-completeness-check.md` and explicit report assumptions.
 - Section 7-9: derive from completed/deferred activities, notes-for-report fields, and evaluate observations.
 

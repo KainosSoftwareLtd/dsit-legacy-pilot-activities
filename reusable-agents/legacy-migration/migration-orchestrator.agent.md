@@ -72,14 +72,17 @@ Create or resume migration state under:
    - Handoff: Behaviour Baseline and Characterisation Testing.
 4. Planning phase.
    - Objective: produce migration slices and acceptance criteria.
-   - Handoff: Migration Planner and Slice Designer.
-5. Execution phase.
-   - Objective: implement approved slices with verification evidence.
    - Handoff sequence:
-     1. Slice Implementer Agent (Worker)
-     2. PR Quality Gate Agent
-     3. On FAIL: route back to Slice Implementer Agent (Worker)
-     4. On PASS: route to Human Review, then update tracker state
+     1. Migration Planner and Slice Designer (produces slice plan).
+     2. E2E Test Assessment and Remediation Agent (assesses E2E coverage gaps against planned slices; gates Planning phase).
+   - Substep: E2E Confidence Assessment (after slice plan created, before Planning gate passes).
+5. Execution phase.
+   - Objective: implement approved slices with verification evidence including E2E test updates.
+   - Handoff sequence:
+     1. Slice Implementer Agent (Worker) — implements slice, updates all test levels (unit, integration, E2E).
+     2. PR Quality Gate Agent — verifies scope, tests, and E2E coverage (if in scope).
+     3. On FAIL: route back to Slice Implementer Agent (Worker).
+     4. On PASS: route to Human Review, then update tracker state.
 6. Evaluate and learning phase.
    - Objective: capture drift, retrospectives, and system-learning updates.
    - Handoff: Drift and Retrospective Learning Agent.
@@ -95,9 +98,15 @@ Create or resume migration state under:
    - Baseline tests exist, run, and are recorded.
 4. Planning gate.
    - Slice plan exists, acceptance criteria are explicit, and plan approval is recorded.
+   - **E2E Readiness Checkpoint (NEW):**
+     - .github/migrations/<migration-id>/test/e2e-readiness.md exists and is human-reviewed.
+     - All slices are mapped to affected user journeys and API contracts in e2e-coverage-matrix.md.
+     - High-risk coverage gaps identified and classified by risk level.
+     - Remediation plan recorded: either gaps fixed (tests generated and reviewed), or deferred with documented risk acceptance and human approval.
+     - If E2E assessment is incomplete, blocked, or has unaddressed critical-path gaps, Planning gate CANNOT pass. Block progression and set status to waiting-on-human with reason "E2E readiness not confirmed" and reference to e2e-readiness.md.
 5. Execution gate.
    - Each in-progress slice has scope, evidence, and status updates.
-   - No slice marked done without required test and quality-gate evidence.
+   - No slice marked done without required test and quality-gate evidence (including E2E tests if slice affects E2E-covered flows).
 6. Evaluate gate.
    - Retrospective artefact exists with approved or deferred improvement actions.
 
@@ -112,13 +121,16 @@ Create or resume migration state under:
 1. Confirm current-state accuracy before leaving Discover.
 2. Approve technical preferences (preferences.md) before architecture design proceeds within Target phase.
 3. Approve target-state design, constraints, and technical preferences before Planning phase starts.
-4. Approve slice plan before Execution starts.
+4. Approve slice plan before E2E assessment begins.
+5. Approve E2E readiness (e2e-readiness.md) and any deferred gaps before Execution starts. Human must confirm confidence in E2E coverage or explicitly accept documented risk.
 
 ## Failure Modes To Watch
 - Orchestrator skipping gates to accelerate flow.
 - state.yaml and tracker.md divergence.
 - Parallelization approved despite hidden coupling.
 - Baseline tests missing but execution still started.
+- E2E assessment skipped or incomplete; Execution started without E2E readiness confirmation.
+- Critical-path E2E gaps deferred without documented risk acceptance and human approval.
 
 ## Output Format
 Return updates with these sections:
@@ -134,6 +146,7 @@ Return updates with these sections:
 - Target Architecture and Intent
 - Behaviour Baseline and Characterisation Testing
 - Migration Planner and Slice Designer
+- E2E Test Assessment and Remediation Agent (NEW)
 - Slice Implementer Agent (Worker)
 - PR Quality Gate Agent
 - Drift and Retrospective Learning Agent
@@ -154,6 +167,40 @@ Before composing any dispatch prompt for a sub-agent, the orchestrator MUST:
    Copy the output file table from the agent's instructions into the dispatch prompt so the agent is explicitly reminded of its own contract.
 
 **Violation of this protocol caused an incorrect dispatch in the Discover phase (2026-04-21): the orchestrator provided a custom output spec (system-map.md, build-analysis.md, risk-register.md) that overrode the Legacy System Analyst's contract (context.md, inventory.md, behaviour-catalogue.md, product-features.md). All four correct artefacts had to be re-produced.**
+
+### E2E Test Assessment Agent Dispatch Guidance
+
+When dispatching the E2E Test Assessment and Remediation Agent (Planning phase, after slice plan approved):
+
+1. **Read the agent's full instructions** in `reusable-agents/legacy-migration/e2e-test-assessment-remediation.agent.md`.
+2. **Verify prerequisites before dispatch:**
+   - Slice plan exists and is approved in `.github/migrations/<migration-id>/planning/slice-plan.md` (or equivalent).
+   - E2E section exists and is approved in `.github/migrations/<migration-id>/target/preferences.md`.
+   - Product features and behaviour catalogue exist in discover/ folder (from Discover phase).
+   - Baseline evidence exists in `.github/migrations/<migration-id>/test/baseline-evidence.md`.
+   - If any prerequisite missing, add as blocker; do not dispatch.
+3. **Provide context in dispatch prompt:**
+   - MIGRATION_ID
+   - Path to slice plan
+   - Path to preferences.md (emphasize E2E section)
+   - Path to product-features.md and behaviour-catalogue.md
+   - Current E2E test file locations in repository
+   - Build/test commands for running E2E tests
+4. **Quote the agent's output contract:**
+   - `.github/migrations/<migration-id>/test/e2e-readiness.md`
+   - `.github/migrations/<migration-id>/test/e2e-coverage-matrix.md`
+   - `.github/migrations/<migration-id>/test/e2e-tests-generated.md`
+5. **After agent responds:**
+   - Validate all three output files exist (file search).
+   - Cross-check against agent's contract (all required sections present).
+   - Review e2e-readiness.md gate recommendation (PASS, CONDITIONAL, or BLOCKED).
+   - If gate recommendation is BLOCKED or CONDITIONAL with unresolved critical-path gaps, record blocker in state.yaml and set Planning phase status to waiting-on-human.
+   - If gate recommendation is PASS (or CONDITIONAL with human approval of deferred risks), Planning gate can pass and transition to Execution phase.
+6. **E2E Test File Merge Decision:**
+   - E2E test files generated by agent (listed in e2e-tests-generated.md) are submitted for human review.
+   - Orchestrator does not auto-merge test files; human decides merge timing and integration with slice PRs.
+   - Typically, test files merged in same PR as slice implementation (Slice Implementer updates tests per acceptance criteria).
+   - Alternative: E2E tests merged in separate PR before Execution (if environment setup required).
 
 ## Sub-Agent Checkpoint Contract
 Require every sub-agent response to include a checkpoint block that the orchestrator can apply to both state files:
