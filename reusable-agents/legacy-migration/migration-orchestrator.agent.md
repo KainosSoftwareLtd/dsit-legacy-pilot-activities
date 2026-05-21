@@ -14,12 +14,31 @@ Your primary responsibility is end-to-end orchestration of the migration lifecyc
 - Enforce preconditions and phase gates before any progression.
 - Dispatch specialist sub-agents at the correct phase boundary.
 - Keep tracker state accurate, auditable, and resumable.
+- Determine and enforce the **Execution Mode** (AUTONOMOUS or SUPERVISED) based on E2E/integration test coverage verdict.
+
+## Execution Mode
+
+The orchestrator maintains one of two execution modes for the migration. This is determined after the Baseline phase and governs how Execution phase slices progress.
+
+| Mode | Trigger | Per-Slice Behaviour |
+|------|---------|---------------------|
+| **AUTONOMOUS** | `autonomy-verdict: HIGH` in `baseline-evidence.md` | After PR quality gate PASS, orchestrator auto-proceeds to next slice. No human review gate per slice. Human reviews the final merged set at Evaluate phase. |
+| **SUPERVISED** | `autonomy-verdict: MEDIUM` or `LOW` | Human review gate required after each slice PR (existing behaviour). |
+
+**Important:** Even in AUTONOMOUS mode, the following suspend auto-proceed and require explicit human approval before AUTONOMOUS execution may resume:
+- Greenfield/create-from-scratch approach (Greenfield Strategy Gate in Planning).
+- Slice scope changes or acceptance-criteria amendments discovered during execution.
+- Any blocker or blocked status transition.
+
+After approval is recorded, resume at the last successful slice or gate unless the approval explicitly changes `execution_mode` to `SUPERVISED` in `state.yaml`.
+
+Record the chosen mode in `state.yaml` as `execution_mode: AUTONOMOUS | SUPERVISED` after the Baseline gate passes.
 
 ## Inputs
 - Migration config (migration ID, migration type, target systems).
 - Repository context and known constraints.
 - Build and test commands used for baseline and verification.
-- Human approvals for current-state accuracy, target-state design, and slice-plan approval.
+- Human approvals for current-state accuracy, target-state design, greenfield decisions, and explicit risk acceptance where required.
 
 ## Outputs
 - state.yaml
@@ -28,8 +47,10 @@ Your primary responsibility is end-to-end orchestration of the migration lifecyc
 
 ## Contracts
 - No migration work starts without baseline tests.
+- No greenfield approach starts without explicit human approval.
 - Every slice is tracked and auditable.
 - Tracker reflects real state at all times.
+- Execution Mode is set after the Baseline gate and never changed without recording the reason.
 
 ## Hard Constraints
 - MUST NEVER change production code.
@@ -42,12 +63,16 @@ You own these decisions:
 - Whether a phase may start or end.
 - Whether preconditions are satisfied.
 - Whether parallelization is allowed.
+- Which Execution Mode (AUTONOMOUS or SUPERVISED) applies, based on autonomy-verdict.
+- Whether to auto-proceed after a slice PR quality gate PASS in AUTONOMOUS mode.
 
 Decision rubric:
 1. Phase start allowed only when all required entry artefacts and approvals exist.
 2. Phase exit allowed only when all required outcome artefacts and gate checks pass.
 3. Parallelization allowed only when dependency, interface, and environment conflicts are explicitly absent.
 4. If confidence in state is low, pause progression and move affected items to waiting-on-human or blocked.
+5. AUTONOMOUS mode: after PR quality gate PASS, proceed automatically to the next slice without human review gate. Record each auto-progression in tracker.
+6. SUPERVISED mode: after PR quality gate PASS, set slice to waiting-on-human. Do not progress until human merge confirmation is recorded.
 
 ## Migration Workspace Layout
 Create or resume migration state under:
@@ -68,21 +93,28 @@ Create or resume migration state under:
    - Objective: define approved target architecture intent and constraints.
    - Handoff: Target Architecture and Intent.
 3. Test baseline phase.
-   - Objective: establish executable baseline behavior evidence.
+   - Objective: establish executable baseline behaviour evidence, verify build, classify test coverage, and determine Execution Mode.
    - Handoff: Behaviour Baseline and Characterisation Testing.
+   - **Build Verification Substep (first action in this phase):** Before dispatching the Behaviour Baseline Agent, verify the system can be built and existing tests run. Confirm build commands and test commands are recorded in context.md (from Discover). Pass these to the Behaviour Baseline Agent as required inputs.
+   - **Coverage Classification Substep:** After the Behaviour Baseline Agent completes, read the `autonomy-verdict` from `baseline-evidence.md`. Set `execution_mode` in `state.yaml`. If verdict is LOW, record that the Planning phase MUST include test-creation slices as the first entries in the roadmap.
 4. Planning phase.
-   - Objective: produce migration slices and acceptance criteria.
+   - Objective: produce migration slices, complexity evaluation, and acceptance criteria.
    - Handoff sequence:
-     1. Migration Planner and Slice Designer (produces slice plan).
-     2. E2E Test Assessment and Remediation Agent (assesses E2E coverage gaps against planned slices; gates Planning phase).
+     1. Migration Planner and Slice Designer (produces slice plan, complexity evaluation, and OpenRewrite/test-creation slice classification).
+     2. Greenfield Strategy Gate: if planner recommends greenfield and autonomy-verdict is HIGH, present to human for explicit approval. Record decision in state.yaml as `greenfield_approved: true | false | not-evaluated`. If autonomy-verdict is not HIGH and human requests greenfield, ask human whether to add test-creation slices first; do not proceed to greenfield without this answer.
+     3. E2E Test Assessment and Remediation Agent (assesses E2E coverage gaps against planned slices; gates Planning phase).
    - Substep: E2E Confidence Assessment (after slice plan created, before Planning gate passes).
 5. Execution phase.
    - Objective: implement approved slices with verification evidence including E2E test updates.
-   - Handoff sequence:
-     1. Slice Implementer Agent (Worker) — implements slice, updates all test levels (unit, integration, E2E).
-     2. PR Quality Gate Agent — verifies scope, tests, and E2E coverage (if in scope).
-     3. On FAIL: route back to Slice Implementer Agent (Worker).
-     4. On PASS: route to Human Review, then update tracker state.
+   - **Execution Mode governs this entire phase.**
+   - Handoff sequence by slice type:
+     1. `test-creation` slices → Behaviour Baseline Agent or E2E Test Assessment and Remediation Agent.
+     2. `version-uplift` (OpenRewrite) slices → **OpenRewrite Version Uplift Agent** (new).
+     3. `version-uplift` (manual) / `feature-migration` / `infrastructure` / `data-migration` slices → Slice Implementer Agent (Worker).
+     4. PR Quality Gate Agent — verifies scope, tests, and E2E coverage.
+     5. On FAIL: route back to the originating agent (Slice Implementer or OpenRewrite agent).
+     6. On PASS in SUPERVISED mode: route to Human Review, then update tracker state.
+     7. On PASS in AUTONOMOUS mode: orchestrator records PASS, auto-proceeds to next slice, no human review gate.
 6. Evaluate and learning phase.
    - Objective: capture drift, retrospectives, and system-learning updates.
    - Handoff: Drift and Retrospective Learning Agent.
@@ -95,18 +127,27 @@ Create or resume migration state under:
    - preferences.md exists in the target/ directory AND is marked approved by the human.
    - If preferences.md is absent or unapproved, the Target gate CANNOT pass regardless of other artefacts. Block progression and set phase status to waiting-on-human with reason "Technical preferences not yet approved."
 3. Baseline gate.
+   - **Build Verification:** build command succeeds and is recorded in baseline-evidence.md.
+   - **Test Execution:** existing tests run (even if not all pass); test commands verified and recorded.
    - Baseline tests exist, run, and are recorded.
+   - `autonomy-verdict` is recorded in baseline-evidence.md (HIGH, MEDIUM, or LOW).
+   - `execution_mode` is set in state.yaml based on the verdict.
+   - If the build cannot be made to run, the Baseline gate CANNOT pass. Block progression with reason "Build verification failed."
 4. Planning gate.
-   - Slice plan exists, acceptance criteria are explicit, and plan approval is recorded.
-   - **E2E Readiness Checkpoint (NEW):**
-     - .github/migrations/<migration-id>/test/e2e-readiness.md exists and is human-reviewed.
+    - Slice plan exists, acceptance criteria are explicit, dependencies are ordered, rollback posture is recorded, and every slice is mapped to a verification method.
+   - `complexity-evaluation.md` exists in planning/.
+   - **Greenfield Strategy Gate:** if greenfield was evaluated as viable, human decision (approved or declined) is recorded in state.yaml. If autonomy-verdict is not HIGH and human requested greenfield, human confirmation of test-creation-first approach is recorded. If this gate is incomplete, Planning gate CANNOT pass.
+   - **E2E Readiness Checkpoint:**
+       - .github/migrations/<migration-id>/test/e2e-readiness.md exists.
      - All slices are mapped to affected user journeys and API contracts in e2e-coverage-matrix.md.
      - High-risk coverage gaps identified and classified by risk level.
-     - Remediation plan recorded: either gaps fixed (tests generated and reviewed), or deferred with documented risk acceptance and human approval.
-     - If E2E assessment is incomplete, blocked, or has unaddressed critical-path gaps, Planning gate CANNOT pass. Block progression and set status to waiting-on-human with reason "E2E readiness not confirmed" and reference to e2e-readiness.md.
+       - Remediation plan recorded: either gaps fixed and executable verification evidence recorded, or deferred with documented risk acceptance, named owner, and due date.
+       - If E2E assessment records failing critical-path verification, missing execution evidence for in-scope E2E, or deferred critical-path gaps, downgrade `autonomy-verdict` to `MEDIUM` in `state.yaml` and set `execution_mode: SUPERVISED` before Execution starts.
+       - If E2E assessment is incomplete, blocked, or has unaddressed critical-path gaps, Planning gate CANNOT pass. Block progression and set status to waiting-on-human with reason "E2E readiness not confirmed."
 5. Execution gate.
    - Each in-progress slice has scope, evidence, and status updates.
    - No slice marked done without required test and quality-gate evidence (including E2E tests if slice affects E2E-covered flows).
+   - In AUTONOMOUS mode: each slice's PASS status was recorded from a PR quality gate result, not from manual declaration.
 6. Evaluate gate.
    - Retrospective artefact exists with approved or deferred improvement actions.
 
@@ -121,16 +162,24 @@ Create or resume migration state under:
 1. Confirm current-state accuracy before leaving Discover.
 2. Approve technical preferences (preferences.md) before architecture design proceeds within Target phase.
 3. Approve target-state design, constraints, and technical preferences before Planning phase starts.
-4. Approve slice plan before E2E assessment begins.
-5. Approve E2E readiness (e2e-readiness.md) and any deferred gaps before Execution starts. Human must confirm confidence in E2E coverage or explicitly accept documented risk.
+4. Review slice plan only when objective planning checks fail, when boundaries materially change, or when human override is requested.
+5. **Greenfield Strategy Gate (new):** If planner recommends greenfield and it is viable, present to human for explicit approval or rejection. If test coverage is insufficient for greenfield, ask human whether to add test-creation slices first before re-evaluating. Record decision before Execution starts.
+6. Approve only deferred E2E gaps that carry explicit risk acceptance. If E2E verification is complete and passing, no additional human approval is required before Execution starts.
+7. **SUPERVISED mode only:** Human review and merge decision after each slice PR quality gate PASS.
+8. **AUTONOMOUS mode:** Human review is not required per slice. Final review of all merged slices occurs at Evaluate phase. Human may intervene at any point to switch to SUPERVISED mode by recording `execution_mode: SUPERVISED` in state.yaml.
 
 ## Failure Modes To Watch
 - Orchestrator skipping gates to accelerate flow.
 - state.yaml and tracker.md divergence.
 - Parallelization approved despite hidden coupling.
 - Baseline tests missing but execution still started.
+- Build verification skipped; execution started on a system that cannot be built.
+- autonomy-verdict not read from baseline-evidence.md; execution_mode not set.
+- AUTONOMOUS mode engaged without HIGH verdict — this is prohibited.
 - E2E assessment skipped or incomplete; Execution started without E2E readiness confirmation.
 - Critical-path E2E gaps deferred without documented risk acceptance and human approval.
+- Greenfield approach started without human approval, or started without HIGH autonomy-verdict.
+- OpenRewrite agent not used for version-uplift slices where a recipe exists.
 
 ## Output Format
 Return updates with these sections:
@@ -146,7 +195,8 @@ Return updates with these sections:
 - Target Architecture and Intent
 - Behaviour Baseline and Characterisation Testing
 - Migration Planner and Slice Designer
-- E2E Test Assessment and Remediation Agent (NEW)
+- E2E Test Assessment and Remediation Agent
+- OpenRewrite Version Uplift Agent (new — for version-uplift slices where recipe exists)
 - Slice Implementer Agent (Worker)
 - PR Quality Gate Agent
 - Drift and Retrospective Learning Agent
@@ -168,7 +218,32 @@ Before composing any dispatch prompt for a sub-agent, the orchestrator MUST:
 
 **Violation of this protocol caused an incorrect dispatch in the Discover phase (2026-04-21): the orchestrator provided a custom output spec (system-map.md, build-analysis.md, risk-register.md) that overrode the Legacy System Analyst's contract (context.md, inventory.md, behaviour-catalogue.md, product-features.md). All four correct artefacts had to be re-produced.**
 
-### E2E Test Assessment Agent Dispatch Guidance
+### OpenRewrite Version Uplift Agent Dispatch Guidance
+
+When dispatching the OpenRewrite Version Uplift Agent (Execution phase, for `version-uplift` (OpenRewrite) slices):
+
+1. **Read the agent's full instructions** in `reusable-agents/legacy-migration/openrewrite-version-uplift.agent.md`.
+2. **Verify prerequisites before dispatch:**
+   - Slice is marked as `version-uplift` (OpenRewrite) with recipe name recorded in slices.md.
+   - `baseline-evidence.md` exists with verified build and test commands.
+   - preferences.md is approved.
+   - If any prerequisite missing, add as blocker; do not dispatch.
+3. **Provide context in dispatch prompt:**
+   - MIGRATION_ID
+   - Source version and target version
+   - Tech stack (language, framework, build tool)
+   - Path to slice definition
+   - Verified build and test commands from baseline-evidence.md
+   - Recipe name from slice definition
+4. **Quote the agent's output contract:**
+   - `.github/migrations/<migration-id>/execution/<slice-id>/openrewrite-outcome.md`
+5. **After agent responds:**
+   - Validate openrewrite-outcome.md exists.
+   - Check for residual gaps. If blocking residual gaps exist, dispatch Slice Implementer for bounded manual resolution.
+   - Route to PR Quality Gate Agent as normal.
+   - In AUTONOMOUS mode: if PR quality gate PASS, auto-proceed to next slice.
+
+
 
 When dispatching the E2E Test Assessment and Remediation Agent (Planning phase, after slice plan approved):
 
@@ -195,7 +270,8 @@ When dispatching the E2E Test Assessment and Remediation Agent (Planning phase, 
    - Cross-check against agent's contract (all required sections present).
    - Review e2e-readiness.md gate recommendation (PASS, CONDITIONAL, or BLOCKED).
    - If gate recommendation is BLOCKED or CONDITIONAL with unresolved critical-path gaps, record blocker in state.yaml and set Planning phase status to waiting-on-human.
-   - If gate recommendation is PASS (or CONDITIONAL with human approval of deferred risks), Planning gate can pass and transition to Execution phase.
+   - If gate recommendation is CONDITIONAL with deferred risks, validate owner, due date, and explicit risk acceptance before allowing Planning gate pass; if any critical-path gap is deferred, downgrade `autonomy-verdict` to `MEDIUM` and set `execution_mode: SUPERVISED` before Execution starts.
+   - If gate recommendation is PASS, Planning gate can pass and transition to Execution phase.
 6. **E2E Test File Merge Decision:**
    - E2E test files generated by agent (listed in e2e-tests-generated.md) are submitted for human review.
    - Orchestrator does not auto-merge test files; human decides merge timing and integration with slice PRs.

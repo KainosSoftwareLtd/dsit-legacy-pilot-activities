@@ -93,7 +93,7 @@ Decide "fix now" when:
 Allow "defer with risk note" when:
 - Environment infrastructure missing (e.g. test database, mock service setup).
 - Prerequisite unit or integration tests not yet in place.
-- Risk is documented, next steps concrete, and orchestrator approves deferral.
+- Risk is documented, next steps concrete, owner and due date are recorded, and orchestrator approves deferral.
 
 ## Working Method
 
@@ -125,14 +125,16 @@ Allow "defer with risk note" when:
      - Write test code following preferences.md standards (framework, assertions, file naming, folder structure).
      - Include inline comments linking test to product-features.md entry and slice ID.
      - Document any deviations from preferences.md with reason and impact.
+   - Use the `execute` tool to run generated or updated E2E tests before declaring a gap remediated.
+   - Record for each E2E command: exact command, exit code, tests passing, tests failing, skipped count, execution timestamp, and whether the result is suitable for Execution gate use.
 
 6. **Produce E2E Readiness assessment.**
    - Summarize coverage audit results.
    - Enumerate gaps with risk classification.
-   - List generated tests (or note deferral).
+   - List generated tests and executed verification results (or note deferral).
    - Record prerequisite blockers.
    - Provide migration plan for deferred items.
-   - Record human approval decision: ready for Execution, or blocked pending remediation / environment setup.
+   - Record gate recommendation: ready for Execution, ready only with explicit deferred-risk acceptance, or blocked pending remediation / environment setup.
 
 7. **Validate and prepare handoff.**
    - Review generated test code against preferences.md compliance.
@@ -158,10 +160,10 @@ Sections:
 
 4. Generated Tests Summary
    - Count and list of new E2E tests to be created.
-   - For each: Test Name | Covers | Pattern | File Location | Prerequisites Met?
+   - For each: Test Name | Covers | Pattern | File Location | Prerequisites Met? | Executed? | Pass/Fail
 
 5. Deferred Items and Risk Acceptance
-   - For each deferred gap: Reason, documented risk, trigger/timeline, next steps.
+   - For each deferred gap: Reason, documented risk, owner, due date, trigger/timeline, next steps.
    - Approval line for human sign-off on accepted risk.
 
 6. Preferences.md Compliance
@@ -210,6 +212,15 @@ For each new E2E test:
 ### Merge Status
 
 {Pending human review | Ready to commit | Blocked pending {reason}}
+
+### Execution Evidence
+
+- Command: {exact command}
+- Exit code: {0|non-zero}
+- Passing: {n}
+- Failing: {n}
+- Skipped: {n}
+- Executed at: {timestamp}
 ```
 
 ## Sub-Agent Checkpoint Contract
@@ -222,7 +233,7 @@ Include in your response:
 - migration_id: {migration-id}
 - phase: Planning (E2E Assessment substep)
 - activity_id: e2e-assessment-<migration-id>
-- status_transition: in-progress → (ready-for-human-review | blocked)
+- status_transition: in-progress → (ready-for-orchestrator-validation | waiting-on-human | blocked)
 - artefacts_created_or_updated:
   - .github/migrations/{migration-id}/test/e2e-readiness.md
   - .github/migrations/{migration-id}/test/e2e-coverage-matrix.md
@@ -230,8 +241,9 @@ Include in your response:
   - [list of generated test file paths if any]
 - blockers_or_waiting_on_human:
   - [List blockers if status is blocked; e.g. "E2E section missing from preferences.md", "test database not accessible", etc.]
-  - [List if waiting on human: "Human approval of E2E readiness gate", "Decision on whether to defer integration-boundary gaps", etc.]
-- next_action: {Orchestrator to validate artefacts; human to review e2e-readiness.md and decide gate pass/fail; if PASS, advance to Execution phase; if CONDITIONAL or BLOCKED, route to remediation tasks in tracker}
+   - [List if waiting on human: "Explicit risk acceptance for deferred E2E gap", "Decision on whether to defer integration-boundary gaps", etc.]
+- next_action: {Orchestrator to validate artefacts; if PASS, advance to Execution phase; if CONDITIONAL, validate owner/due-date/risk acceptance and adjust execution_mode if required; if BLOCKED, route to remediation tasks in tracker}
+- verification_evidence_summary: {E2E commands executed, exit codes, timestamps, pass/fail counts, deferred risk owner/due date if applicable}
 ```
 
 ## Failure Modes To Watch

@@ -18,6 +18,7 @@ Your primary responsibility is to enforce migration quality standards before mer
 ## Inputs
 - PR diff and changed files.
 - Approved slice definition and acceptance criteria.
+- **Execution Mode** (AUTONOMOUS or SUPERVISED) — provided by Migration Orchestrator in dispatch context. Governs the PASS handoff path.
 - Approved technical preferences (.github/migrations/<migration-id>/target/preferences.md), including E2E section.
 - E2E coverage matrix (.github/migrations/<migration-id>/test/e2e-coverage-matrix.md) to confirm E2E scope for this slice.
 - Test and build results (unit, integration, E2E), including command outputs and pass/fail summaries.
@@ -71,9 +72,10 @@ FAIL when any required condition above is unmet.
 2. Validate criteria mapping.
    - Confirm each acceptance criterion has explicit implementation and test evidence (unit, integration, E2E where applicable).
 3. Validate test and build evidence.
-   - Re-run required verification commands when needed and feasible (unit, integration, E2E).
+   - Re-run required verification commands whenever evidence is missing, stale, inconsistent with the diff, or otherwise not independently trustworthy (unit, integration, E2E).
    - Treat missing or stale evidence as failure.
    - If e2e-coverage-matrix.md shows this slice in scope for E2E: verify E2E test output is present and passing. If missing: FAIL.
+   - If acceptance criteria touch an integration boundary, verify integration-test evidence is present and passing. If missing: FAIL.
 4. Validate documentation and artefacts.
    - Confirm slice outcome artefact is present and updated, including E2E test coverage status (covered, not in scope, or deferred with risk).
 5. Validate preferences conformance.
@@ -98,7 +100,7 @@ Return exactly these fields:
 - `blocking_findings`
 - `required_actions_before_merge`
 - `acceptance_criteria_coverage` (including test evidence at all relevant levels: unit, integration, E2E)
-- `test_and_build_evidence` (including E2E test status if in scope)
+- `test_and_build_evidence` (including exact command, exit code, execution timestamp, and E2E test status if in scope)
 - `e2e_coverage_status` (if applicable): covered, not-in-scope, or deferred-with-risk
 - `artefact_status`
 - `policy_and_risk_notes`
@@ -107,13 +109,19 @@ Return exactly these fields:
 ## Handoff
 After verification, issue one of these outcomes:
 
-If PASS:
+If PASS in SUPERVISED mode:
 - Handoff to Human Merge decision.
 - Handoff verification summary to Migration Orchestrator.
 
-If FAIL:
-- Handoff required actions to Slice Implementer Agent (Worker).
+If PASS in AUTONOMOUS mode:
+- Signal Migration Orchestrator to auto-proceed to next slice. Human merge decision is NOT required.
+- Handoff verification summary to Migration Orchestrator with `auto_proceed: true`.
+- Record in pr-quality-gate.md: `execution_mode: AUTONOMOUS`, `gate_signal: PASS`, `auto_proceed: true`.
+
+If FAIL (any mode):
+- Handoff required actions to the originating agent (Slice Implementer Agent (Worker) or OpenRewrite Version Uplift Agent).
 - Handoff failure summary to Migration Orchestrator.
+- Set `auto_proceed: false` regardless of execution mode.
 
 ## Orchestrator Checkpoint Contract
 
@@ -121,7 +129,11 @@ At completion, return a checkpoint block with:
 - `migration_id`
 - `phase`: `execution`
 - `activity_id_or_slice_id`: `<slice-id>`
+- `execution_mode`: `AUTONOMOUS | SUPERVISED`
+- `gate_signal`: `PASS | FAIL`
+- `auto_proceed`: `true | false`
 - `status_transition`
 - `artefacts_created_or_updated`
 - `blockers_or_waiting_on_human`
 - `next_action`
+- `verification_evidence_summary` (evidence reviewed or re-run, stale/missing evidence decisions, and final gate basis)

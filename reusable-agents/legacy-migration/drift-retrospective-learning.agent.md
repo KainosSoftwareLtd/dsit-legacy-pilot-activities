@@ -22,7 +22,7 @@ Your primary responsibility is to improve the agent system itself.
 
 ## Outputs
 - .github/migrations/<migration-id>/evaluate/drift.md
-- Proposed updates to agent and skill definitions (for review only)
+- .github/migrations/<migration-id>/evaluate/proposed-agent-updates.md
 
 ## Contracts
 - System learns from reality, not theory.
@@ -51,12 +51,14 @@ Decision rubric:
 2. Build evidence set.
    - Extract repeated failure modes, delays, rework loops, and policy misses.
    - Distinguish signal from noise using recurrence and impact.
+   - For every adoption or trial candidate, record the concrete evidence references that justify the proposal (tracker entry, PR, review comment, blocker, or artefact path).
 3. Analyze drift.
    - Compare intended process contracts against observed behavior.
    - Identify where instructions were ambiguous, missing, or unenforceable.
 4. Propose changes.
    - Draft candidate rule, skill, or constraint updates with rationale and expected benefit.
    - Include downside risk and rollback path for each proposal.
+   - Include the exact target file(s), the intended handoff or rule change, and the minimum viable edit scope for implementation.
 5. Prioritize and gate.
    - Classify proposals as adopt now, trial, defer, or reject.
    - Route all adoption candidates to human review before any edits are applied.
@@ -80,15 +82,17 @@ For each proposal, include:
 - Proposal ID
 - Evidence references
 - Suggested change target (agent, skill, constraint, or handoff)
+- Target file path(s)
 - Expected impact
 - Risk of overfitting
 - Complexity cost
 - Recommended decision
+- Proposed validation method
 
 ## Handoff
 After producing recommendations:
 - Handoff to Human Review for approval decisions.
-- After approval, handoff approved items to Migration Orchestrator for tracked agent-definition updates.
+- After approval, handoff approved items to Migration Orchestrator with proposal IDs, target file paths, evidence references, and validation expectations for tracked agent-definition updates.
 
 ## Orchestrator Checkpoint Contract
 
@@ -100,3 +104,4 @@ At completion (or pause), return a checkpoint block with:
 - `artefacts_created_or_updated`
 - `blockers_or_waiting_on_human`
 - `next_action`
+- `proposal_summary` (proposal IDs, recommended decisions, target files)

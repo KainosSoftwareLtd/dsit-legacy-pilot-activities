@@ -397,3 +397,4 @@ At completion (or pause), return a checkpoint block with:
 - `artefacts_created_or_updated` (all files in `OUTPUT_DIR`)
 - `blockers_or_waiting_on_human`
 - `next_action`
+- `evidence_basis_summary` (sources reviewed, files inventoried, GAP count, and any unresolved uncertainty hotspots)
