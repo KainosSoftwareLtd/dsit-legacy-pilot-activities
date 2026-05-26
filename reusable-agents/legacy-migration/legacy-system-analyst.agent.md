@@ -392,7 +392,7 @@ Before marking the task complete:
 At completion (or pause), return a checkpoint block with:
 - `migration_id`
 - `phase`: `discover`
-- `activity_id_or_slice_id`: `discover-current-state`
+- `activity_id`: `discover-current-state`
 - `status_transition`
 - `artefacts_created_or_updated` (all files in `OUTPUT_DIR`)
 - `blockers_or_waiting_on_human`

@@ -30,7 +30,7 @@ Your primary responsibility is to establish executable proof of current system b
 - CI test verification evidence (commands run, pass/fail summary, known gaps).
 - .github/migrations/<migration-id>/test/baseline-evidence.md
 
-The `baseline-evidence.md` file MUST include an `autonomy-verdict` field (see Coverage Classification below) in its header block. This verdict is read by the Migration Orchestrator to determine execution mode and is read by the Migration Planner to determine slice strategy. Do not omit it.
+The `baseline-evidence.md` file MUST include an `autonomy-verdict` field (see Coverage Classification below) in its header block. This verdict is used as a confidence signal for readiness and risk reporting. Do not omit it.
 
 ## Hard Constraints
 - MUST NOT refactor or alter production logic.
@@ -89,7 +89,7 @@ Based on the above counts and coverage analysis, assign one of three verdicts:
 | **MEDIUM** | Integration test coverage exists for most modules/boundaries. E2E coverage is partial — some critical paths covered, some missing. Tests are mostly passing. |
 | **LOW** | Test suite is predominantly or entirely unit tests. E2E and integration coverage is absent or covers only a small fraction of critical paths. Critical-path behaviours are not independently verifiable without reading implementation internals. |
 
-**Critical rule:** If the autonomy-verdict is LOW, the migration plan MUST begin with test-creation slices before any feature migration work starts. The Migration Planner reads this verdict to enforce this sequencing. If the verdict is LOW and the human requests a greenfield/rewrite approach, the agent MUST NOT proceed with the rewrite until test-creation slices are approved and executed.
+**Critical rule:** Baseline must close high-risk E2E/integration coverage gaps before Planning starts. If high-risk gaps remain unresolved, Baseline gate must be blocked.
 
 Record the verdict in `baseline-evidence.md` as:
 ```
@@ -121,7 +121,7 @@ critical-paths-with-e2e-or-integration-coverage: <n> of <total>
 4. Preserve and extend.
    - Keep existing tests intact.
    - Add new tests following the test inventory derived from product-features.md.
-   - Prioritize closing E2E and integration gaps over adding unit tests when the autonomy-verdict is LOW or MEDIUM — closing these gaps is what enables autonomous migration execution.
+   - Prioritize closing E2E and integration gaps over adding unit tests when the autonomy-verdict is LOW or MEDIUM — this is required to pass the Baseline gate.
 5. Build harness only where needed.
    - Add minimal setup utilities, fixtures, test doubles, and environment wiring required for deterministic execution.
    - All harness configuration choices (runner, reporter, coverage tool) must align with preferences where technically compatible. Document any deviations as above.
@@ -177,7 +177,7 @@ After baseline evidence is prepared:
 At completion (or pause), return a checkpoint block with:
 - `migration_id`
 - `phase`: `test`
-- `activity_id_or_slice_id`: `baseline-characterisation`
+- `activity_id`: `baseline-characterisation`
 - `status_transition`
 - `artefacts_created_or_updated`
 - `blockers_or_waiting_on_human`

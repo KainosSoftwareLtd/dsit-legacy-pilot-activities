@@ -1,105 +1,118 @@
 # Legacy Migration Agents
 
-This folder contains the agent workflow for controlled legacy migration planning and execution.
+This folder defines the migration workflow for a simplified plan-and-iterate model.
 
-## Current Behavior
+## Prerequisites
 
-The workflow is orchestrated by [migration-orchestrator.agent.md](migration-orchestrator.agent.md) and currently follows these phases:
+Before running the migration agents, the project team must be able to perform the following on the target repository:
+
+- Build the codebase successfully using the project-standard build command.
+- Run integration and E2E tests locally or in a controlled CI-equivalent environment.
+- Install and run Docker, including building images and running containers.
+- Install project toolchain dependencies required by the repo (for example runtime SDKs, package managers, build tools, and test runners).
+- Access repository manifests and lock files so dependency/version analysis can run.
+- Provide write access for migration artefacts under .github/migrations/<migration-id>/.
+- Provide approved technical preferences under target/preferences.md before baseline remediation and planning.
+- Provide network and credential access needed for non-production test dependencies (such as local test databases or approved mocks).
+
+Recommended readiness checks before kickoff:
+
+- Verify build command returns success.
+- Verify integration and E2E test commands execute and return results.
+- Verify docker build and docker run commands work in the local environment.
+- Verify required language/tool versions match repository expectations.
+- Verify OpenRewrite execution path is available for recipe-supported uplifts where applicable.
+
+## Lifecycle
+
+The orchestrated lifecycle is:
 
 1. Discover
-2. Target intent
-3. Test baseline
+2. Target
+3. Baseline
 4. Planning
 5. Execution
 6. Evaluate
 
-Each phase is gated by persisted artefacts under `.github/migrations/<migration-id>/...`. The orchestrator uses those artefacts, not chat state, as the source of truth.
+## Human-In-The-Loop Gates
 
-## Execution Modes
+Human approval is required at:
 
-Execution mode is set after baseline testing:
+- Discover completion
+- Target completion
+- Migration plan approval before Execution
+- Final completion approval after unified release-readiness gate pass
 
-- `AUTONOMOUS`: allowed only when `baseline-evidence.md` records `autonomy-verdict: HIGH`
-- `SUPERVISED`: required when the verdict is `MEDIUM` or `LOW`
+## Baseline Policy
 
-In `AUTONOMOUS` mode, the orchestrator auto-proceeds after a slice passes the PR quality gate.
+Baseline is a hard gate before Planning.
 
-In `SUPERVISED` mode, each passing slice waits for human merge confirmation.
+Baseline must:
 
-`AUTONOMOUS` execution can still pause when one of these occurs:
+- verify build and test commands
+- map Discover functionality to existing E2E and integration tests
+- add missing high-risk E2E or integration tests following existing repository standards
+- execute and record evidence for added tests
 
-- Greenfield/create-from-scratch approval is required
-- Slice scope or acceptance criteria materially change
-- A blocker or blocked status transition is raised
+Execution must use the baseline test set for evaluation.
 
-When those exceptions are resolved, execution resumes from the last successful slice or gate unless `execution_mode` is explicitly changed in `state.yaml`.
+## Planning Policy
 
-## Human Gates
+Planning is unified, not slice-based.
 
-The current workflow keeps humans in the loop only for high-impact decisions:
+Planning outputs are:
 
-- Current-state accuracy confirmation in Discover
-- Strategic target-state decision approval in Target intent
-- Greenfield approval in Planning
-- Explicit risk acceptance for deferred E2E gaps
-- Per-slice merge decisions in `SUPERVISED` mode
-- Drift-learning approval for policy or agent-definition changes
+- .github/migrations/<migration-id>/planning/plan.md
+- .github/migrations/<migration-id>/planning/version-uplift-inventory.md
+- .github/migrations/<migration-id>/planning/containerization-plan.md
 
-Objective completeness checks now replace several former blanket approvals:
+OpenRewrite rule:
 
-- Technical preferences are checked for completeness rather than requiring generic sign-off
-- Slice plans can auto-advance when acceptance criteria, dependencies, rollback posture, and verification methods are complete
-- E2E readiness can advance without extra approval when verification is complete and passing
+- if a public OpenRewrite recipe exists for an uplift, OpenRewrite is mandatory
+- if no public recipe exists, manual path must be documented with rationale
+
+## Execution Policy
+
+Execution is iterative until required tests pass.
+
+Execution must:
+
+- apply OpenRewrite-supported uplifts early
+- implement remaining plan changes in bounded batches
+- run build and required tests after each batch
+- continue until existing baseline integration and E2E tests pass
+
+Execution must not create new tests for evaluation.
+
+## Containerized End-State Criteria
+
+Execution gate requires:
+
+- docker build success
+- tests run in container context
+- documented runtime command
+
+## Agent Set
+
+Primary agents:
+
+- migration-orchestrator.agent.md
+- legacy-system-analyst.agent.md
+- target-architecture-intent.agent.md
+- behaviour-baseline-characterisation-testing.agent.md
+- e2e-test-assessment-remediation.agent.md
+- migration-plan.agent.md
+- openrewrite-version-uplift.agent.md
+- migration-implementation.agent.md
+- release readiness gate agent
+- drift-retrospective-learning.agent.md
 
 ## Evidence Contract
 
-Agents that execute or verify work are expected to persist command-level evidence. The current standard is:
+For command execution evidence, record:
 
 - exact command
 - exit code
 - execution timestamp
 - pass/fail summary
-- classification of failures when non-zero
-
-This applies to baseline verification, E2E remediation, slice implementation, OpenRewrite execution, and PR quality gating.
-
-Checkpoint blocks now fall into two categories:
-
-- `verification_evidence_summary`: for agents that execute or verify commands
-- `evidence_basis_summary` or `planning_evidence_summary`: for agents that synthesize or validate non-executable planning/state artefacts
-
-## Agent Responsibilities
-
-- [legacy-system-analyst.agent.md](legacy-system-analyst.agent.md): documents current state without changing code or inferring behavior
-- [target-architecture-intent.agent.md](target-architecture-intent.agent.md): defines target state, constraints, ADRs, NFRs, and technical preferences
-- [behaviour-baseline-characterisation-testing.agent.md](behaviour-baseline-characterisation-testing.agent.md): verifies build/test baseline and sets the autonomy verdict
-- [migration-planner-slice-designer.agent.md](migration-planner-slice-designer.agent.md): turns approved intent into executable slices and roadmap
-- [e2e-test-assessment-remediation.agent.md](e2e-test-assessment-remediation.agent.md): maps slice coverage to journeys/contracts and closes or documents E2E gaps
-- [slice-implementer-worker.agent.md](slice-implementer-worker.agent.md): implements approved slices and gathers verification evidence
-- [openrewrite-version-uplift.agent.md](openrewrite-version-uplift.agent.md): handles automated version-uplift slices with recipe-driven changes
-- [pr-quality-gate-verification.agent.md](pr-quality-gate-verification.agent.md): enforces the formal pass/fail gate before merge or auto-proceed
-- [drift-retrospective-learning.agent.md](drift-retrospective-learning.agent.md): proposes evidence-backed workflow improvements during Evaluate
-
-## E2E Policy
-
-E2E coverage is part of the decision to trust autonomous execution.
-
-- If critical-path E2E verification is missing, failing, or deferred, the orchestrator can downgrade execution to `SUPERVISED` before Execution starts.
-- Deferred E2E risk requires explicit owner, due date, and human risk acceptance.
-- If a slice is in scope for E2E according to `e2e-coverage-matrix.md`, E2E execution evidence is required before PR handoff.
-
-## OpenRewrite Policy
-
-`version-uplift` slices should prefer [openrewrite-version-uplift.agent.md](openrewrite-version-uplift.agent.md) when a valid recipe exists.
-
-The OpenRewrite agent is expected to:
-
-- dry-run first when supported
-- record exact recipe/execution commands
-- run build and full tests after recipe application
-- escalate only bounded residual gaps to the slice implementer
-
-## Folder Notes
-
-- `e2e-test-patterns.md` is supporting guidance for E2E test generation and should stay aligned with the E2E assessment agent.
-- This folder documents workflow behavior; migration artefacts themselves live under `.github/migrations/<migration-id>/`.
+- failure classification when applicable

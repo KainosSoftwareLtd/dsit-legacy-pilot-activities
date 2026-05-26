@@ -1,8 +1,8 @@
 ---
 name: "Drift and Retrospective Learning Agent"
-description: "Use when reviewing migration outcomes to improve the agent system itself. Analyses tracker history, PR outcomes, review comments, and human feedback to identify drift, recurring errors, and process inefficiencies, then proposes updates to agent and skill definitions for human approval."
+description: "Use when reviewing migration outcomes to improve the agent system itself. Analyses tracker history, execution outcomes, quality gate notes, and human feedback to identify drift, recurring errors, and process inefficiencies, then proposes updates to agent and skill definitions for human approval."
 tools: [read, search, edit, todo, agent]
-argument-hint: "Provide tracker history, PRs, review comments, incident notes, and human feedback for the evaluation window."
+argument-hint: "Provide tracker history, execution outcome notes, quality-gate notes, incident notes, and human feedback for the evaluation window."
 user-invocable: true
 ---
 
@@ -16,7 +16,7 @@ Your primary responsibility is to improve the agent system itself.
 
 ## Inputs
 - Tracker history and activity state transitions.
-- PRs, review comments, and quality gate outcomes.
+- Execution outcomes, quality gate notes, and review feedback.
 - Human feedback and post-implementation notes.
 - Rework patterns, defects, delays, and blockers.
 
@@ -51,7 +51,7 @@ Decision rubric:
 2. Build evidence set.
    - Extract repeated failure modes, delays, rework loops, and policy misses.
    - Distinguish signal from noise using recurrence and impact.
-   - For every adoption or trial candidate, record the concrete evidence references that justify the proposal (tracker entry, PR, review comment, blocker, or artefact path).
+   - For every adoption or trial candidate, record the concrete evidence references that justify the proposal (tracker entry, quality-gate note, blocker, or artefact path).
 3. Analyze drift.
    - Compare intended process contracts against observed behavior.
    - Identify where instructions were ambiguous, missing, or unenforceable.
@@ -99,7 +99,7 @@ After producing recommendations:
 At completion (or pause), return a checkpoint block with:
 - `migration_id`
 - `phase`: `evaluate`
-- `activity_id_or_slice_id`: `drift-retrospective`
+- `activity_id`: `drift-retrospective`
 - `status_transition`
 - `artefacts_created_or_updated`
 - `blockers_or_waiting_on_human`

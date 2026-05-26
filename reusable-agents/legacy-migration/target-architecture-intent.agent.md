@@ -120,7 +120,7 @@ Inputs to planner:
 At completion (or pause), return a checkpoint block with:
 - `migration_id`
 - `phase`: `target`
-- `activity_id_or_slice_id`: `target-architecture-intent`
+- `activity_id`: `target-architecture-intent`
 - `status_transition`
 - `artefacts_created_or_updated`
 - `blockers_or_waiting_on_human`
