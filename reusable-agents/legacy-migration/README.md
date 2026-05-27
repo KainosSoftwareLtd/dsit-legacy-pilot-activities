@@ -7,7 +7,7 @@ This folder defines the migration workflow for a simplified plan-and-iterate mod
 Before running the migration agents, the project team must be able to perform the following on the target repository:
 
 - Build the codebase successfully using the project-standard build command.
-- Run integration and E2E tests locally or in a controlled CI-equivalent environment.
+- Run unit, integration, and E2E tests locally or in a controlled CI-equivalent environment.
 - Install and run Docker, including building images and running containers.
 - Install project toolchain dependencies required by the repo (for example runtime SDKs, package managers, build tools, and test runners).
 - Access repository manifests and lock files so dependency/version analysis can run.
@@ -18,7 +18,7 @@ Before running the migration agents, the project team must be able to perform th
 Recommended readiness checks before kickoff:
 
 - Verify build command returns success.
-- Verify integration and E2E test commands execute and return results.
+- Verify unit, integration, and E2E test commands execute and return results.
 - Verify docker build and docker run commands work in the local environment.
 - Verify required language/tool versions match repository expectations.
 - Verify OpenRewrite execution path is available for recipe-supported uplifts where applicable.
@@ -108,19 +108,10 @@ Active agents:
 - `migration-orchestrator.agent.md` — primary entrypoint
 - `legacy-system-analyst.agent.md` — Discover phase
 - `target-architecture-intent.agent.md` — Target phase
-- `test-expert.agent.md` — Test phase (assessment + Mode A/B creation + verification + sign-off gate)
+- `test-expert.agent.md` — Test phase (pyramid-wide assessment + Mode A/B creation + verification + sign-off gate)
 - `migration-target-spec.agent.md` — Planning phase (what the migrated system should be)
 - `migration-plan.agent.md` — Planning phase (how to build it)
 - `migration-implementation.agent.md` — Execution phase (TDD test porting + OpenRewrite uplifts + iterative implementation; primary deliverable is `migrated-system/` folder)
-- `release-readiness.agent.md` — **superseded**; Execution gate is now validated directly by the orchestrator
-
-Superseded agents (retained for reference):
-
-- `openrewrite-version-uplift.agent.md` — superseded; OpenRewrite is now handled inside `migration-implementation.agent.md`
-- `test-strategy-assessment.agent.md` — superseded by `test-expert.agent.md`
-- `behaviour-baseline-characterisation-testing.agent.md` — superseded by `test-expert.agent.md`
-- `e2e-test-assessment-remediation.agent.md` — superseded by `test-expert.agent.md`
-- `drift-retrospective-learning.agent.md` — removed from active pipeline
 
 ## Evidence Contract
 
