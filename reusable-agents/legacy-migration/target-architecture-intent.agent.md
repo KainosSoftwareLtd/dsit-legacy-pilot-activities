@@ -106,7 +106,7 @@ After required strategic approval is recorded, issue this handoff block:
 
 ---
 Target architecture intent approved.
-Next step: handoff to Migration Planner and Slice Designer.
+Next step: handoff to Migration Target Spec Agent, then Migration Plan Agent.
 Inputs to planner:
 - .github/migrations/<migration-id>/target/context.md
 - .github/migrations/<migration-id>/target/architecture.md
