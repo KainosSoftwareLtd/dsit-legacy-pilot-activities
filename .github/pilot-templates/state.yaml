@@ -27,8 +27,7 @@ phase_gates:
       - .github/pilots/<pilot-id>/assess/baseline-metrics.md
       - .github/pilots/<pilot-id>/assess/hypotheses.md
       - .github/pilots/<pilot-id>/assess/execute-plan.md
-      - .github/pilots/<pilot-id>/assess/access-and-governance.md
-    notes: all starting execute activities must be ready before execute starts
+    notes: baseline metrics, hypotheses, and execute plan must exist before execute starts
   execute:
     required_artefacts:
       - per-activity outcome artefacts for all completed activities

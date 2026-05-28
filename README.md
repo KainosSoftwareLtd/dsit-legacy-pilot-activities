@@ -141,6 +141,7 @@ Specialist subagents used by the orchestrator:
 
 - [Legacy System Analyst](reusable-agents/legacy-migration/legacy-system-analyst.agent.md)
 - [Target Architecture and Intent](reusable-agents/legacy-migration/target-architecture-intent.agent.md)
+- [Test Strategy Assessment](reusable-agents/legacy-migration/test-strategy-assessment.agent.md) — pyramid-wide test assessment in Discover
 - [Behaviour Baseline and Characterisation Testing](reusable-agents/legacy-migration/behaviour-baseline-characterisation-testing.agent.md)
 - [Migration Planner and Slice Designer](reusable-agents/legacy-migration/migration-planner-slice-designer.agent.md)
 - [Slice Implementer Agent (Worker)](reusable-agents/legacy-migration/slice-implementer-worker.agent.md)
