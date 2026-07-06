@@ -15,6 +15,8 @@ Before running the migration agents, the project team must be able to perform th
 - Provide approved technical preferences under target/preferences.md before baseline remediation and planning.
 - Provide network and credential access needed for non-production test dependencies (such as local test databases or approved mocks).
 
+These prerequisites are validated by a mandatory preflight gate before Discover starts.
+
 Recommended readiness checks before kickoff:
 
 - Verify build command returns success.
@@ -27,11 +29,35 @@ Recommended readiness checks before kickoff:
 
 The orchestrated lifecycle is:
 
-1. Discover — current-state BDD spec
-2. Target — architecture intent and preferences
-3. Test — pyramid-wide assessment, test creation, and human sign-off
-4. Planning — target spec and migration plan
-5. Execution
+1. Preflight — environment capability and permission checks
+2. Discover — current-state BDD spec
+3. Target — architecture intent and preferences
+4. Test — pyramid-wide assessment, test creation, and human sign-off
+5. Planning — target spec and migration plan
+6. Execution
+
+## Preflight policy (before Discover)
+
+The orchestrator must assess what can and cannot run in the local environment before Discover handoff.
+
+Minimum checks:
+
+- shell command execution availability
+- migration artefact write access
+- build command executability
+- test command executability (where provided)
+- Docker runtime availability/permission (if needed)
+- Python runtime availability
+- Python install/escalation permission
+- relevant package manager/toolchain restrictions
+- network/credential constraints for non-prod dependencies
+
+Results are persisted in `state.yaml` under `environment-preflight` and mirrored in `tracker.md`.
+
+If checks fail:
+
+- mark blocked or waiting-on-human with specific unblock actions
+- do not proceed to Discover unless preflight passes or an explicit override is approved
 
 ## Human-In-The-Loop Gates
 
@@ -88,8 +114,6 @@ Execution follows a TDD sequence:
 4. **Containerize** — add Docker artefacts to the output folder and validate in container context.
 
 Execution must not modify test business logic. If a test cannot pass without changing its business logic, it is a blocker requiring human decision.
-
-OpenRewrite rule: if a public recipe exists for an uplift, OpenRewrite is mandatory. Manual path only where no recipe exists.
 
 ## Containerized End-State Criteria
 
