@@ -15,6 +15,8 @@ Before running the migration agents, the project team must be able to perform th
 - Provide approved technical preferences under target/preferences.md before baseline remediation and planning.
 - Provide network and credential access needed for non-production test dependencies (such as local test databases or approved mocks).
 
+These prerequisites are validated by a mandatory preflight gate before Discover starts.
+
 Recommended readiness checks before kickoff:
 
 - Verify build command returns success.
@@ -27,11 +29,46 @@ Recommended readiness checks before kickoff:
 
 The orchestrated lifecycle is:
 
-1. Discover — current-state BDD spec
-2. Target — architecture intent and preferences
-3. Test — pyramid-wide assessment, test creation, and human sign-off
-4. Planning — target spec and migration plan
-5. Execution
+1. Preflight — environment capability and permission checks
+2. Discover — current-state BDD spec
+3. Target — architecture intent and preferences
+4. Test — pyramid-wide assessment, test creation, and human sign-off
+5. Planning — target spec and migration plan
+6. Execution
+
+## Preflight policy (before Discover)
+
+The orchestrator must assess what can and cannot run in the local environment before Discover handoff.
+
+Minimum checks:
+
+- shell command execution availability
+- migration artefact write access
+- build command executability
+- test command executability (where provided)
+- Docker runtime availability/permission (if needed)
+- Python runtime availability
+- Python install/escalation permission
+- relevant package manager/toolchain restrictions
+- network/credential constraints for non-prod dependencies
+
+Results are persisted in `state.yaml` under `environment-preflight` and mirrored in `tracker.md`.
+
+If checks fail:
+
+- mark blocked or waiting-on-human with specific unblock actions
+- do not proceed to Discover unless preflight passes or an explicit override is approved
+- short-circuit to human input for workaround/next-step decision before any retry
+- do not use AI-led trial-and-error remediation loops to bypass blockers
+
+## Blocker escalation policy (all legacy-migration agents)
+
+Across the orchestrator and all sub-agents:
+
+- Any failed/blocked prerequisite or gate check must immediately short-circuit to human input.
+- The agent must return concrete blocker details: impact, evidence, and `required_human_action`.
+- Retries are allowed only after explicit human-provided workaround/decision (or approved override where applicable).
+- Agents must not run autonomous trial-and-error sequences to clear blockers.
 
 ## Human-In-The-Loop Gates
 
@@ -49,12 +86,13 @@ The Test phase is a single gate handled by the Test Expert agent.
 
 The Test Expert:
 
+- first performs a fast coverage sufficiency assessment from test files and provided context
 - assesses the full test pyramid (unit, integration, E2E) against every spec entry in `product-features.md`
 - classifies gaps by spec entry, not coverage percentage alone
 - detects test mode and routes accordingly:
-  - **Mode A** (adequate tests exist): translate existing tests to target framework; human confirms translation fidelity; AI must not invent new cases
-  - **Mode B** (tests absent or inadequate): spec-driven TDD from `product-features.md`; failing tests first, then implementation code; AI must not derive cases from reading implementation
-- runs build verification and records execution evidence
+  - **Mode A** (coverage sufficient): proceed to verification/translation flow and gather execution evidence
+  - **Mode B** (coverage insufficient): produce `coverage-increase-plan.md` and stop before green-run pursuit
+- runs build verification only after a sufficient-coverage decision
 - raises a mandatory human sign-off gate before the Test phase can exit
 
 Execution uses only the ported baseline test set. Execution must not create new tests for self-evaluation.
@@ -89,8 +127,6 @@ Execution follows a TDD sequence:
 
 Execution must not modify test business logic. If a test cannot pass without changing its business logic, it is a blocker requiring human decision.
 
-OpenRewrite rule: if a public recipe exists for an uplift, OpenRewrite is mandatory. Manual path only where no recipe exists.
-
 ## Containerized End-State Criteria
 
 Execution gate requires:
@@ -108,7 +144,7 @@ Active agents:
 - `migration-orchestrator.agent.md` — primary entrypoint
 - `legacy-system-analyst.agent.md` — Discover phase
 - `target-architecture-intent.agent.md` — Target phase
-- `test-expert.agent.md` — Test phase (pyramid-wide assessment + Mode A/B creation + verification + sign-off gate)
+- `test-expert.agent.md` — Test phase (coverage-first sufficiency decision, then Mode A verification or Mode B coverage-increase planning, plus sign-off gate handling)
 - `migration-target-spec.agent.md` — Planning phase (what the migrated system should be)
 - `migration-plan.agent.md` — Planning phase (how to build it)
 - `migration-implementation.agent.md` — Execution phase (TDD test porting + OpenRewrite uplifts + iterative implementation; primary deliverable is `migrated-system/` folder)
