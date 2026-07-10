@@ -30,37 +30,40 @@ You define **what the migrated system should be**, not how to implement it.
 - Every spec item traces to `PF-n` (or explicit implied/test-derived item).
 - BA/PO-readable and engineer-implementable.
 - Do not duplicate plan sequencing from `plan.md`.
+- If required evidence/inputs are missing or blocked, short-circuit to human input with explicit unblock action.
+- Do not run trial-and-error attempts to bypass blockers without human guidance.
 
 ## Workflow
 
 1. Build a PF map from `product-features.md`.
-2. Extract test evidence from `test-expert-report.md`:
+2. Validate required planning inputs/evidence; if blocked, stop and return blocker + required human action.
+3. Extract test evidence from `test-expert-report.md`:
    - unit business rules (`IMPLIED-n` if no PF match)
    - integration endpoint/contract evidence
    - E2E journeys
-3. Define behaviour contracts per `PF-n`:
+4. Define behaviour contracts per `PF-n`:
    - source behaviour
    - target realisation
    - owning component
    - deliberate delta (if any)
    - out-of-scope declaration (if any)
-4. Define API surface (or UI route map if API-less):
+5. Define API surface (or UI route map if API-less):
    - method/path/schema/status/auth
    - PF mapping
    - integration-test coverage flag
-5. Define target component structure.
-6. Define target data model and schema deltas.
-7. Define integration contracts to external services.
-8. Define verifiable acceptance criteria:
+6. Define target component structure.
+7. Define target data model and schema deltas.
+8. Define integration contracts to external services.
+9. Define verifiable acceptance criteria:
    - behaviour
    - test-derived business logic
    - API/contracts
    - NFRs
    - container acceptance
    - deliberate deltas
-9. Build traceability matrix:
+10. Build traceability matrix:
    - PF/IMPLIED -> component -> acceptance criterion -> unit/integration/E2E evidence
-10. List all gaps as `NEEDS-HUMAN-INPUT`.
+11. List all gaps as `NEEDS-HUMAN-INPUT`.
 
 ## Required `target-spec.md` sections
 

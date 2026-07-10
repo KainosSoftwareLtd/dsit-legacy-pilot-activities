@@ -34,6 +34,8 @@ You control lifecycle progression and gate safety for end-to-end migration.
 - Never bypass gates.
 - Never infer completion from chat alone; rely on persisted artefacts + tracker/state.
 - Never hand off to Discover until preflight gate is passed or explicitly overridden.
+- If any prerequisite/check is failed or blocked, immediately short-circuit to human input with explicit unblock options.
+- Do not use autonomous trial-and-error attempts to clear blockers; wait for human workaround/decision before retry.
 - Execution starts only after:
   - approved migration plan
   - approved target spec
@@ -53,8 +55,8 @@ You control lifecycle progression and gate safety for end-to-end migration.
    - Outputs: `target/context.md`, `target/architecture.md`, `target/preferences.md`, `target/adrs/`, `target/nfrs.md`
    - Gate: human approval of architecture and preferences
 4. **Test** (Test Expert)
-   - Outputs: `test/test-expert-report.md`, `test/baseline-evidence.md`, baseline tests
-   - Gate: `test-suite-signoff: approved` in `state.yaml` with required statement
+   - Outputs: `test/test-expert-report.md`, `test/baseline-evidence.md`, baseline tests, and `test/coverage-increase-plan.md` when coverage is insufficient
+   - Gate: coverage sufficiency decision is recorded; if sufficient, `test-suite-signoff: approved` in `state.yaml`; if insufficient, coverage increase plan is produced and phase remains waiting-on-human
 5. **Planning**
    - Handoffs: Migration Target Spec -> Migration Plan Agent
    - Outputs: `planning/target-spec.md`, `planning/plan.md`, `planning/version-uplift-inventory.md`, `planning/containerization-plan.md`
@@ -81,6 +83,12 @@ For each failed/blocked check, record:
 - constraint id
 - impact
 - specific human action needed to unblock
+
+If any required check is failed/blocked:
+- set preflight phase status to `blocked` (or retain `failed` evidence as applicable)
+- mirror blocker details in tracker
+- request human workaround/next-step decision
+- do not dispatch Discover until human guidance is received and preflight is re-evaluated
 
 ## Preflight state contract (`state.yaml`)
 
@@ -113,15 +121,21 @@ environment-preflight:
 
 Progression rule:
 - Discover phase cannot start unless `environment-preflight.status = passed` OR `override.status = approved`.
+- Retry rule: failed/blocked checks are retried only after explicit human-provided workaround/decision or approved override is recorded.
 
 ## Gate checks (must pass)
 
 - **Preflight:** environment-preflight persisted; unsupported capabilities and permissions recorded; Discover allowed only on pass/approved override
 - **Discover:** product-features exists, PF-n style, human-confirmed
 - **Target:** required target artefacts exist, preferences approved, strategy approved
-- **Test:** report + baseline evidence exist, build succeeds, sign-off recorded
+- **Test:** report + baseline evidence exist and coverage sufficiency verdict recorded; if sufficient, build/test verification evidence + sign-off recorded; if insufficient, coverage increase plan exists and waiting-on-human action is explicit
 - **Planning:** target spec/plan/inventory/container plan exist and approved
 - **Execution:** deliverable folder complete, outcome evidence complete, ported tests pass, container acceptance passes
+
+If a gate check fails or remains blocked:
+- stop phase progression immediately
+- mark state/tracker as `blocked` or `waiting-on-human` with explicit required action
+- route back to human decision before any further retry attempts
 
 ## Tracker truth rules
 
@@ -143,6 +157,7 @@ After dispatch:
 1. Verify every artefact listed by the sub-agent exists.
 2. Cross-check against required output contract.
 3. If anything missing/mismatched, block phase progression.
+4. If sub-agent reports blockers or waiting-on-human, short-circuit to human input and do not issue autonomous workaround attempts.
 
 ## Dispatch prerequisites (summary)
 

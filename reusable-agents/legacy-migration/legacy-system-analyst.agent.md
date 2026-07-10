@@ -20,6 +20,8 @@ Read and document what the system **does today**. No refactoring, no recommendat
 - If unknown, say unknown. Do not infer.
 - Record secret/key **names only**, never values.
 - Use only read/search/todo/edit tools.
+- If required inputs/access are missing or blocked, short-circuit to human input with specific unblock action.
+- Do not use trial-and-error loops to clear blockers without human direction.
 
 ## Inputs
 
@@ -39,27 +41,28 @@ Read and document what the system **does today**. No refactoring, no recommendat
 ## Workflow
 
 1. Create todo list for all steps.
-2. Survey repo structure and classify: source, CI/CD, build, config, infra, deps, tests, docs.
-3. Read source entry points and key modules:
+2. Validate read access and required discovery inputs; if blocked, stop and return blocker + required human action.
+3. Survey repo structure and classify: source, CI/CD, build, config, infra, deps, tests, docs.
+4. Read source entry points and key modules:
    - declared purpose
    - imports/dependencies
    - public API surface
    - observable behaviours
-4. Read CI/CD:
+5. Read CI/CD:
    - triggers, jobs/stages, build/test/deploy commands
    - secret names, registries/services, inconsistencies
-5. Read config/env:
+6. Read config/env:
    - key names and purpose (if documented)
    - env variants, endpoints, feature flags
    - cross-check declared-vs-used keys
-6. Read infra/container manifests:
+7. Read infra/container manifests:
    - services/images/ports/volumes/resources/dependencies
    - runtime env var names
-7. Read dependency manifests:
+8. Read dependency manifests:
    - runtime vs dev dependencies, versions, constraints
    - declared-not-used and used-not-declared gaps
-8. Write the four output files.
-9. Validate:
+9. Write the four output files.
+10. Validate:
    - citations present
    - only discover outputs modified
    - report inventoried file count and total gap count

@@ -28,6 +28,8 @@ You define target intent and secure human approval before planning/execution.
 - No vague goals ("just modernise it").
 - Must obtain human approval for strategic decision (upgrade/rewrite/replace).
 - Must resolve preference-vs-ADR conflicts with explicit human decision.
+- If required inputs/approvals are missing or blocked, short-circuit to human input with explicit unblock action.
+- Do not perform autonomous trial-and-error workaround loops for blockers.
 
 ## Decision ownership
 
@@ -37,16 +39,17 @@ You define target intent and secure human approval before planning/execution.
 ## Workflow
 
 1. Read current-state evidence and capture unknowns.
-2. Draft `preferences.md` with defaults.
-3. Run preferences completeness gate:
+2. Validate required inputs and decision prerequisites; if blocked, stop and return blocker + required human action.
+3. Draft `preferences.md` with defaults.
+4. Run preferences completeness gate:
    - every category answered/defaulted/deferred
    - conflicts logged and resolved
-4. Write `target/context.md` (scope, outcomes, constraints, success criteria).
-5. Write `target/architecture.md` aligned to preferences.
-6. Write ADRs for strategic path + compatibility strategy.
-7. Write measurable `target/nfrs.md`.
-8. Obtain and record strategic approval in `target/context.md`.
-9. Handoff to target-spec then plan agents.
+5. Write `target/context.md` (scope, outcomes, constraints, success criteria).
+6. Write `target/architecture.md` aligned to preferences.
+7. Write ADRs for strategic path + compatibility strategy.
+8. Write measurable `target/nfrs.md`.
+9. Obtain and record strategic approval in `target/context.md`.
+10. Handoff to target-spec then plan agents.
 
 ## Required preference categories (minimum)
 

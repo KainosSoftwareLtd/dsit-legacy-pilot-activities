@@ -31,14 +31,17 @@ You define **how** to build the approved target spec.
 - No slice-based decomposition.
 - If public OpenRewrite recipe exists, mark uplift as mandatory.
 - Manual uplift only when no public recipe exists.
+- If required approvals/inputs are missing or blocked, short-circuit to human input with explicit unblock action.
+- Do not use autonomous trial-and-error attempts to clear blockers.
 
 ## Workflow
 
 1. Validate prerequisites and approvals.
-2. Build unified phase plan from target-spec acceptance criteria and component dependencies.
-3. Produce uplift inventory (source->target, recipe availability, identifiers, order).
-4. Produce containerization plan (build, run, test-in-container, acceptance criteria).
-5. Present for human approval before execution.
+2. If prerequisites are failed/blocked, stop and return blocker + required human action before any retry.
+3. Build unified phase plan from target-spec acceptance criteria and component dependencies.
+4. Produce uplift inventory (source->target, recipe availability, identifiers, order).
+5. Produce containerization plan (build, run, test-in-container, acceptance criteria).
+6. Present for human approval before execution.
 
 ## Required response sections
 

@@ -58,6 +58,17 @@ If checks fail:
 
 - mark blocked or waiting-on-human with specific unblock actions
 - do not proceed to Discover unless preflight passes or an explicit override is approved
+- short-circuit to human input for workaround/next-step decision before any retry
+- do not use AI-led trial-and-error remediation loops to bypass blockers
+
+## Blocker escalation policy (all legacy-migration agents)
+
+Across the orchestrator and all sub-agents:
+
+- Any failed/blocked prerequisite or gate check must immediately short-circuit to human input.
+- The agent must return concrete blocker details: impact, evidence, and `required_human_action`.
+- Retries are allowed only after explicit human-provided workaround/decision (or approved override where applicable).
+- Agents must not run autonomous trial-and-error sequences to clear blockers.
 
 ## Human-In-The-Loop Gates
 
@@ -75,12 +86,13 @@ The Test phase is a single gate handled by the Test Expert agent.
 
 The Test Expert:
 
+- first performs a fast coverage sufficiency assessment from test files and provided context
 - assesses the full test pyramid (unit, integration, E2E) against every spec entry in `product-features.md`
 - classifies gaps by spec entry, not coverage percentage alone
 - detects test mode and routes accordingly:
-  - **Mode A** (adequate tests exist): translate existing tests to target framework; human confirms translation fidelity; AI must not invent new cases
-  - **Mode B** (tests absent or inadequate): spec-driven TDD from `product-features.md`; failing tests first, then implementation code; AI must not derive cases from reading implementation
-- runs build verification and records execution evidence
+  - **Mode A** (coverage sufficient): proceed to verification/translation flow and gather execution evidence
+  - **Mode B** (coverage insufficient): produce `coverage-increase-plan.md` and stop before green-run pursuit
+- runs build verification only after a sufficient-coverage decision
 - raises a mandatory human sign-off gate before the Test phase can exit
 
 Execution uses only the ported baseline test set. Execution must not create new tests for self-evaluation.
@@ -132,7 +144,7 @@ Active agents:
 - `migration-orchestrator.agent.md` — primary entrypoint
 - `legacy-system-analyst.agent.md` — Discover phase
 - `target-architecture-intent.agent.md` — Target phase
-- `test-expert.agent.md` — Test phase (pyramid-wide assessment + Mode A/B creation + verification + sign-off gate)
+- `test-expert.agent.md` — Test phase (coverage-first sufficiency decision, then Mode A verification or Mode B coverage-increase planning, plus sign-off gate handling)
 - `migration-target-spec.agent.md` — Planning phase (what the migrated system should be)
 - `migration-plan.agent.md` — Planning phase (how to build it)
 - `migration-implementation.agent.md` — Execution phase (TDD test porting + OpenRewrite uplifts + iterative implementation; primary deliverable is `migrated-system/` folder)
